@@ -1,4 +1,4 @@
-# PHP Installation Guide
+# Project Guide
 
 ## Start by Installing PHP
 
@@ -51,3 +51,11 @@
 Run the following command in **Terminal** or **Command Prompt**:
 ```bash
 php -v
+
+---
+
+## To Start Server
+
+Run the following command in **Terminal** or **Command Prompt**:
+```bash
+php -S localhost:8000
