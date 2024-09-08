@@ -1,0 +1,4 @@
+--install php
+
+--to run server run this in terminal
+php -S localhost:8000
