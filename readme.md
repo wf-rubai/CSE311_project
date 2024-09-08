@@ -51,10 +51,10 @@
 Run the following command in **Terminal** or **Command Prompt**:
 ```bash
 php -v
-
+```
 ---
 
-## To Start Server
+## To Start Project Server
 
 Run the following command in **Terminal** or **Command Prompt**:
 ```bash
