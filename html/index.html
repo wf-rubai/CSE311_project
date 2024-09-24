@@ -1,50 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSE311 project</title>
+    <title>Advising Assistent</title>
     <!-- <link rel="stylesheet" href="../css/style.css"> -->
     <style>
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 300px;
-            padding: 150px 0 400px 0;
-            /* background: black; */
+            font-family: arial;
+            margin: 0;
         }
 
-        div {
-            height: 300px;
-            margin: auto;
+        .content-1 {
+            background: #ffcf90;
+            padding: 15px;
             display: flex;
-            align-items: center;
-            font-family: sans-serif;
-            font-size: 90px;
-            color: rgba(10, 59, 150, 0);
-            text-shadow: 3px 3px 6px rgb(255, 255, 255), 0 0 0 #000, 1px 4px 6px rgb(255, 255, 255);
+            justify-content: flex-end;
+        }
+
+        .content-1 button {
+            margin: 0px 0px 0px 7px;
+            padding: 5px;
+            width: 70px;
+            border-radius: 100px;
+            background: none;
+        }
+
+        .log-btn {
+            border: 1.5px solid #3F51B5;
+            color: #3F51B5;
             transition: .5s;
         }
-        div:hover{
-            color: rgb(255 255 255);
-            /* text-shadow: -3px -3px 6px #000000; */
-            text-shadow: 3px 3px 6px rgba(255, 255, 255, 0), 0 0 0 #ffffff00, 3px 3px 6px rgb(0, 0, 0);
+
+        .sign-btn {
+            border: 1.5px solid #FF9800;
+            color: #FF9800;
             transition: .5s;
-            cursor: none;
+        }
+
+        .log-btn:hover {
+            border: 1.5px solid #3F51B5;
+            background: #3F51B5;
+            color: #ffffff;
+            transition: .5s;
+        }
+
+        .sign-btn:hover {
+            border: 1.5px solid #FF9800;
+            background: #FF9800;
+            color: #ffffff;
+            transition: .5s;
+        }
+
+        .content-2 {
+            background: antiquewhite;
+            padding: 30px;
+            text-align: center;
+            font-size: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            /* Keep the height constant */
+            overflow: hidden;
+        }
+
+        .content-2 h1 {
+            margin: 0;
+            transition: all 1s ease;
+            /* Smooth transition for animation */
+        }
+
+        @keyframes animateText {
+            0% {
+                transform: translateX(0);
+                font-size: 50px;
+                text-align: center;
+            }
+
+            100% {
+                transform: translateX(-100%);
+                font-size: 30px;
+                text-align: left;
+            }
+        }
+
+        .content-2.animated h1 {
+            animation: animateText 2s ease forwards;
+        }
+
+        .content-2.animated {
+            justify-content: flex-start;
+        }
+
+        /* Animation delay */
+        @keyframes delayAnimation {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: delayAnimation 1s ease 1s forwards;
         }
     </style>
 </head>
 
 <body>
-    <form action="../php/process.php" method="POST">
-        <div>
-            <strong>
-                Welcome Fuckers
-            </strong>
-        </div>
-    </form>
+    <div class="container">
+        <form action="../php/process.php" method="POST">
+            <div class="content-1">
+                <button type="button" class="log-btn" onclick="location.href = 'login.html';">Login</button>
+                <button type="button" class="sign-btn" onclick="location.href = 'signup.html';">Sign up</button>
+            </div>
+            <div class="content-2">
+                <h1>ADVISING</h1>
+                <h1>ASSISTENT</h1>
+            </div>
+        </form>
+    </div>
 
     <script src="../js/script.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                document.querySelector('.content-2').classList.add('animated');
+            }, 2000); // 2 seconds delay after page refresh
+        });
+    </script>
 </body>
+
 </html>
