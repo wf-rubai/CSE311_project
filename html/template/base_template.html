@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../js/common.js"></script>
     <title>Document</title>
     <style>
         body{
@@ -30,7 +31,7 @@
     
     <div class="container">
         <!-- side bar -->
-        <iframe src="template/side_bar.html"  class="side_bar" id="sidebar" style="border: none; width: 15%; margin: 10px 0 10px 10px; display: none;"></iframe>
+        <iframe src="template/side_bar.html"  class="side_bar" id="sidebar" style="border: none; width: 250px; margin: 10px 0 10px 10px; display: none;"></iframe>
         
         <!-- all main content here -->
         <div class="main_body">
@@ -38,14 +39,5 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('message', function(event) {
-            if (event.data === 'toggleSidebar') {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
-                // sidebar.style.transition = '5s';
-            }
-        });
-    </script>
 </body>
 </html>

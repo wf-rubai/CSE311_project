@@ -1,4 +1,4 @@
 # ignore log files and databases
 *.log
 *.sqlite
-*database
+*data_rds2
