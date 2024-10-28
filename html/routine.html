@@ -37,6 +37,7 @@
             flex-direction: column;
             border-radius: 10px;
             padding: 20px;
+            color: #333;
         }
 
         .info_dec button {
@@ -48,24 +49,66 @@
         }
 
         #addCourse {
-            background: #9b9fff;
-            transition: .5s;
+            background: linear-gradient(to right, #9428ff, #6a6aff, #00BCD4);
+            background-size: 200% 100%;
+            animation: reverseHoverAnimation .5s ease forwards;
             margin-left: 0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes reverseHoverAnimation {
+            0% {
+                background-position: 100% 0%;
+            }100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        @keyframes hoverAnimation {
+            0% {
+                background-position: 0% 0%;
+            }100% {
+                background-position: 100% 0%;
+            }
         }
 
         #addCourse:hover {
-            background: #8286ff;
-            transition: .5s;
+            animation: hoverAnimation .5s ease forwards;
         }
 
+
         #generateRoutine {
-            background: #82ff65;
-            transition: .5s;
+            background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
+            background-size: 200% 100%;
+            animation: reverseHoverAnimation2 .5s ease forwards;
+            margin-left: 0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes reverseHoverAnimation2 {
+            0% {
+                background-position: 100% 0%;
+            }100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        @keyframes hoverAnimation2 {
+            0% {
+                background-position: 0% 0%;
+            }100% {
+                background-position: 100% 0%;
+            }
         }
 
         #generateRoutine:hover {
-            background: #66d54d;
-            transition: .5s;
+            animation: hoverAnimation2 .5s ease forwards;
         }
 
         .info_group {
@@ -85,31 +128,40 @@
             padding: 5px;
             border: 1px solid #b8b8b8;
             border-radius: 5px;
+            background-color: #ffffff69;
         }
 
-        .dropdown-list {
+        .info_group select {
+            cursor: pointer;
+        }
+
+        .dropdown-list,
+        .dropdown-list-color {
             display: none;
             border: 1px solid #b8b8b8;
             max-height: 150px;
             overflow-y: auto;
             position: absolute;
-            width: 300px;
-            background-color: #fff;
+            width: 100%;
+            background-color: #4f4f4fa8;
             z-index: 10;
             padding: 5px;
             border-radius: 5px;
             transition: .5s;
+            backdrop-filter: blur(30px);
+            color: white;
         }
 
         .dropdown-item {
-            padding: 8px;
+            padding: 5px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
         .dropdown-item:hover {
-            background-color: #f0f0f0;
+            background-color: #518eff;
             border-radius: 5px;
-            transition: .5s;
         }
 
         .custom-dropdown {
@@ -123,31 +175,29 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             cursor: pointer;
-            background-color: white;
+            background-color: #ffffff69;
             font-size: 13px;
         }
 
-        .dropdown-list-color {
-            display: none;
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-            z-index: 1;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .dropdown-item {
-            padding: 8px;
-            cursor: pointer;
+        .dlt_course {
+            /* background: white; */
+            background-color: #ffffff69;
+            color: #ff5d5d;
+            height: 25px;
+            width: 25px;
             display: flex;
+            justify-content: center;
             align-items: center;
+            border-radius: 5px;
+            margin-left: 50px;
+            scale: .7;
+            font-size: 25px;
+            cursor: pointer;
         }
 
-        .dropdown-item:hover {
-            background-color: #f0f0f0;
+        .dlt_course:hover {
+            color: white;
+            background: #ff5d5d;
         }
     </style>
 </head>
@@ -165,16 +215,18 @@
             <div class="info_dec">
                 <h3 style="text-align: center; margin-top: 0;">Your Advising Preferences</h3>
 
-                <div class="info_group">
-                    <label for="studentID">Maximum credit</label>
-                    <input type="number" id="max_cr" value="10" required>
+                <div style="display: flex;">
+                    <div class="info_group">
+                        <label for="max_cr">Maximum credit</label>
+                        <input type="number" id="max_cr" value="10" required>
+                    </div>
+                    <div class="info_group" style="margin-left: 50px;">
+                        <label for="min_cr">Minimum credit</label>
+                        <input type="number" id="min_cr" value="6" required>
+                    </div>
                 </div>
                 <div class="info_group">
-                    <label for="studentID">Minimum credit</label>
-                    <input type="number" id="min_cr" value="6" required>
-                </div>
-                <div class="info_group">
-                    <label for="studentID">Minimum class days</label>
+                    <label for="min_cr_6">Minimum class days</label>
                     <div style="display: flex; align-items: center;">
                         <input type="radio" id="min_cr_6" name="min_cr" value="6" style="margin: 0 5px 0 0;" checked>
                         <label for="min_cr_6" style="margin-right: 30px; width: 0;">6</label>
@@ -186,13 +238,13 @@
                 </div>
                 <div class="selected_courses">
                     <div class="info_group course_selection" style="display: none;">
-                        <label for="min_cr">Choose course</label>
-                        <div>
+                        <label for="search_box_course">Choose course</label>
+                        <div style="width: 300px; position: relative;">
                             <input style="width: 312px;" type="search" id="search_box_course" placeholder="Course title"
                                 onfocus="filterList()" required>
                             <div id="courseList" class="dropdown-list"></div>
                         </div>
-                        <label style="margin-left: 50px; width: 60px;">Credit</label>
+                        <label style="margin-left: 50px; width: 60px;position: relative; left: 12px; ">Credit</label>
                         <select name="credit" style="width: 200px;" required>
                             <option value="1">1</option>
                             <option value="1.5">1.5</option>
@@ -203,33 +255,41 @@
                             <div class="selected-option" id="selectedColor">
                                 <i class="fa fa-square" style="color: rgb(95, 95, 255);"></i> Blue
                             </div>
-                            <div class="dropdown-list-color" id="colorList">
+                            <div class="dropdown-list-color" id="colorList" style="width: calc(100% - 12px);">
                                 <div class="dropdown-item" data-color="red">
-                                    <i class="fa fa-square" style="color: rgb(255, 99, 99);"></i> Red
+                                    <i class="fa fa-square" style="color: rgb(255, 99, 99); margin-right: 5px;"></i> Red
                                 </div>
                                 <div class="dropdown-item" data-color="green">
-                                    <i class="fa fa-square" style="color: rgb(91, 255, 91);"></i> Green
+                                    <i class="fa fa-square" style="color: rgb(91, 255, 91); margin-right: 5px;"></i>
+                                    Green
                                 </div>
                                 <div class="dropdown-item" data-color="blue">
-                                    <i class="fa fa-square" style="color: rgb(95, 95, 255);"></i> Blue
+                                    <i class="fa fa-square" style="color: rgb(95, 95, 255); margin-right: 5px;"></i>
+                                    Blue
                                 </div>
                                 <div class="dropdown-item" data-color="yellow">
-                                    <i class="fa fa-square" style="color: yellow;"></i> Yellow
+                                    <i class="fa fa-square" style="color: rgb(218, 218, 0); margin-right: 5px;"></i>
+                                    Yellow
                                 </div>
                                 <div class="dropdown-item" data-color="orange">
-                                    <i class="fa fa-square" style="color: rgb(255, 166, 0);"></i> Orange
+                                    <i class="fa fa-square" style="color: rgb(255, 166, 0); margin-right: 5px;"></i>
+                                    Orange
                                 </div>
                                 <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: rgb(255, 93, 255);"></i> Pink
+                                    <i class="fa fa-square" style="color: rgb(255, 93, 255); margin-right: 5px;"></i>
+                                    Pink
                                 </div>
                                 <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: cyan;"></i> Cyan
+                                    <i class="fa fa-square" style="color: rgb(0, 255, 255); margin-right: 5px;"></i>
+                                    Cyan
                                 </div>
                                 <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: rgb(188, 188, 188);"></i> Gray
+                                    <i class="fa fa-square" style="color: rgb(188, 188, 188); margin-right: 5px;"></i>
+                                    Gray
                                 </div>
                             </div>
                         </div>
+                        <div class="dlt_course">&times;</div>
                     </div>
                 </div>
 
@@ -242,78 +302,17 @@
         </div>
     </div>
 
-    <!-- dropdown js for color list -->
-    <!-- <script>
-        const selectedColor = document.getElementById("selectedColor");
-        const colorList = document.getElementById("colorList");
-
-        // Toggle the dropdown on click
-        selectedColor.addEventListener("click", () => {
-            colorList.style.display = colorList.style.display === "block" ? "none" : "block";
-        });
-
-        // Hide dropdown when clicking outside
-        document.addEventListener("click", (event) => {
-            if (!selectedColor.contains(event.target) && !colorList.contains(event.target)) {
-                colorList.style.display = "none"; // Hide the dropdown
-            }
-        });
-
-        // Set the selected color
-        colorList.addEventListener("click", (event) => {
-            if (event.target.classList.contains("dropdown-item")) {
-                selectedColor.innerHTML = event.target.innerHTML;
-                selectedColor.style.color = 'black';
-                colorList.style.display = "none"; // Hide dropdown
-            }
-        });
-
-    </script> -->
-
-    <!-- dropdown js for course list -->
-    <!-- <script>
-
-        function filterList() {
-            const input = document.getElementById("search_box_course");
-            const listContainer = document.getElementById("courseList");
-
-            const filter = input.value.toLowerCase();
-
-            listContainer.style.display = "block";
-            listContainer.innerHTML = "";
-
-            courses
-                .filter(course => course.toLowerCase().includes(filter))
-                .forEach(course => {
-                    const option = document.createElement("div");
-                    option.classList.add("dropdown-item");
-                    option.textContent = course;
-                    option.onclick = () => {
-                        input.value = course;
-                        listContainer.innerHTML = "";
-                        listContainer.style.display = "none";
-                    };
-                    listContainer.appendChild(option);
-                });
-        }
-
-        document.addEventListener("click", (event) => {
-            const input = document.getElementById("search_box_course");
-            const listContainer = document.getElementById("courseList");
-
-            if (!input.contains(event.target) && !listContainer.contains(event.target)) {
-                listContainer.style.display = "none";
-            }
-        });
-
-        const searchBox = document.getElementById("search_box_course");
-        searchBox.addEventListener("focus", filterList);
-        searchBox.addEventListener("input", filterList);
-    </script> -->
-    
+    <!-- Adds a row to insert course info -->
     <script>
-        const courses = ["MAT101", "CSE110", "PHY111", "ENG102", "BIO105"]; // List of course options
-        
+        const courses = [
+            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
+            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310", "CSE320",
+            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
+            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
+            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
+        ];
+
+
         document.getElementById("addCourse").addEventListener("click", () => {
             const originalCourseSelection = document.querySelector(".course_selection");
             const newCourseSelection = originalCourseSelection.cloneNode(true);
@@ -347,6 +346,7 @@
             colorList.addEventListener("click", (event) => {
                 if (event.target.classList.contains("dropdown-item")) {
                     selectedColor.innerHTML = event.target.innerHTML;
+                    selectedColor.querySelector("i").style.marginRight = "0";
                     selectedColor.style.color = 'black';
                     colorList.style.display = "none";
                 }
@@ -356,7 +356,7 @@
             const searchBox = newCourseSelection.querySelector(`#search_box_course_${uniqueID}`);
             const listContainer = newCourseSelection.querySelector(`#courseList_${uniqueID}`);
 
-            function filterList() {
+            window.filterList = function () {
                 const filter = searchBox.value.toLowerCase();
 
                 listContainer.style.display = "block";
@@ -384,6 +384,13 @@
                 if (!searchBox.contains(event.target) && !listContainer.contains(event.target)) {
                     listContainer.style.display = "none";
                 }
+            });
+
+            // delete course button action
+            const deleteIcon = newCourseSelection.querySelector(".dlt_course");
+
+            deleteIcon.addEventListener("click", () => {
+                newCourseSelection.remove();
             });
         });
 

@@ -3,33 +3,60 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
     <style>
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
             height: calc(100vh - 41px);
         }
-        .side_bar{
-            /* margin: 10px; */
-            background: blueviolet;
+
+        .side_bar {
+            position: relative;
             padding: 20px;
             border-radius: 10px;
             height: 100%;
-            /* width: 100%; */
+            overflow: hidden;
+            color: white;
         }
-        .side_bar h3{
+
+        .side_bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url(https://images.unsplash.com/photo-1557683304-673a23048d34?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhZGllbnQlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+            z-index: -1;
+            filter: brightness(.5);
+            /* opacity: 0.7; */
+            /* Optional: adjust for visibility */
+        }
+        
+        .side_bar:hover::before{
+            filter: brightness(.6);
+        }
+
+        .side_bar h3 {
             margin: 0;
         }
     </style>
 </head>
+
 <body>
     <div class="side_bar">
         <h3>Navigate to</h3>
     </div>
 </body>
+
 </html>

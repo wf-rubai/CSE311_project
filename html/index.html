@@ -72,7 +72,7 @@
             /* Smooth transition for animation */
         }
 
-        @keyframes animateText {
+        /* @keyframes animateText {
             0% {
                 transform: translateX(0);
                 font-size: 50px;
@@ -88,14 +88,14 @@
 
         .content-2.animated h1 {
             animation: animateText 2s ease forwards;
-        }
+        } */
 
         .content-2.animated {
             justify-content: flex-start;
         }
 
         /* Animation delay */
-        @keyframes delayAnimation {
+        /* @keyframes delayAnimation {
             0% {
                 opacity: 0;
             }
@@ -107,7 +107,7 @@
 
         body {
             animation: delayAnimation 1s ease 1s forwards;
-        }
+        } */
     </style>
 </head>
 
@@ -127,11 +127,11 @@
 
     <script src="../js/script.js"></script>
     <script>
-        window.addEventListener("load", function () {
-            setTimeout(function () {
-                document.querySelector('.content-2').classList.add('animated');
-            }, 2000); // 2 seconds delay after page refresh
-        });
+        // window.addEventListener("load", function () {
+        //     setTimeout(function () {
+        //         document.querySelector('.content-2').classList.add('animated');
+        //     }, 2000); // 2 seconds delay after page refresh
+        // });
     </script>
 </body>
 
