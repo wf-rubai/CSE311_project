@@ -1,52 +1,68 @@
 <!-- use this iframe to add navigation bar -->
 <!-- <iframe src="template/nav_bar.html" style="border: none; width: 100%; height: 60px; display: block;"></iframe> -->
- 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
     <style>
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
         }
-        .nav_bar{
+
+        .nav_bar {
             background-color: #333;
             padding: 20px;
             display: flex;
             align-items: center;
             color: aliceblue;
         }
-        .nav_bar h2{
+
+        .nav_bar h2 {
             position: absolute;
             left: 50%;
-            transform: translate(-50%,0);
+            transform: translate(-50%, 0);
             cursor: pointer;
         }
-        .nav_bar i{
+
+        .nav_bar i {
             font-size: 20px;
             cursor: pointer;
             transition: .5s;
         }
-        .nav_bar i:hover{
+
+        .nav_bar i:hover {
             scale: 1.2;
             transition: .5s;
         }
     </style>
 </head>
+
 <body>
     <div class="nav_bar">
         <i class="fa fa-bars" onclick="toggleSidebar()"></i>
-        <h2>Advising Assistent</h2>
+        <h2 onclick="navigateToHome()">
+            Advising Assistant
+        </h2>
     </div>
 
     <script>
+        // to triger the side bar js on common.js
         function toggleSidebar() {
             window.parent.postMessage('toggleSidebar', '*');
         }
+
+        // to navigate to home page upon click
+        function navigateToHome() {
+            window.parent.location = '../index.html'; // Update this path as needed
+        }
+
     </script>
 </body>
+
 </html>
