@@ -1,0 +1,286 @@
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        height: 100vh;
+    }
+
+    .container {
+        /* background-color: #41ff51; */
+        height: calc(100vh - 60px);
+        display: flex;
+    }
+
+    .main_body {
+        /* background: #9595ff; */
+        width: -webkit-fill-available;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .info_dec {
+        /* background: #e9e9e9; */
+        background-image: url(https://images.pexels.com/photos/7130560/pexels-photo-7130560.jpeg?cs=srgb&dl=pexels-codioful-7130560.jpg&fm=jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        padding: 20px;
+        color: #333;
+    }
+
+    .info_dec button {
+        width: 150px;
+        border: oldlace;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 10px;
+    }
+
+    #addCourse {
+        background: linear-gradient(to right, #9428ff, #6a6aff, #00BCD4);
+        background-size: 200% 100%;
+        animation: reverseHoverAnimation .5s ease forwards;
+        margin-left: 0;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    @keyframes reverseHoverAnimation {
+        0% {
+            background-position: 100% 0%;
+        }100% {
+            background-position: 0% 0%;
+        }
+    }
+
+    @keyframes hoverAnimation {
+        0% {
+            background-position: 0% 0%;
+        }100% {
+            background-position: 100% 0%;
+        }
+    }
+
+    #addCourse:hover {
+        animation: hoverAnimation .5s ease forwards;
+    }
+
+
+    #generateRoutine {
+        background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
+        background-size: 200% 100%;
+        animation: reverseHoverAnimation2 .5s ease forwards;
+        margin-left: 0;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    @keyframes reverseHoverAnimation2 {
+        0% {
+            background-position: 100% 0%;
+        }100% {
+            background-position: 0% 0%;
+        }
+    }
+
+    @keyframes hoverAnimation2 {
+        0% {
+            background-position: 0% 0%;
+        }100% {
+            background-position: 100% 0%;
+        }
+    }
+
+    #generateRoutine:hover {
+        animation: hoverAnimation2 .5s ease forwards;
+    }
+
+    .info_group {
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .info_group label {
+        width: 160px;
+    }
+
+    .info_group input[type='number'],
+    input[type='search'],
+    select {
+        width: 300px;
+        padding: 5px;
+        border: 1px solid #b8b8b8;
+        border-radius: 5px;
+        background-color: #ffffff69;
+    }
+
+    .info_group select {
+        cursor: pointer;
+    }
+
+    .dropdown-list,
+    .dropdown-list-color {
+        display: none;
+        border: 1px solid #b8b8b8;
+        max-height: 150px;
+        overflow-y: auto;
+        position: absolute;
+        width: 100%;
+        background-color: #4f4f4fa8;
+        z-index: 10;
+        padding: 5px;
+        border-radius: 5px;
+        transition: .5s;
+        backdrop-filter: blur(30px);
+        color: white;
+    }
+
+    .dropdown-item {
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-item:hover {
+        background-color: #518eff;
+        border-radius: 5px;
+    }
+
+    .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        width: 200px;
+    }
+
+    .selected-option {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #ffffff69;
+        font-size: 13px;
+    }
+
+    .dlt_course {
+        /* background: white; */
+        background-color: #ffffff69;
+        color: #ff5d5d;
+        height: 25px;
+        width: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin-left: 50px;
+        scale: .7;
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .dlt_course:hover {
+        color: white;
+        background: #ff5d5d;
+    }
+</style>
+<div class="main_body">
+    <div class="info_dec">
+        <h3 style="text-align: center; margin-top: 0;">Your Advising Preferences</h3>
+
+        <div style="display: flex;">
+            <div class="info_group">
+                <label for="max_cr">Maximum credit</label>
+                <input type="number" id="max_cr" value="10" required>
+            </div>
+            <div class="info_group" style="margin-left: 50px;">
+                <label for="min_cr">Minimum credit</label>
+                <input type="number" id="min_cr" value="6" required>
+            </div>
+        </div>
+        <div class="info_group">
+            <label for="min_cr_6">Minimum class days</label>
+            <div style="display: flex; align-items: center;">
+                <input type="radio" id="min_cr_6" name="min_cr" value="6" style="margin: 0 5px 0 0;" checked>
+                <label for="min_cr_6" style="margin-right: 30px; width: 0;">6</label>
+                <input type="radio" id="min_cr_4" name="min_cr" value="4" style="margin: 0 5px 0 0;">
+                <label for="min_cr_4" style="margin-right: 30px; width: 0;">4</label>
+                <input type="radio" id="min_cr_2" name="min_cr" value="2" style="margin: 0 5px 0 0;">
+                <label for="min_cr_2" style="margin-right: 30px; width: 0;">2</label>
+            </div>
+        </div>
+        <div class="selected_courses">
+            <div class="info_group course_selection" style="display: none;">
+                <label for="search_box_course">Choose course</label>
+                <div style="width: 300px; position: relative;">
+                    <input style="width: 312px;" type="search" id="search_box_course" placeholder="Course title"
+                        onfocus="filterList()" required>
+                    <div id="courseList" class="dropdown-list"></div>
+                </div>
+                <label style="margin-left: 50px; width: 60px;position: relative; left: 12px; ">Credit</label>
+                <select name="credit" style="width: 200px;" required>
+                    <option value="1">1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="3" selected>3</option>
+                </select>
+                <label style="margin-left: 50px; width: 60px;">Color</label>
+                <div class="custom-dropdown">
+                    <div class="selected-option" id="selectedColor">
+                        <i class="fa fa-square" style="color: rgb(95, 95, 255);"></i> Blue
+                    </div>
+                    <div class="dropdown-list-color" id="colorList" style="width: calc(100% - 12px);">
+                        <div class="dropdown-item" data-color="red">
+                            <i class="fa fa-square" style="color: rgb(255, 99, 99); margin-right: 5px;"></i> Red
+                        </div>
+                        <div class="dropdown-item" data-color="green">
+                            <i class="fa fa-square" style="color: rgb(91, 255, 91); margin-right: 5px;"></i>
+                            Green
+                        </div>
+                        <div class="dropdown-item" data-color="blue">
+                            <i class="fa fa-square" style="color: rgb(95, 95, 255); margin-right: 5px;"></i>
+                            Blue
+                        </div>
+                        <div class="dropdown-item" data-color="yellow">
+                            <i class="fa fa-square" style="color: rgb(218, 218, 0); margin-right: 5px;"></i>
+                            Yellow
+                        </div>
+                        <div class="dropdown-item" data-color="orange">
+                            <i class="fa fa-square" style="color: rgb(255, 166, 0); margin-right: 5px;"></i>
+                            Orange
+                        </div>
+                        <div class="dropdown-item" data-color="purple">
+                            <i class="fa fa-square" style="color: rgb(255, 93, 255); margin-right: 5px;"></i>
+                            Pink
+                        </div>
+                        <div class="dropdown-item" data-color="purple">
+                            <i class="fa fa-square" style="color: rgb(0, 255, 255); margin-right: 5px;"></i>
+                            Cyan
+                        </div>
+                        <div class="dropdown-item" data-color="purple">
+                            <i class="fa fa-square" style="color: rgb(188, 188, 188); margin-right: 5px;"></i>
+                            Gray
+                        </div>
+                    </div>
+                </div>
+                <div class="dlt_course">&times;</div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-start;">
+            <button type="button" id="addCourse">+ Add course</button>
+            <button type="submit" id="generateRoutine">Generate Routine</button>
+        </div>
+    </div>
+
+    <div class="show_table">
+        
+    </div>
+</div>
