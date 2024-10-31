@@ -129,16 +129,6 @@
             z-index: 1;
         }
 
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 20px;
-            width: 50%;
-            position: relative;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
         .close {
             position: absolute;
             top: 10px;
@@ -148,7 +138,7 @@
             color: #ff5d5d;
         }
 
-        button {
+        /* button {
             background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
             background-size: 200% 100%;
             animation: reverseHoverAnimation 0.5s ease forwards;
@@ -156,22 +146,25 @@
 
         button:hover {
             animation: hoverAnimation 0.5s ease forwards;
-        }
+        } */
 
-        .modal-content {
+        .modal-content-fr {
             background: linear-gradient(to right, #ffffff, #f3f4ff);
-            margin: 10% auto;
-            padding: 20px 40px;
+            /* margin: 10% auto; */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 20px;
             width: 60%;
-            position: relative;
+            position: absolute;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(58, 57, 57, 0.3);
             color: #333;
-            max-height: 60%;
-            overflow-y: auto;
+            height: fit-content;
+            /* overflow-y: auto; */
         }
 
-        .modal-content h2 {
+        .modal-content-fr h2 {
             margin-top: 0;
             color: #333;
             font-size: 24px;
@@ -180,11 +173,11 @@
             padding-bottom: 10px;
         }
 
-        .modal-content p {
+        .modal-content-fr p {
             color: #666;
         }
 
-        .modal-content label {
+        .modal-content-fr label {
             display: block;
             margin: 15px 0 5px;
             font-weight: bold;
@@ -199,7 +192,7 @@
             font-size: 14px;
         }
 
-        .modal-content button[type="submit"] {
+        .sumbit_btn {
             background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
             border: none;
             color: white;
@@ -212,7 +205,7 @@
             transition: 0.5s;
         }
 
-        .modal-content button[type="submit"]:hover {
+        .sumbit_btn {
             background-position: 100% 0;
         }
 
@@ -318,12 +311,15 @@
 
             <!-- Review Modal -->
             <div id="reviewModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content-fr">
                     <span class="close" onclick="closeReviewModal()">&times;</span>
                     <h2>Write a Review</h2>
                     <form>
                         <label for="reviewText">Review:</label>
-                        <textarea id="reviewText" rows="4"></textarea>
+                        <!-- <textarea id="reviewText" rows="4"></textarea> -->
+                        <?php
+                        echo readfile("WFR_editor.html");
+                        ?>
 
                         <label>Learning:</label>
                         <div class="star-rating" id="learningRating">
@@ -343,14 +339,14 @@
                             <span onclick="setRating('gradingRating', 5)">★</span>
                         </div>
 
-                        <button type="submit">Submit</button>
+                        <button class="sumbit_btn" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
 
             <!-- Faculty Modal -->
             <div id="facultyModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content-fr">
                     <span class="close" onclick="closeFacultyModal()">&times;</span>
                     <h2 id="facultyName">Faculty Name</h2>
                     <img id="facultyImage" src="#" alt="Faculty Image" loading="lazy"/>
