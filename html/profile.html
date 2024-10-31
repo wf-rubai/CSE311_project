@@ -7,39 +7,32 @@
     <script src="../js/common.js"></script>
     <title>Member Profile</title>
     <style>
-        * {
+        /* * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
+        } */
 
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f0f2f5;
+        body{
+            font-family: Arial, Helvetica, sans-serif;
             margin: 0;
+            height: 100vh;
         }
-
-        .container {
-            background-color: #ffffff;
-            min-height: calc(100vh - 60px);
+        .container{
+            background-color: #41ff51;
+            height: calc(100vh - 60px);
             display: flex;
-            padding: 20px;
-            gap: 20px;
         }
-
-        .main_body {
-            background: linear-gradient(135deg, #e0f7fa, #80deea, #26c6da);
+        .main_body{
+            background: #9595ff;
+            width: -webkit-fill-available;
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            transition: transform 0.3s;
+            margin: 10px;
         }
 
-        .main_body:hover {
+        /* .main_body:hover {
             transform: scale(1.02);
-        }
+        } */
 
         .profile-section {
             text-align: center;
@@ -137,7 +130,7 @@
 
     <div class="container">
         <!-- Sidebar -->
-        <iframe src="template/side_bar.html" class="side_bar" id="sidebar" style="border: none; width: 250px; display: block;"></iframe>
+        <iframe src="template/side_bar.html"  class="side_bar" id="sidebar" style="border: none; width: 250px; margin: 10px 0 10px 10px; display: none;"></iframe>
 
         <!-- Main Content -->
         <div class="main_body">

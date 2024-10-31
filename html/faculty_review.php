@@ -318,7 +318,7 @@
                         <label for="reviewText">Review:</label>
                         <!-- <textarea id="reviewText" rows="4"></textarea> -->
                         <?php
-                        echo file_get_contents("WFR_editor.html");
+                        echo file_get_contents("template/WFR_editor.html");
                         ?>
 
                         <label>Learning:</label>
