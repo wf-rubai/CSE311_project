@@ -28,6 +28,7 @@
             width: -webkit-fill-available;
             border-radius: 10px;
             margin: 10px;
+            overflow-y: auto;
         }
 
         /* .main_body:hover {
@@ -63,16 +64,34 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .profile-pic img {
+        .profile-pic {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             border: 2px solid #001f3f;
+            overflow: hidden;
+        }
+        
+        .profile-pic img {
+            /* width: 150px;
+            height: 150px;
+            border-radius: 50%; */
+            /* border: 2px solid #001f3f; */
+            /* z-index: -1; */
+            width: 100%;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             transition: transform 0.3s;
         }
 
         .profile-pic img:hover {
-            transform: scale(1.05);
+            /* top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform: scale(1.05); */
+            scale: 1.05;
         }
 
         .profile-details, .academic-info {
@@ -94,7 +113,7 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
+            /* width: 100%; */
         }
 
         .footer {
