@@ -16,7 +16,10 @@ if (preg_match('/^\/image\/(.+)\/?$/', $request, $matches)) {
 
     // Check if the file exists in the image folder
     if (file_exists($file_path)) {
-        include $file_path;
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        header('Content-Type: image/' . $ext);
+        header('Content-Disposition: inline; filename="' . basename($file_path) . '"');
+        readfile($file_path);
         exit;
     } else {
         // If the image file does not exist, return a 404 error
@@ -33,7 +36,9 @@ if (preg_match('/^\/js\/(.+)\/?$/', $request, $matches)) {
 
     // Check if the file exists in the js folder
     if (file_exists($file_path)) {
-        include $file_path;
+        header('Content-Type: application/javascript');
+        header('Content-Disposition: inline; filename="' . basename($file_path) . '"');
+        readfile($file_path);
         exit;
     } else {
         // If the js file does not exist, return a 404 error
