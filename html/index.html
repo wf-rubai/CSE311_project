@@ -4,135 +4,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advising Assistent</title>
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <title>Advising Assistant</title>
     <style>
-        body {
-            font-family: arial;
+        /* Reset */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .content-1 {
-            background: #ffcf90;
-            padding: 15px;
+        body {
+            font-family: Arial, sans-serif;
+            /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
+            background-image: linear-gradient(to right, rgb(31, 0, 51), rgb(9, 0, 15), rgb(9, 0, 15), rgb(31, 0, 51));
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            /* max-width: 1200px;
+            margin: 0 auto; */
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
             display: flex;
             justify-content: flex-end;
+            /* padding: 20px; */
+            /* height: 5vh; */
+            padding-top: 20px;
         }
 
-        .content-1 button {
-            margin: 0px 0px 0px 7px;
-            padding: 5px;
-            width: 70px;
-            border-radius: 100px;
-            background: none;
+        .header button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 2px solid;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.4s;
         }
 
         .log-btn {
-            border: 1.5px solid #3F51B5;
-            color: #3F51B5;
-            transition: .5s;
+            border-color: #3F51B5;
+            background: none;
         }
 
         .sign-btn {
-            border: 1.5px solid #FF9800;
-            color: #FF9800;
-            transition: .5s;
+            border-color: #FF9800;
+            background: none;
         }
 
         .log-btn:hover {
-            border: 1.5px solid #3F51B5;
-            background: #3F51B5;
-            color: #ffffff;
-            transition: .5s;
+            background-color: #3F51B5;
         }
 
         .sign-btn:hover {
-            border: 1.5px solid #FF9800;
-            background: #FF9800;
-            color: #ffffff;
-            transition: .5s;
+            background-color: #FF9800;
         }
 
-        .content-2 {
-            background: antiquewhite;
-            padding: 30px;
+        /* Main Content */
+        .main-content {
             text-align: center;
-            font-size: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            /* Keep the height constant */
-            overflow: hidden;
+            padding: 0 20px 50px 20px;
+            animation: fadeIn 1.5s ease-out;
         }
 
-        .content-2 h1 {
+        .main-content h1 {
+            font-size: 9rem;
+            /* background: -webkit-linear-gradient(45deg, #3F51B5, #FF9800); */
+            /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+            background-image: url('https://plus.unsplash.com/premium_photo-1672201106204-58e9af7a2888?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3JhZGllbnQlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww');
+            background-size: 400% 400%;
+            animation: gradient 15s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 0;
-            transition: all 1s ease;
-            /* Smooth transition for animation */
+            padding: 0;
         }
 
-        /* @keyframes animateText {
+        @keyframes gradient {
             0% {
-                transform: translateX(0);
-                font-size: 50px;
-                text-align: center;
+                background-position: 100% 0%;
+            }
+
+            25% {
+                background-position: 0% 100%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            75% {
+                background-position: 0% 0%;
             }
 
             100% {
-                transform: translateX(-100%);
-                font-size: 30px;
-                text-align: left;
+                background-position: 100% 0%;
             }
         }
 
-        .content-2.animated h1 {
-            animation: animateText 2s ease forwards;
-        } */
-
-        .content-2.animated {
-            justify-content: flex-start;
+        .description {
+            font-size: 1.25rem;
+            margin: 20px 0;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        /* Animation delay */
-        /* @keyframes delayAnimation {
+        .hero {
+            height: 100vh;
+            /* display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; */
+            /* animation: hero_animation cubic-bezier(0,-1.54, 0, 0.99) forwards;
+            animation-timeline: view(y 0% 100%); */
+            /* animation-range-start: entry 110%; */
+            /* position: relative; */
+            /* top: 0; */
+        }
+        
+        @keyframes hero_animation {
             0% {
+                height: 100vh;
+                /* scale: 1; */
+            }
+            
+            /* 70%, */
+            100% {
+                height: 30vh;
+                /* scale: .5; */
+                /* position: relative; */
+                /* justify-content: flex-end; */
+            }
+        }
+        
+        .hero_title {
+            position: sticky;
+            top: 50%;
+            transform: translate(0, -50%);
+            /* animation: hero_title_animation cubic-bezier(0,-1.54, 0, 0.99) forwards; */
+            animation: hero_title_animation ease-out forwards;
+            animation-timeline: view(y 50% 100%);
+        }
+        
+        @keyframes hero_title_animation {
+            0% {
+                /* height: 100vh; */
+                scale: 1; 
+                /* font-size: 9rem; */
+                top: 50%;
+                /* transform: translate(0, -50%); */
+            }
+
+            50%{
+                scale: .5;
+            }
+            
+            /* 75%, */
+            100% {
+                /* height: 50vh; */
+                scale: .5;
+                /* font-size: 3rem; */
+                /* top: 100%; */
+                /* top: 50%; */
+                /* position: relative; */
+                /* justify-content: flex-end; */
+            }
+        }
+
+        /* Screenshot Section */
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .screenshot-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .screenshot {
+            width: 30%;
+            height: max-content;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+
+        .description-text {
+            max-width: 50%;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #cccccc;
+        }
+
+        /* Alternate Screenshot Layout */
+        .screenshot-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+            background-color: #111;
+            color: #777;
+        }
+
+        /* Animations */
+        /* @keyframes fadeIn {
+            from {
                 opacity: 0;
+                transform: translateY(10px);
             }
 
-            100% {
+            to {
                 opacity: 1;
+                transform: translateY(0);
             }
-        }
-
-        body {
-            animation: delayAnimation 1s ease 1s forwards;
         } */
     </style>
 </head>
 
 <body>
     <div class="container">
-        <form action="../php/process.php" method="POST">
-            <div class="content-1">
-                <button type="button" class="log-btn" onclick="location.href = 'login.html';">Login</button>
-                <button type="button" class="sign-btn" onclick="location.href = 'signup.html';">Sign up</button>
-            </div>
-            <div class="content-2">
-                <h1>ADVISING</h1>
-                <h1>ASSISTENT</h1>
-            </div>
-        </form>
-    </div>
 
-    <script src="../js/script.js"></script>
-    <script>
-        // window.addEventListener("load", function () {
-        //     setTimeout(function () {
-        //         document.querySelector('.content-2').classList.add('animated');
-        //     }, 2000); // 2 seconds delay after page refresh
-        // });
-    </script>
+        <div class="main-content">
+            <div class="hero">
+                <header class="header">
+                    <button type="button" class="log-btn" onclick="location.href = 'login.html';">Login</button>
+                    <button type="button" class="sign-btn" onclick="location.href = 'signup.html';">Sign up</button>
+                </header>
+                <div class="hero_title">
+                    <h1>Advising Assistant</h1>
+                    <p class="description">
+                        Welcome to the Advising Assistant! Plan your academic journey effortlessly by generating
+                        personalized schedules based on your chosen courses, class days, and seat availability. Track your
+                        progress, manage your profile, and explore faculty reviews all in one place.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Screenshot Section -->
+            <div class="image-container">
+                <h2 style="font-size: 35px;">How Will it Help</h2>
+                <div class="screenshot-section">
+                    <div class="screenshot"><img style="width: 100%;" src="../image/profile_ss.png" alt=""></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+
+                <div class="screenshot-section">
+                    <div class="screenshot"><img style="width: 100%;" src="../image/profile_ss.png" alt=""></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+
+                <div class="screenshot-section">
+                    <div class="screenshot"><img style="width: 100%;" src="../image/profile_ss.png" alt=""></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+
+                <div class="screenshot-section">
+                    <div class="screenshot"><img style="width: 100%;" src="../image/profile_ss.png" alt=""></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            &copy; 2024 Advising Assistant. All Rights Reserved.
+        </footer>
+    </div>
 </body>
 
 </html>
