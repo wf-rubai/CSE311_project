@@ -2,3 +2,4 @@
 *.log
 *.sqlite
 *data_rds2
+config.json
