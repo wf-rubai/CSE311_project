@@ -29,6 +29,25 @@ if (preg_match('/^\/image\/(.+)\/?$/', $request, $matches)) {
     }
 }
 
+// Check if the request is for an image in the "image" folder
+if (preg_match('/^\/css\/(.+)\/?$/', $request, $matches)) {
+    $filename = $matches[1];
+    $file_path = __DIR__ . "/css/" . $filename;
+
+    // Check if the file exists in the image folder
+    if (file_exists($file_path)) {
+        header('Content-Type: text/css');
+        header('Content-Disposition: inline; filename="' . basename($file_path) . '"');
+        readfile($file_path);
+        exit;
+    } else {
+        // If the image file does not exist, return a 404 error
+        http_response_code(404);
+        echo "404 Not Found";
+        exit;
+    }
+}
+
 // Check if the request is for an js in the "js" folder
 if (preg_match('/^\/js\/(.+)\/?$/', $request, $matches)) {
     $filename = $matches[1];
