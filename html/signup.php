@@ -1,9 +1,22 @@
+<?php
+    require "php/signupFunction.php";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        header('Content-Type: application/json');
+        $response = signup($_POST['nsu_id'], $_POST['email'], $_POST['password'], $_POST['confirmPassword']);
+        echo json_encode(['message' => $response]);
+
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign-Up Page</title>
+
     <style>
         * {
             margin: 0;
@@ -103,7 +116,7 @@
 </head>
 <body>
     <div class="signup-container container">
-        <form id="signupForm" class="signup-form">
+        <form id="signupForm" class="signup-form" method="POST">
             <h2>Sign Up</h2>
             <div class="input-group">
                 <label for="nsu_id">NSU ID</label>
@@ -121,7 +134,7 @@
                 <label for="confirmPassword"><i>Confirm Password</i></label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
-            <button type="submit" class="signup-btn">Sign Up</button>
+            <button type="submit" name="signup" class="signup-btn">Sign Up</button>
             <p class="login-link">Already have an account? <a href="/login">Login here</a></p>
             <p class="error-message" id="errorMessage"></p>
             <p class="success-message" id="successMessage"></p>
@@ -139,6 +152,7 @@
             successMessage.textContent = '';
 
             // Get form values
+            const form = document.getElementById('signupForm');
             const username = document.getElementById('nsu_id').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -155,14 +169,37 @@
                 return;
             }
 
-            // Simulate form submission (replace with actual server-side sign-up logic)
-            alert('Sign-up successful!');
-            successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
+            // Send AJAX POST request using fetch
+            fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded', // Set header for URL encoded data
+                },
+                body: new URLSearchParams(new FormData(form)) // Send serialized form data
+            })
+            .then(response => response.json()) // Parse the JSON response
+            .then(data => {
+                if (data.message) {
+                    if(data.message != "success") {
+                        errorMessage.textContent = data.message; // Display success message
+                    }
+                    else {
+                        successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
+                
+                        // Simulate redirect to login page
+                        setTimeout(function() {
+                            window.location.href = '/login'; // Replace with actual login page
+                        }, 2000);
+                    }
+                } else {
+                    errorMessage.textContent = "An error occurred. Please try again."; // Display error message
+                }
+            })
+            .catch(error => {
+                errorMessage.textContent = "There was an error processing the form.";
+                console.error("Fetch Error:", error); // Log fetch error details
+            });
             
-            // Simulate redirect to login page
-            setTimeout(function() {
-                window.location.href = '/login'; // Replace with actual login page
-            }, 2000);
         });
     </script>
 </body>

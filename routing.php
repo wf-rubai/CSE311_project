@@ -1,5 +1,7 @@
 <?php
 
+include 'php/connection.php';
+
 // Load the routes configuration
 $routes = include 'routes.php';
 
