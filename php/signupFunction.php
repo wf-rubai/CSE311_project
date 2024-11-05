@@ -5,7 +5,7 @@ function signup($nsu_id, $email, $password, $confirm_password) {
     $mysqli = connect();
 
     if(strlen($nsu_id) > 7) {
-        return "NSU ID must be 10 characters long";
+        return "NSU ID must be 7 characters long";
     }
 
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
