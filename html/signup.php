@@ -113,6 +113,9 @@
             color: green;
         }
     </style>
+
+    <script src="/js/common.js"></script>
+
 </head>
 <body>
     <div class="signup-container container">
@@ -152,7 +155,6 @@
             successMessage.textContent = '';
 
             // Get form values
-            const form = document.getElementById('signupForm');
             const username = document.getElementById('nsu_id').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -169,37 +171,18 @@
                 return;
             }
 
-            // Send AJAX POST request using fetch
-            fetch('/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded', // Set header for URL encoded data
-                },
-                body: new URLSearchParams(new FormData(form)) // Send serialized form data
-            })
-            .then(response => response.json()) // Parse the JSON response
-            .then(data => {
-                if (data.message) {
-                    if(data.message != "success") {
-                        errorMessage.textContent = data.message; // Display success message
-                    }
-                    else {
-                        successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
-                
-                        // Simulate redirect to login page
-                        setTimeout(function() {
-                            window.location.href = '/login'; // Replace with actual login page
-                        }, 2000);
-                    }
-                } else {
-                    errorMessage.textContent = "An error occurred. Please try again."; // Display error message
+            sendPostRequest('/signup', this).then(response => {               
+                if(response != 'success') {
+                    errorMessage.textContent = response; // Display error message
                 }
-            })
-            .catch(error => {
-                errorMessage.textContent = "There was an error processing the form.";
-                console.error("Fetch Error:", error); // Log fetch error details
-            });
+                else {
+                    successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
             
+                    setTimeout(function() {
+                        window.location.href = '/login';
+                    }, 2000);
+                }
+            });
         });
     </script>
 </body>
