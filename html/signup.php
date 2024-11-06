@@ -2,9 +2,12 @@
     require "php/signupFunction.php";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        header('Content-Type: application/json');
-        $response = signup($_POST['nsu_id'], $_POST['email'], $_POST['password'], $_POST['confirmPassword']);
-        echo json_encode(['message' => $response]);
+        
+        if(isset($_POST['signup'])) {
+            header('Content-Type: application/json');
+            $response = signup($_POST['nsu_id'], $_POST['email'], $_POST['password'], $_POST['confirmPassword']);
+            echo json_encode(['message' => $response]);
+        }
 
         exit;
     }
@@ -171,9 +174,9 @@
                 return;
             }
 
-            sendPostRequest('/signup', this).then(response => {               
-                if(response != 'success') {
-                    errorMessage.textContent = response; // Display error message
+            sendPostRequest('/signup', this, 'signup').then(response => {
+                if(response.message != 'success') {
+                    errorMessage.textContent = response.message; // Display error message
                 }
                 else {
                     successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
