@@ -6,7 +6,7 @@ window.addEventListener('message', function(event) {
 });
 
 /**
- * Returns the response data.
+ * Returns the response data or if a redirect url is given in response then it redirects to that url
  * @param url String that specifies the url endpoint.
  * @param form The form to get the values from.
  * @param action [Optional] to set the actiontype of the api call.
@@ -30,7 +30,12 @@ async function sendPostRequest(url, form, action=null) {
 
         // Return the message or an error message
         if (data) {
-            return data;
+            if(data.redirectUrl) {
+                window.location.href=data.redirectUrl;
+            }
+            else {
+                return data;
+            }
         } else {
             return "An error occurred. Please try again."; // Display error message
         }

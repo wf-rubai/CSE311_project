@@ -6,7 +6,12 @@
         if(isset($_POST['login'])) {
             header('Content-Type: application/json');
             $response = login($_POST['nsu_id'], $_POST['password']);
-            echo json_encode(['message' => $response]);
+            if ($response != 'success') {
+                echo json_encode(['message' => $response]);
+            }
+            else {
+                echo json_encode(['redirectUrl' => '/profile']);
+            }
         }
 
         exit;
@@ -147,9 +152,6 @@
             sendPostRequest('/login', this, 'login').then(response => {
                 if(response.message != 'success') {
                     errorMessage.textContent = response.message; // Display error message
-                }
-                else {
-                    window.location.href = '/profile';
                 }
             });
         });
