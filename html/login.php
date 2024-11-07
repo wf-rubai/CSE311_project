@@ -1,3 +1,18 @@
+<?php
+    require "php/loginFunction.php";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        if(isset($_POST['login'])) {
+            header('Content-Type: application/json');
+            $response = login($_POST['nsu_id'], $_POST['password']);
+            echo json_encode(['message' => $response]);
+        }
+
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,14 +104,16 @@
             margin-top: 1rem;
         }
     </style>
+
+    <script src="/js/common.js"></script>
 </head>
 <body>
     <div class="login-container container">
         <form id="loginForm" class="login-form">
             <h2>Login</h2>
             <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <label for="nsu_id">NSU ID</label>
+                <input type="text" id="nsu_id" name="nsu_id" required>
             </div>
             <div class="input-group">
                 <i>  <label for="password">Password</label>
@@ -118,7 +135,7 @@
             errorMessage.textContent = '';
 
             // Get form values
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('nsu_id').value;
             const password = document.getElementById('password').value;
 
             // Basic validation
@@ -127,13 +144,14 @@
                 return;
             }
 
-            // Simulate form submission (replace with actual server-side login logic)
-            if (username === 'admin' && password === 'password123') {
-                alert('Login successful!');
-                window.location.href = 'dashboard.php'; // Replace with actual redirection
-            } else {
-                errorMessage.textContent = 'Invalid username or password!';
-            }
+            sendPostRequest('/login', this, 'login').then(response => {
+                if(response.message != 'success') {
+                    errorMessage.textContent = response.message; // Display error message
+                }
+                else {
+                    window.location.href = '/profile';
+                }
+            });
         });
     </script>
 </body>

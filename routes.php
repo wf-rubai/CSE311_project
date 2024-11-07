@@ -4,7 +4,7 @@ return [
     '/' => 'html/index.html',
     '/template/side_bar.html' => 'html/template/side_bar.html',
     '/template/nav_bar.html' => 'html/template/nav_bar.html',
-    '/login' => 'html/login.html',
+    '/login' => 'html/login.php',
     '/signup' => 'html/signup.php',
     '/profile' => 'html/profile.html',
     '/routine' => 'html/routine.html',
