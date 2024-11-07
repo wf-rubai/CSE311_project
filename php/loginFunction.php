@@ -9,8 +9,8 @@ function login($nsu_id, $password) {
         return "Both fields are required";
     }
 
-    $nsu_id = htmlspecialchars($nsu_id);
-    $password = htmlspecialchars($password);
+    // $nsu_id = htmlspecialchars($nsu_id);
+    // $password = htmlspecialchars($password);
 
     $sql = "SELECT nsu_id, passkey FROM register_users WHERE nsu_id = ?";
     $stmt = $mysqli->prepare($sql);
