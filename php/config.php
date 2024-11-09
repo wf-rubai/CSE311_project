@@ -1,9 +1,9 @@
 <?php 
     
     session_start();
-    define('SERVER', 'localhost');
+    define('SERVER', '127.0.0.1');
     define('USERNAME', 'root');
     define('PASSWORD', '');
-    define('DATABASE', 'CSE311_proj');
+    define('DATABASE', '311_Project_database');
     
 ?>

@@ -4,6 +4,7 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if(isset($_POST['login'])) {
+            echo $_POST;
             header('Content-Type: application/json');
             $response = login($_POST['nsu_id'], $_POST['password']);
             if ($response != 'success') {

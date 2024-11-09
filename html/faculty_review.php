@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="../js/common.js"></script>
     <title>Document</title>
     <style>
@@ -15,231 +15,395 @@
         }
 
         .container {
+            background-color: #ffffff;
+            /* background-image: url('https://i0.wp.com/backgroundabstract.com/wp-content/uploads/edd/2021/09/gradient-blue-pink-abstract-art-wallpaper-preview-e1656162284223.jpg?fit=728%2C410&ssl=1');
+            background-repeat: no-repeat;
+            background-size: cover; */
+            /* background-image: linear-gradient(to right, #1f0033, #09000f); */
             height: calc(100vh - 60px);
             display: flex;
         }
 
         .main_body {
-            background: #9595ff;
+            /* background: #0000001f; */
+            /* background-image: linear-gradient(136deg, #cc00ac, #6a00af, #0036af); */
+            background: linear-gradient(to right, #32334d, #5a3e49);
             width: -webkit-fill-available;
             border-radius: 10px;
             margin: 10px;
+            overflow-y: hidden;
+            backdrop-filter: blur(15px);
+            /* border: 2px solid #ffffff80; */
+        }
+
+        .bg_img {
+            position: absolute;
+            opacity: .1;
+            min-width: 100%;
+            z-index: -1;
         }
     </style>
-
+    <!-- search box css -->
     <style>
-        .review-container {
-            max-width: 800px;
-            margin: 20px auto;
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            padding: 8px;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #b8b8b8;
-            background-color: #ffffff69;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-        }
-
-        td .star-rating {
-            width: auto;
-            justify-content: center;
-        }
-
-        th {
-            background-color: #333;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        td button {
-            background: linear-gradient(to right, #9428ff, #6a6aff, #00BCD4);
-            background-size: 200% 100%;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: 0.5s;
-        }
-
-        td button:hover {
-            background-position: 100% 0;
-        }
-
-        img {
-            max-width: 50%;
-            height: auto; 
-        }
-
-        
-        .star-rating {
+        .search_field {
             display: flex;
-            justify-content: start;
-            margin-bottom: 10px;
-            color: #FFD700;
-            width: fit-content;
+            justify-content: center;
+            margin: 20px;
         }
 
-        .star-rating span {
-            font-size: 24px;
-            color: #ccc;
+        .search_field input {
+            width: 43%;
+            padding: 5px;
+            border: 1.5px solid #ffffff80;
+            border-radius: 5px;
+            background-color: #ffffff90;
+        }
+
+        #courseList {
+            display: none;
+            border: 1.5px solid #b8b8b8;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            background-color: #4f4f4fa8;
+            z-index: 10;
+            padding: 5px;
+            border-radius: 5px;
+            transition: .5s;
+            backdrop-filter: blur(30px);
+            color: white;
+        }
+
+        .dropdown-item {
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-item:hover {
+            background-color: #518eff;
+            border-radius: 5px;
+        }
+    </style>
+    <!-- scroll feed css -->
+    <style>
+        .scroll_feed {
+            height: calc(100% - 67.5px);
+            margin: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .review_block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            width: 50%;
+        }
+
+        .main_rev {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            width: -webkit-fill-available;
+            background: #ffffff36;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ffffff80;
+        }
+
+        .fac_profile {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .fac_profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .fac_profile h3 {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .rev_bars {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .rev {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 50%;
+        }
+
+        .rev h4 {
+            font-size: 14px;
+            color: #ffffff;
+            margin: 5px 0;
+        }
+
+        .rev input[type="range"] {
+            width: 100%;
+            height: 8px;
+            margin: 0;
+            background: linear-gradient(to right, #ff9800, #ff9800) no-repeat;
+            background-size: 50% 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 4px;
+            background-color: #aaa;
+        }
+
+        .rev input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 0;
+            width: 0;
+            background: #ff9800;
+            cursor: pointer;
+        }
+
+        .rev input[type="range"]::-moz-range-thumb {
+            height: 0;
+            width: 0;
+            background: #ff9800;
+            cursor: pointer;
+        }
+
+        .rev_opt {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .rev_opt div {
+            display: flex;
+            font-size: 20px;
+            color: #ffffff;
             cursor: pointer;
             transition: color 0.3s;
+            height: 30%;
+            aspect-ratio: 1;
+            background: #ffffff36;
+            margin-left: 10px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid #ffffff80;
+            transition: .3s;
         }
 
-        .star-rating span.active {
-            color: #FFD700;
+        .rev_opt div:hover {
+            box-shadow: 0 0 10px 0 #fff;
         }
-
-        .star-rating:hover span {
-            color: #FFD700;
-        }
-
-        .star-rating span:hover~span {
-            color: #ccc;
-        }
-
+    </style>
+    <!-- comment modal css -->
+    <style>
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1060;
         }
 
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            color: #ff5d5d;
+        .modal_content {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            color: #fff;
+            overflow-y: auto;
+            max-height: 80vh;
         }
 
-        /* button {
-            background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
-            background-size: 200% 100%;
-            animation: reverseHoverAnimation 0.5s ease forwards;
-        }
-
-        button:hover {
-            animation: hoverAnimation 0.5s ease forwards;
-        } */
-
-        .modal-content-fr {
-            background: linear-gradient(to right, #ffffff, #f3f4ff);
-            /* margin: 10% auto; */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px 20px;
-            width: 60%;
-            position: absolute;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(58, 57, 57, 0.3);
-            color: #333;
-            height: fit-content;
-            /* overflow-y: auto; */
-        }
-
-        .modal-content-fr h2 {
+        .modal_content h2 {
             margin-top: 0;
-            color: #333;
-            font-size: 24px;
-            text-align: center;
-            border-bottom: 2px solid #6a6aff;
-            padding-bottom: 10px;
+            color: #ff9800;
         }
 
-        .modal-content-fr p {
-            color: #666;
+        .comments_section {
+            margin-top: 15px;
         }
 
-        .modal-content-fr label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
+        .comment {
+            padding: 15px;
+            background: #444;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
-        textarea {
+        .comment_header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .profile_pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment_info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .comment_date {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .comment_text {
+            margin: 10px 0;
+            color: #ddd;
+        }
+
+        /* Review styling for comments */
+        .reviews {
+            display: flex;
+            gap: 15px;
+        }
+
+        .reviews .rev {
             width: 100%;
-            border-radius: 5px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background: #ffffff69;
+        }
+
+        .reviews .rev h4 {
+            font-size: 14px;
+            color: #ff9800;
+            margin-bottom: 5px;
+        }
+
+        .reviews .rev input[type="range"] {
+            width: 100%;
+            height: 8px;
+            margin: 0;
+            background: linear-gradient(to right, #ff9800, #ff9800) no-repeat;
+            background-size: 50% 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 4px;
+            background-color: #aaa;
+        }
+
+        .reviews .rev input[type="range"]::-webkit-slider-thumb,
+        .reviews .rev input[type="range"]::-moz-range-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 0;
+            width: 0;
+            background: #ff9800;
+            cursor: pointer;
+        }
+    </style>
+    <!-- review modal css -->
+    <style>
+        .modal_review {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1060;
+        }
+
+        .modal_content {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            color: #fff;
+        }
+
+        .modal_content h2 {
+            color: #ff9800;
+            margin-top: 0;
+        }
+
+        .anonymous_check {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .anonymous_check input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .review_section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rev_to_give {
+            width: 50%;
+        }
+
+        .rev_to_give h4 {
+            color: #ff9800;
+            margin: 5px 0;
             font-size: 14px;
         }
 
-        .sumbit_btn {
-            background: linear-gradient(to right, #ff2e00, #ff8d00, #ffd200);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 10px;
+        .rev_to_give input[type="range"] {
+            appearance: none;
+            accent-color: #ff9800;
             width: 100%;
-            margin-top: 20px;
-            transition: 0.5s;
+            height: 8px;
+            margin: 0;
+            background: #4c4c4c;
+            border-radius: 4px;
         }
 
-        .sumbit_btn {
-            background-position: 100% 0;
+        .modal_buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .close {
-            color: #ff5d5d;
-            font-size: 25px;
-            position: absolute;
-            right: 15px;
-            top: 15px;
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
 
-        .close:hover {
-            color: #ff2e00;
+        #cancel_button {
+            background-color: #555;
+            color: #fff;
         }
 
-        @keyframes reverseHoverAnimation {
-            0% {
-                background-position: 100% 0;
-            }
-
-            100% {
-                background-position: 0 0;
-            }
-        }
-
-        @keyframes hoverAnimation {
-            0% {
-                background-position: 0 0;
-            }
-
-            100% {
-                background-position: 100% 0;
-            }
+        #submit_button {
+            background-color: #ff9800;
+            color: #fff;
         }
     </style>
 </head>
@@ -255,173 +419,478 @@
 
         <!-- all main content here -->
         <div class="main_body">
-            <div class="review-container">
-                <h1>Faculty Reviews</h1>
-                <input type="text" id="searchBar" placeholder="Search by name or initials..." onkeyup="searchFaculty()">
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Faculty Name</th>
-                            <th>Initials</th>
-                            <th>Overall Rating</th>
-                            <th>Review!</th>
-                        </tr>
-                    </thead>
-                    <tbody id="facultyTable">
-                        <tr>
-                            <td><button onclick="openFacultyModal('John Doe', 'JD', ' https://e7.pngegg.com/pngimages/653/612/png-clipart-lorem-ipsum-john-doe-digital-marketing-tincidunt-a-place-i-called-home-face-head-man-miscellaneous-hand.png', ['Math 101', 'CS 201'])">John Doe</button></td>
-                            <td>JD</td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                        <tr>
-                            <td><button onclick="openFacultyModal('Professor Quirky', 'PQ', 'https://dreamlightvalleywiki.com/images/6/6f/Donald_Duck.png', ['History of Jellybeans', 'Quantum Sandwiches'])">Professor Quirky</button></td>
-                            <td>PQ</td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                        <tr>
-                            <td><button onclick="openFacultyModal('Dr. Fizzlebottom', 'FB', 'https://i1.sndcdn.com/avatars-ZkoiXGmhy64htgxE-ow17lw-t500x500.jpg', ['Advanced Nonsense', 'Bubble Physics'])">Dr. Fizzlebottom</button></td>
-                            <td>FB</td>
-                            <td><span class="star-rating">★★★☆☆</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                        <tr>
-                            <td><button onclick="openFacultyModal('Ms. Gigglepants', 'GP', 'https://example.com/giggle_image.jpg', ['Laughology 101', 'Comedy Chemistry'])">Ms. Gigglepants</button></td>
-                            <td>GP</td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                        <tr>
-                            <td><button onclick="openFacultyModal('Captain Cucumber', 'CC', 'https://example.com/cucumber_image.jpg', ['Vegetable Studies', 'Salsa Dancing'])">Captain Cucumber</button></td>
-                            <td>CC</td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                        <tr>
-                            <td><button onclick="openFacultyModal('Duke of Donuts', 'DD', 'https://example.com/donut_image.jpg', ['Pastry Physics', 'Doughnut Dynamics'])">Duke of Donuts</button></td>
-                            <td>DD</td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><button onclick="openReviewModal()">Make Review</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Review Modal -->
-            <div id="reviewModal" class="modal">
-                <div class="modal-content-fr">
-                    <span class="close" onclick="closeReviewModal()">&times;</span>
-                    <h2>Write a Review</h2>
-                    <form>
-                        <label for="reviewText">Review:</label>
-                        <!-- <textarea id="reviewText" rows="4"></textarea> -->
-                        <?php
-                        echo file_get_contents("html/template/WFR_editor.html");
-                        ?>
-
-                        <label>Learning:</label>
-                        <div class="star-rating" id="learningRating">
-                            <span onclick="setRating('learningRating', 1)">★</span>
-                            <span onclick="setRating('learningRating', 2)">★</span>
-                            <span onclick="setRating('learningRating', 3)">★</span>
-                            <span onclick="setRating('learningRating', 4)">★</span>
-                            <span onclick="setRating('learningRating', 5)">★</span>
-                        </div>
-
-                        <label>Grading:</label>
-                        <div class="star-rating" id="gradingRating">
-                            <span onclick="setRating('gradingRating', 1)">★</span>
-                            <span onclick="setRating('gradingRating', 2)">★</span>
-                            <span onclick="setRating('gradingRating', 3)">★</span>
-                            <span onclick="setRating('gradingRating', 4)">★</span>
-                            <span onclick="setRating('gradingRating', 5)">★</span>
-                        </div>
-
-                        <button class="sumbit_btn" type="submit">Submit</button>
-                    </form>
+            <img class="bg_img" src="../image/Slide1.jpg" alt="">
+            <div class="search_field">
+                <div style="width: 300px; position: relative;">
+                    <input style="width: 312px;" type="search" id="search_box_course" placeholder="Search faculty"
+                        onfocus="filterList()" required>
+                    <div id="courseList" class="dropdown-list"></div>
                 </div>
             </div>
 
-            <!-- Faculty Modal -->
-            <div id="facultyModal" class="modal">
-                <div class="modal-content-fr">
-                    <span class="close" onclick="closeFacultyModal()">&times;</span>
-                    <h2 id="facultyName">Faculty Name</h2>
-                    <img id="facultyImage" src="#" alt="Faculty Image" loading="lazy"/>
-                    <p><strong>Initials:</strong> <span id="facultyInitials"></span></p>
-                    <p><strong>Courses:</strong> <span id="facultyCourses"></span></p>
-                    <h3>Ratings</h3>
-                    <div id="facultyRatings">
-                        <p>Learning: ★★★★☆</p>
-                        <p>Grading: ★★★☆☆</p>
+            <div class="scroll_feed">
+
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
                     </div>
-                    <h3>Reviews</h3>
-                    <div id="facultyReviews">
-                        <p>No reviews yet.</p>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="review_block">
+                    <div class="main_rev">
+                        <div class="fac_profile">
+                            <img src="../image/no_profile_pic.jpg" alt="">
+                            <h3>Faculty Initial (FIn)</h3>
+                        </div>
+                        <div class="rev_bars">
+                            <div class="rev">
+                                <h4>For Learning</h4>
+                                <input type="range" min="1" max="100" value="0" id="learn_rev">
+                            </div>
+                            <div class="rev">
+                                <h4>For Grading</h4>
+                                <input type="range" min="1" max="100" value="0" id="grade_rev">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rev_opt">
+                        <div class="fac_comment">
+                            <i class="fa-regular fa-message"></i>
+                        </div>
+                        <div class="write_rev">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- comment modal -->
+    <div id="comment_modal" class="modal">
+        <div class="modal_content">
+            <h2>Faculty Reviews</h2>
+            <div class="comments_section">
+
+                <div class="comment">
+                    <div class="comment_header">
+                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
+                        <div class="comment_info">
+                            <h3>John Doe</h3>
+                            <span class="comment_date">2024-11-07 14:30</span>
+                        </div>
+                    </div>
+                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
+                        the course was engaging.</p>
+                    <div class="reviews">
+                        <div class="rev">
+                            <h4>Learning</h4>
+                            <input type="range" value="70">
+                        </div>
+                        <div class="rev">
+                            <h4>Grading</h4>
+                            <input type="range" value="85">
+                        </div>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment_header">
+                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
+                        <div class="comment_info">
+                            <h3>John Doe</h3>
+                            <span class="comment_date">2024-11-07 14:30</span>
+                        </div>
+                    </div>
+                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
+                        the course was engaging.</p>
+                    <div class="reviews">
+                        <div class="rev">
+                            <h4>Learning</h4>
+                            <input type="range" value="70">
+                        </div>
+                        <div class="rev">
+                            <h4>Grading</h4>
+                            <input type="range" value="85">
+                        </div>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment_header">
+                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
+                        <div class="comment_info">
+                            <h3>John Doe</h3>
+                            <span class="comment_date">2024-11-07 14:30</span>
+                        </div>
+                    </div>
+                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
+                        the course was engaging.</p>
+                    <div class="reviews">
+                        <div class="rev">
+                            <h4>Learning</h4>
+                            <input type="range" value="70">
+                        </div>
+                        <div class="rev">
+                            <h4>Grading</h4>
+                            <input type="range" value="85">
+                        </div>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment_header">
+                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
+                        <div class="comment_info">
+                            <h3>John Doe</h3>
+                            <span class="comment_date">2024-11-07 14:30</span>
+                        </div>
+                    </div>
+                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
+                        the course was engaging.</p>
+                    <div class="reviews">
+                        <div class="rev">
+                            <h4>Learning</h4>
+                            <input type="range" value="70">
+                        </div>
+                        <div class="rev">
+                            <h4>Grading</h4>
+                            <input type="range" value="85">
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat .comment div for each comment -->
+            </div>
+        </div>
+    </div>
+
+    <!-- review modal -->
+    <div id="review_modal" class="modal_review">
+        <div class="modal_content">
+            <h2>Write a Review</h2>
+
+            <label class="anonymous_check">
+                <input type="checkbox" id="anonymous" checked>
+                Submit anonymously
+            </label>
+
+            <div class="review_section">
+                <div class="rev_to_give">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h4>For Learning</h4>
+                        <h4 id="learn_rating" style="color: white;">0</h4>
+                    </div>
+                    <input type="range" min="1" max="10" value="0" id="learning_rate">
+                </div>
+                <div class="rev_to_give">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h4>For Grading</h4>
+                        <h4 id="grade_rating" style="color: white;">0</h4>
+                    </div>
+                    <input type="range" min="1" max="10" value="0" id="grading_rate">
+                </div>
+            </div>
+
+            <label for="comment_text">Comment:</label>
+            <?php
+            echo file_get_contents("html/template/WFR_editor.html");
+            ?>
+
+            <div class="modal_buttons">
+                <button id="cancel_button">Cancel</button>
+                <button id="submit_button">Submit</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- search box js -->
     <script>
-        function openReviewModal() {
-            document.getElementById("reviewModal").style.display = "block";
+        const courses = [
+            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
+            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
+            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
+            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
+            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
+        ];
+        const searchBox = document.querySelector(`#search_box_course`);
+        const listContainer = document.querySelector(`#courseList`);
+
+        function filterList() {
+            const filter = searchBox.value.toLowerCase();
+
+            listContainer.style.display = "block";
+            listContainer.innerHTML = "";
+
+            courses
+                .filter(course => course.toLowerCase().includes(filter))
+                .forEach(course => {
+                    const option = document.createElement("div");
+                    option.classList.add("dropdown-item");
+                    option.textContent = course;
+                    option.onclick = () => {
+                        searchBox.value = course;
+                        searchBox.style.color = '#ffffff'
+                        listContainer.innerHTML = "";
+                        listContainer.style.display = "none";
+                    };
+                    listContainer.appendChild(option);
+                });
         }
 
-        function closeReviewModal() {
-            document.getElementById("reviewModal").style.display = "none";
-        }
+        searchBox.addEventListener("focus", filterList);
+        searchBox.addEventListener("input", filterList);
 
-        function openFacultyModal(name, initials, imageUrl, courses) {
-            document.getElementById("facultyName").innerText = name;
-            document.getElementById("facultyInitials").innerText = initials;
-            document.getElementById("facultyImage").src = imageUrl;
-            document.getElementById("facultyCourses").innerText = courses.join(", ");
-            document.getElementById("facultyModal").style.display = "block";
-        }
-
-        function closeFacultyModal() {
-            document.getElementById("facultyModal").style.display = "none";
-        }
-
-        function setRating(id, rating) {
-            const stars = document.getElementById(id).children;
-            for (let i = 0; i < stars.length; i++) {
-                stars[i].classList.remove("active");
+        document.addEventListener("click", (event) => {
+            if (!searchBox.contains(event.target) && !listContainer.contains(event.target)) {
+                listContainer.style.display = "none";
             }
-            for (let i = 0; i < rating; i++) {
-                stars[i].classList.add("active");
-            }
-        }
+        });
+    </script>
 
-        function searchFaculty() {
-            const filter = document.getElementById("searchBar").value.toUpperCase();
-            const rows = document.getElementById("facultyTable").getElementsByTagName("tr");
+    <!-- modal controll js -->
+    <script>
+        // Get modal elements
+        const commentModal = document.getElementById('comment_modal');
+        const facCommentButton = document.querySelector('.fac_comment');
 
-            for (let i = 0; i < rows.length; i++) {
-                const name = rows[i].getElementsByTagName("td")[0];
-                const initials = rows[i].getElementsByTagName("td")[1];
-                if (name || initials) {
-                    const nameText = name.textContent || name.innerText;
-                    const initialsText = initials.textContent || initials.innerText;
-                    rows[i].style.display = (nameText.toUpperCase().indexOf(filter) > -1 || initialsText.toUpperCase().indexOf(filter) > -1) ? "" : "none";
-                }
-            }
-        }
+        // Open modal when facCommentButton is clicked
+        facCommentButton.addEventListener('click', () => {
+            commentModal.style.display = 'flex';
+        });
 
-        window.onclick = function (event) {
-            if (event.target == document.getElementById("reviewModal")) {
-                closeReviewModal();
+        // Close modal when clicking outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === commentModal) {
+                commentModal.style.display = 'none';
             }
-            if (event.target == document.getElementById("facultyModal")) {
-                closeFacultyModal();
-            }
-        }
+        });
 
     </script>
+
+    <script>
+        document.getElementById('grading_rate').addEventListener("input", () => {
+            document.getElementById('grade_rating').textContent = document.getElementById('grading_rate').value;
+            document.getElementById('grading_rate').title = document.getElementById('grading_rate').value;
+        });
+
+        document.getElementById('learning_rate').addEventListener("input", () => {
+            document.getElementById('learn_rating').textContent = document.getElementById('learning_rate').value;
+            document.getElementById('learning_rate').title = document.getElementById('learning_rate').value;
+        });
+
+        // Elements
+        const reviewModal = document.getElementById('review_modal');
+        const revWriteButton = document.querySelector('.write_rev'); // Adjust if needed
+        const cancelButton = document.getElementById('cancel_button');
+        const submitButton = document.getElementById('submit_button');
+
+        // Open modal
+        revWriteButton.addEventListener('click', () => {
+            reviewModal.style.display = 'flex';
+        });
+
+        // Close modal on 'Cancel' button
+        cancelButton.addEventListener('click', () => {
+            reviewModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === reviewModal) {
+                reviewModal.style.display = 'none';
+            }
+        });
+
+        // Handle Submit button click (implement as needed)
+        submitButton.addEventListener('click', () => {
+            const isAnonymous = document.getElementById('anonymous').checked;
+            const learningRating = document.getElementById('learning_rating').value;
+            const gradingRating = document.getElementById('grading_rating').value;
+            const commentText = document.getElementById('comment_text').value;
+
+            // Logic to save the review (e.g., AJAX request)
+            console.log({ isAnonymous, learningRating, gradingRating, commentText });
+
+            // Close modal after submitting
+            reviewModal.style.display = 'none';
+        });
+
+    </script>
+
 </body>
 
 </html>
