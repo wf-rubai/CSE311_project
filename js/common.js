@@ -1,8 +1,21 @@
+// for side bar controll
+let barDisplay = localStorage.getItem('barDisplay') || 'none';
+
 window.addEventListener('message', function(event) {
     if (event.data === 'toggleSidebar') {
         const sidebar = document.getElementById('sidebar');
-        sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+        barDisplay = sidebar.style.display === 'none' ? 'block' : 'none';
+        sidebar.style.display = barDisplay;
+
+        // Save the updated state in localStorage
+        localStorage.setItem('barDisplay', barDisplay);
     }
+});
+
+window.addEventListener('load', function() {
+    const sidebar = document.getElementById('sidebar');
+    barDisplay = sidebar.style.display === 'none' ? 'none' : 'block';
+    sidebar.style.display = barDisplay;
 });
 
 /**
@@ -24,6 +37,8 @@ async function sendPostRequest(url, form, action=null) {
                 'Content-Type': 'application/x-www-form-urlencoded', // Set header for URL encoded data
             },
             body: new URLSearchParams(formData) // Send serialized form data
+        }).then(data => {
+            console.log(data); // Output the response to the browser console
         });
 
         const data = await response.json(); // Parse the JSON response

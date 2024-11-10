@@ -3,9 +3,8 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
+        header('Content-Type: application/json');
         if(isset($_POST['login'])) {
-            echo $_POST;
-            header('Content-Type: application/json');
             $response = login($_POST['nsu_id'], $_POST['password']);
             if ($response != 'success') {
                 echo json_encode(['message' => $response]);
@@ -25,13 +24,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/common.js"></script>
     <title>Login Page</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
         }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
 
         body {
             font-family: Arial, sans-serif;

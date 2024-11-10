@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../js/common.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            height: calc(100vh - 60px);
+            display: flex;
+        }
+
+        .main_body {
+            /* background: #9595ff; */
+            background: linear-gradient(to right, #32334d, #5a3e49);
+            width: -webkit-fill-available;
+            border-radius: 10px;
+            margin: 10px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .bg_img {
+            position: absolute;
+            opacity: .1;
+            min-width: 100%;
+            z-index: -1;
+        }
+
+        .course_selection,
+        .routine_table {
+            height: 50%;
+            /* background: #32334d; */
+            /* border: 2px solid; */
+        }
+    </style>
+    <!-- dropdown search box css -->
+    <style>
+        .search_field {
+            margin: 10px 0 0 0;
+        }
+
+        .search_field input {
+            width: 43%;
+            padding: 5px;
+            border: 1.5px solid #ffffff80;
+            border-radius: 5px;
+            background-color: #ffffff90;
+        }
+
+        #courseList,
+        #sectionList {
+            display: none;
+            border: 1.5px solid #b8b8b8;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            background-color: #4f4f4fa8;
+            z-index: 10;
+            padding: 5px;
+            border-radius: 5px;
+            transition: .5s;
+            backdrop-filter: blur(30px);
+            color: white;
+        }
+
+        #sectionList .dropdown-item {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #518eff;
+            border-radius: 5px;
+        }
+    </style>
+    <!-- course_selection css -->
+    <style>
+        .course_selection {
+            padding: 20px;
+            color: white;
+        }
+
+        .input_div {
+            margin: 20px 0 0 0;
+        }
+
+        .select_courss_info button {
+            margin: 20px 0 0 0;
+            padding: 5px;
+            width: 75px;
+            background: 0;
+            border: 1.5px solid #fff;
+            border-radius: 5px;
+            color: white;
+            transition: .5s;
+        }
+
+        .select_courss_info button:hover {
+            box-shadow: 0 0 10px 2px #fff;
+        }
+
+        .course_tab table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .course_tab th,
+        .course_tab td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .course_tab th {
+            background-color: #33333340;
+            color: #ffffff;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .course_tab td {
+            background-color: #ffffff40;
+            color: #000000;
+            border-top: .5px solid #5f5f5f;
+        }
+
+        .course_tab tr:hover td {
+            background-color: #e8e8e880;
+        }
+
+        .course_tab {
+            width: -webkit-fill-available;
+            height: fit-content;
+            max-height: 280px;
+            border-radius: 10px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #33333380;
+            margin: 20px 0 0 0;
+        }
+
+        .course_tab table tbody tr td button {
+            font-size: 20px;
+            color: #ffb4b4;
+            transition: .2s;
+            background: 0;
+            border: none;
+            width: 100%;
+        }
+
+        .course_tab table tbody tr td button:hover {
+            color: #ff0000f0;
+        }
+    </style>
+    <!-- routine_table css -->
+    <style>
+        .routine_table {
+            display: flex;
+            justify-content: center;
+        }
+
+        .routine table {
+            /* width: 100%; */
+            border-collapse: separate;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            border-spacing: 2.5px;
+            /* display: none; */
+        }
+
+        .routine th,
+        .routine td {
+            padding: 10px;
+            /* border: 1px solid #ddd; */
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .routine th {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .routine th:first-child {
+            background-color: #555;
+            font-weight: bold;
+            width: fit-content;
+            /* display: none; */
+        }
+
+        .routine td {
+            background-color: #f9f9f9;
+            width: 100px;
+        }
+
+        .tab_swap_controll {
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .tab_swap_controll button {
+            margin: 0 5px;
+            border: 0;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            font-size: 15px;
+            align-items: center;
+            background: 0;
+            color: white;
+            /* transition: .5s; */
+            cursor: pointer;
+        }
+
+        .tab_swap_controll button i:hover {
+            /* background: #ffffff6e; */
+            text-shadow: 0 0 10px #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- navigation bar -->
+    <iframe src="template/nav_bar.html" style="border: none; width: 100%; height: 60px; display: block;"></iframe>
+
+    <div class="container">
+        <!-- side bar -->
+        <iframe src="template/side_bar.html" class="side_bar" id="sidebar"
+            style="border: none; width: 250px; margin: 10px 0 10px 10px; display: none;"></iframe>
+
+        <!-- all main content here -->
+        <div class="main_body">
+            <img class="bg_img" src="../image/Slide1.jpg" alt="">
+            <div class="course_selection">
+                <h3 style="text-align: center; margin-top: 0;">Create Routine</h3>
+                <div style="display: flex; gap: 20px; height: -webkit-fill-available;">
+                    <div class="select_courss_info">
+                        <div class="input_div">
+                            <label for="search_box_course">Choose Course</label>
+                            <div class="search_field">
+                                <div style="width: 300px; position: relative;">
+                                    <input style="width: 100%;" type="search" id="search_box_course"
+                                        placeholder="Course title" onfocus="filterList()" required>
+                                    <div id="courseList" class="dropdown-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input_div">
+                            <label for="course_title">Choose Section or Time</label>
+                            <div class="search_field">
+                                <div style="width: 300px; position: relative;">
+                                    <input style="width: 100%;" type="search" id="search_box_section"
+                                        placeholder="Section and time" onfocus="filterSectionList()" required>
+                                    <div id="sectionList" class="dropdown-list-section dropdown-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="addButton">Add</button>
+                    </div>
+                    <div class="course_tab">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="border-radius: 10px 0 0 0;">Course</th>
+                                    <th style="border-radius: 0 0 0 0;">Section</th>
+                                    <th style="border-radius: 0 0 0 0;">Class Time</th>
+                                    <th style="border-radius: 0 0 0 0;">Faculty</th>
+                                    <th style="border-radius: 0 0 0 0;">Room</th>
+                                    <th style="border-radius: 0 0 0 0;">Seat available</th>
+                                    <th style="border-radius: 0 10px 0 0;">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="routine_table">
+                <div class="routine">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Sat</th>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                        </tr>
+                        <tr>
+                            <th>8:00 AM - 9:15 AM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>9:25 AM - 10:40 AM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>10:50 AM - 12:05 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>12:15 PM - 1:30 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>1:40 PM - 2:55 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>3:05 PM - 4:20 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>4:30 PM - 5:45 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr hidden>
+                            <th>5:55 - 7:10 PM</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div class="tab_swap_controll">
+                        <button class="prev_tab"><i class="fa-solid fa-trash"></i></button>
+                        <button class="next_tab"><i class="fa-solid fa-circle-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- course selection js -->
+    <script>
+        const courses = [
+            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
+            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
+            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
+            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
+            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
+        ];
+        const searchBox = document.querySelector(`#search_box_course`);
+        const listContainer = document.querySelector(`#courseList`);
+
+        function filterList() {
+            const filter = searchBox.value.toLowerCase();
+
+            listContainer.style.display = "block";
+            listContainer.innerHTML = "";
+
+            courses
+                .filter(course => course.toLowerCase().includes(filter))
+                .forEach(course => {
+                    const option = document.createElement("div");
+                    option.classList.add("dropdown-item");
+                    option.textContent = course;
+                    option.onclick = () => {
+                        searchBox.value = course;
+                        searchBox.style.color = '#ffffff'
+                        listContainer.innerHTML = "";
+                        listContainer.style.display = "none";
+                    };
+                    listContainer.appendChild(option);
+                });
+        }
+
+        searchBox.addEventListener("focus", filterList);
+        searchBox.addEventListener("input", filterList);
+
+        document.addEventListener("click", (event) => {
+            if (!searchBox.contains(event.target) && !listContainer.contains(event.target)) {
+                listContainer.style.display = "none";
+            }
+        });
+    </script>
+
+    <!-- section selection js -->
+    <script>
+        const sections = [
+            { section: '1', time: "MW 08:00 AM - 09:45 AM" },
+            { section: '2', time: "ST 09:25 AM - 10:40 AM" },
+            { section: '3', time: "RA 10:50 AM - 12:05 PM" },
+            { section: '4', time: "MW 01:40 PM - 02:55 PM" },
+            { section: '5', time: "ST 03:05 PM - 04:20 PM" },
+            { section: '6', time: "RA 04:30 PM - 05:45 PM" },
+            { section: '7', time: "MW 06:00 PM - 07:15 PM" },
+            { section: '8', time: "ST 07:30 PM - 08:45 PM" },
+            { section: '9', time: "RA 09:25 AM - 10:40 AM" },
+            { section: '10', time: "MW 10:50 AM - 12:05 PM" },
+            { section: '11', time: "ST 12:15 PM - 01:30 PM" },
+            { section: '12', time: "RA 01:40 PM - 02:55 PM" },
+            { section: '13', time: "MW 03:05 PM - 04:20 PM" },
+            { section: '14', time: "ST 04:30 PM - 05:45 PM" },
+            { section: '15', time: "RA 06:00 PM - 07:15 PM" },
+            { section: '16', time: "MW 07:30 PM - 08:45 PM" },
+            { section: '17', time: "ST 09:25 AM - 10:40 AM" },
+            { section: '18', time: "RA 10:30 AM - 11:45 AM" },
+            { section: '19', time: "MW 12:00 PM - 01:15 PM" },
+            { section: '20', time: "ST 02:00 PM - 03:15 PM" }
+        ];
+
+
+        const sectionSearchBox = document.querySelector(`#search_box_section`);
+        const sectionListContainer = document.querySelector(`#sectionList`);
+
+        function filterSectionList() {
+            const filter = sectionSearchBox.value.toLowerCase();
+
+            sectionListContainer.style.display = "block";
+            sectionListContainer.innerHTML = "";
+
+            // Get all the class times from the course_tab table
+            const courseTimes = [];
+            const courseRows = document.querySelectorAll('.course_tab tbody tr');
+            courseRows.forEach(row => {
+                const classTimeCell = row.querySelector('td:nth-child(3)'); // Class Time column
+                if (classTimeCell) {
+                    courseTimes.push(classTimeCell.textContent.trim().toLowerCase());
+                }
+            });
+
+            sections
+                .filter(item => item.section.toLowerCase().includes(filter) || item.time.toLowerCase().includes(filter))
+                .forEach(item => {
+                    const option = document.createElement("div");
+                    option.classList.add("dropdown-item");
+
+                    // Creating two separate elements for section and time
+                    const sectionDiv = document.createElement("span");
+                    sectionDiv.textContent = item.section;
+                    sectionDiv.style.width = '15%';
+                    sectionDiv.style.borderRight = '1.5px solid #ffffff40';
+                    sectionDiv.style.marginRight = "30px";
+
+                    const timeDiv = document.createElement("span");
+                    timeDiv.textContent = item.time;
+                    timeDiv.style.opacity = "0.8";
+
+                    // Check for time clashes with the course times
+                    const isClashing = courseTimes.some(courseTime => {
+                        // Normalize times for comparison
+                        return normalizeTime(item.time.trim().toLowerCase()) === normalizeTime(courseTime);
+                    });
+
+                    // If there is a time clash, add a "disabled" class to the option
+                    if (isClashing) {
+                        option.classList.add('disabled');
+                        option.style.opacity = "0.5";
+                        option.style.pointerEvents = "none";
+                        option.style.background = "#ff000080";
+                    }
+
+                    // Append both parts to the option container
+                    option.appendChild(sectionDiv);
+                    option.appendChild(timeDiv);
+
+                    option.onclick = () => {
+                        if (!option.classList.contains('disabled')) {
+                            sectionSearchBox.value = `${item.section} - ${item.time}`;
+                            sectionSearchBox.style.color = '#ffffff';
+                            sectionListContainer.innerHTML = "";
+                            sectionListContainer.style.display = "none";
+                        }
+                    };
+                    sectionListContainer.appendChild(option);
+                });
+        }
+
+        sectionSearchBox.addEventListener("focus", filterSectionList);
+        sectionSearchBox.addEventListener("input", filterSectionList);
+
+        document.addEventListener("click", (event) => {
+            if (!sectionSearchBox.contains(event.target) && !sectionListContainer.contains(event.target)) {
+                sectionListContainer.style.display = "none";
+            }
+        });
+    </script>
+
+    <!-- add button js -->
+    <script>
+        // Array of colors
+        const colors = ["rgb(218, 218, 0)", "rgb(0, 191, 255)", "rgb(144, 238, 144)", "rgb(255, 182, 193)", "rgb(221, 160, 221)"];
+
+        // References to the input fields and table
+        const addButton = document.getElementById("addButton");
+        const courseInput = document.getElementById("search_box_course");
+        const sectionInput = document.getElementById("search_box_section");
+        const courseTable = document.querySelector(".course_tab tbody"); // Getting tbody for new rows
+
+        addButton.addEventListener("click", function () {
+            addCoursesToCourses();
+            addCoursesToRoutine();
+        });
+
+        function addCoursesToCourses() {
+            // Get selected course and section values
+            const selectedCourse = courseInput.value.trim();
+            const selectedSection = sectionInput.value.trim();
+
+            if (!selectedCourse || !selectedSection) {
+                alert("Please select both a course and a section.");
+                return;
+            }
+
+            // Split section and time from the section input
+            const [section, ...timeArray] = selectedSection.split(" - ");
+            const time = timeArray.join(" - ").trim();
+
+            // Create a new row
+            const newRow = document.createElement("tr");
+
+            // Add cells for each column with values or placeholders
+            newRow.innerHTML = `
+                <td>${selectedCourse}</td>
+                <td>${section}</td>
+                <td>${time}</td>
+                <td>TBA</td>
+                <td></td>
+                <td></td>
+                <td><button>&times;</button></td>
+            `;
+
+            courseTable.appendChild(newRow);
+            newRow.querySelector("button").addEventListener("click", function () {
+                courseTable.removeChild(newRow);
+            });
+        }
+
+        function addCoursesToRoutine() {
+            const courseTitle = courseInput.value.trim();
+            const sectionDetails = sectionInput.value.trim();
+            // Extract days (like MW) and time (like 08:00 AM - 09:15 AM) from sectionDetails
+            const [_, days, time] = sectionDetails.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
+
+            if (!courseTitle || !days || !time) {
+                console.warn("Please make sure both course title and section details are selected properly.");
+                return;
+            }
+
+            const daysMapping = {
+                'A': 1, // Saturday
+                'S': 2, // Sunday
+                'M': 3, // Monday
+                'T': 4, // Tuesday
+                'W': 5, // Wednesday
+                'R': 6  // Thursday
+            };
+
+            // Choose a random color from the array
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            // Loop through each day in days (e.g., 'MW' -> Monday, Wednesday)
+            for (let day of days) {
+                const dayColumn = daysMapping[day];
+                if (dayColumn) {
+                    // Locate the correct row by matching the time
+                    const rows = document.querySelectorAll(".routine_table .routine table tr");
+
+                    rows.forEach((row) => {
+                        const timeCell = row.querySelector("th");
+                        // if (normalizeTime(timeCell.textContent.trim()) === normalizeTime(time.trim())) {
+                        // console.log((timeCell), 1);
+                        // console.log(2, normalizeTime(time.trim()));
+                        if (normalizeTime(timeCell.textContent.trim()) != ''){
+                            if (timesIntersect(normalizeTime(timeCell.textContent.trim()), normalizeTime(time.trim()))) {
+                                const targetCell = row.cells[dayColumn];
+                                if (targetCell) {
+                                    targetCell.style.backgroundColor = color;
+                                    targetCell.textContent = courseTitle;
+                                } else {
+                                    console.warn(`No cell found for day ${day} and time ${time}`);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Clear input fields after adding
+            courseInput.value = "";
+            sectionInput.value = "";
+        }
+
+        function timesIntersect(period1, period2) {
+            // Helper function to convert 12-hour time format (HH:MM AM/PM) to minutes
+            const timeToMinutes = (time) => {
+                const [timePart, period] = time.split(' '); // Split time and AM/PM
+                let [hours, minutes] = timePart.split(':').map(Number); // Split hours and minutes
+                if (period === 'PM' && hours !== 12) hours += 12; // Convert PM times
+                if (period === 'AM' && hours === 12) hours = 0; // Convert 12 AM to 00:00
+                return hours * 60 + minutes;
+            };
+
+            // Extract start and end times from each period
+            const extractTimes = (period) => {
+                const [startTime, endTime] = period.split(' - '); // Split the period into start and end times
+                return {
+                    start: timeToMinutes(startTime.trim()),
+                    end: timeToMinutes(endTime.trim())
+                };
+            };
+
+            // Extract start and end times for both periods
+            const { start: startTime1, end: endTime1 } = extractTimes(period1);
+            const { start: startTime2, end: endTime2 } = extractTimes(period2);
+
+            // Check if the two time periods overlap
+            return startTime1 < endTime2 && startTime2 < endTime1;
+        }
+
+        // Example usage:
+        console.log(timesIntersect("02:00 PM - 03:15 PM", "02:30 PM - 04:00 PM")); // Should return true
+        console.log(timesIntersect("02:00 PM - 03:00 PM", "03:00 PM - 04:00 PM")); // Should return false
+
+        function normalizeTime(timeString) {
+            return timeString.replace(/\b0(\d)/g, '$1'); // Remove leading zeros from hours
+        }
+    </script>
+
+</body>
+
+</html>

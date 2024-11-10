@@ -8,6 +8,18 @@
     <script src="../js/common.js"></script>
     <title>Document</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
@@ -776,7 +788,6 @@
         </div>
     </div>
 
-
     <!-- search box js -->
     <script>
         const courses = [
@@ -841,6 +852,7 @@
 
     </script>
 
+    <!-- Modals controll js -->
     <script>
         document.getElementById('grading_rate').addEventListener("input", () => {
             document.getElementById('grade_rating').textContent = document.getElementById('grading_rate').value;
