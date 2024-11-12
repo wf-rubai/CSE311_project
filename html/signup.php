@@ -41,8 +41,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('http://ece.northsouth.edu/wp-content/uploads/2015/08/rajesh-pp-photo.jpg');
-            /* Replace 'your-image-path.jpg' with the actual path of your image */
+            /* background-image: url('http://ece.northsouth.edu/wp-content/uploads/2015/08/rajesh-pp-photo.jpg'); */
             background-size: contain;
             background-position: center;
             /* background-repeat: no-repeat; */

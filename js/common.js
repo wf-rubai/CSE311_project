@@ -37,8 +37,6 @@ async function sendPostRequest(url, form, action=null) {
                 'Content-Type': 'application/x-www-form-urlencoded', // Set header for URL encoded data
             },
             body: new URLSearchParams(formData) // Send serialized form data
-        }).then(data => {
-            console.log(data); // Output the response to the browser console
         });
 
         const data = await response.json(); // Parse the JSON response
