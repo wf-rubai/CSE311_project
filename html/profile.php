@@ -394,7 +394,7 @@
                             <h3><?php if(isset($user_details['fullname'])) {echo $user_details['fullname'];} ?></h3>
                             <p><strong>ID:</strong> <?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?></p>
                             <p><strong>Email:</strong> <?php if(isset($user_details['email'])) {echo $user_details['email'];} ?></p>
-                            <!-- <p><strong>NSU Email:</strong> nabila.oyshi@northsouth.edu</p> -->
+                            <p><strong>NSU Email:</strong> </p>
                         </div>
                     </div>
 
@@ -455,19 +455,19 @@
                             <tr>
                                 <th>Name</th>
                                 <td>
-                                    <input type="text" name="" id="" placeholder="Name" value="Nabila Tabassum">
+                                    <input type="text" name="" id="" placeholder="Name" value="<?php if(isset($user_details['fullname'])) {echo $user_details['fullname'];} ?>">
                                 </td>
                             </tr>
                             <tr>
                                 <th>NSU ID</th>
                                 <td>
-                                    <input type="text" name="" id="" placeholder="ID" value="2231386042">
+                                    <input type="text" name="" id="" placeholder="ID" value="<?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?>">
                                 </td>
                             </tr>
                             <tr>
                                 <th>Email</th>
                                 <td>
-                                    <input type="text" name="" id="" placeholder="Email" value="oyshu233@gmail.com">
+                                    <input type="text" name="" id="" placeholder="Email" value="<?php if(isset($user_details['email'])) {echo $user_details['email'];} ?>">
                                 </td>
                             </tr>
                             <tr>
