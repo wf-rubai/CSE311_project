@@ -2,8 +2,8 @@
     require "php/facultyReviewFunction.php";
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        header('Content-Type: application/json');
         if(isset($_POST['get_reviews'])) {
-            header('Content-Type: application/json');
             $reviews = get_reviews_of_faculty($_POST['faculty_initial']);
             
             if($reviews != null) {
@@ -12,8 +12,12 @@
             else {
                 echo json_encode(['message' => 'Error while fetching reviews!']);
             }
-            exit();
         }
+        else if(isset($_POST['add_review'])) {
+            $response = add_review($_POST['faculty_initial'], isset($_POST['anonymous']) ? 1 : 0, isset($_POST['review_by']) ? $_POST['review_by'] : null, $_POST['learning_rate'], $_POST['grading_rate'], $_POST['task_description_details']);
+            echo json_encode(['message' => 'success']);
+        }
+        exit();
     } 
     else {
         $faculty_reviews = get_faculties();
@@ -493,6 +497,7 @@
                                         <i class="fa-regular fa-message"></i>
                                     </div>
                                     <div class="write_rev">
+                                        <input type="hidden" name="initial" value="'. $faculty_review['initial'] .'"/>
                                         <i class="fa-solid fa-pen"></i>
                                     </div>
                                 </div>
@@ -519,39 +524,42 @@
     <!-- review modal -->
     <div id="review_modal" class="modal_review">
         <div class="modal_content">
-            <h2>Write a Review</h2>
-
-            <label class="anonymous_check">
-                <input type="checkbox" id="anonymous" checked>
-                Submit anonymously
-            </label>
-
-            <div class="review_section">
-                <div class="rev_to_give">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h4>For Learning</h4>
-                        <h4 id="learn_rating" style="color: white;">0</h4>
+            <form id="add_review">
+                <h2>Write a Review</h2>
+    
+                <label class="anonymous_check">
+                    <input type="checkbox" id="anonymous" name="anonymous" checked>
+                    Submit anonymously
+                </label>
+    
+                <div class="review_section">
+                    <div class="rev_to_give">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4>For Learning</h4>
+                            <h4 id="learn_rating" style="color: white;">0</h4>
+                        </div>
+                        <input type="range" min="1" max="10" value="0" id="learning_rate" name="learning_rate">
                     </div>
-                    <input type="range" min="1" max="10" value="0" id="learning_rate">
-                </div>
-                <div class="rev_to_give">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h4>For Grading</h4>
-                        <h4 id="grade_rating" style="color: white;">0</h4>
+                    <div class="rev_to_give">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4>For Grading</h4>
+                            <h4 id="grade_rating" style="color: white;">0</h4>
+                        </div>
+                        <input type="range" min="1" max="10" value="0" id="grading_rate" name="grading_rate">
                     </div>
-                    <input type="range" min="1" max="10" value="0" id="grading_rate">
                 </div>
-            </div>
-
-            <label for="comment_text">Comment:</label>
-            <?php
-            echo file_get_contents("html/template/WFR_editor.html");
-            ?>
-
-            <div class="modal_buttons">
-                <button id="cancel_button">Cancel</button>
-                <button id="submit_button">Submit</button>
-            </div>
+    
+                <label for="comment_text">Comment:</label>
+                <?php
+                echo file_get_contents("html/template/WFR_editor.html");
+                ?>
+    
+                <div class="modal_buttons">
+                    <button type="button" id="cancel_button">Cancel</button>
+                    <button type="submit" id="submit_button">Submit</button>
+                    <input type="hidden" name="faculty_initial" value="">
+                </div>
+            </form>
         </div>
     </div>
 
@@ -670,37 +678,45 @@
 
         // Elements
         const reviewModal = document.getElementById('review_modal');
-        const revWriteButton = document.querySelector('.write_rev'); // Adjust if needed
+        const revWriteButtons = document.querySelectorAll('.write_rev'); // Adjust if needed
         const cancelButton = document.getElementById('cancel_button');
         const submitButton = document.getElementById('submit_button');
 
         // Open modal
-        revWriteButton.addEventListener('click', () => {
-            reviewModal.style.display = 'flex';
-        });
+        revWriteButtons.forEach(revWriteButton => {
+            revWriteButton.addEventListener('click', () => {
+                reviewModal.style.display = 'flex';
+                var faculty_initial = revWriteButton.querySelector('input[name="initial"]').value;
+                reviewModal.querySelector('input[name="faculty_initial"]').value = faculty_initial;
+            });
 
-        // Close modal on 'Cancel' button
-        cancelButton.addEventListener('click', () => {
-            reviewModal.style.display = 'none';
-        });
-
-        // Close modal when clicking outside the modal content
-        window.addEventListener('click', (event) => {
-            if (event.target === reviewModal) {
+            // Close modal on 'Cancel' button
+            cancelButton.addEventListener('click', () => {
                 reviewModal.style.display = 'none';
-            } 
+            });
 
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', (event) => {
+                if (event.target === reviewModal) {
+                    reviewModal.style.display = 'none';
+                } 
+
+            });
         });
 
         // Handle Submit button click (implement as needed)
-        submitButton.addEventListener('click', () => {
-            const isAnonymous = document.getElementById('anonymous').checked;
-            const learningRating = document.getElementById('learning_rating').value;
-            const gradingRating = document.getElementById('grading_rating').value;
-            const commentText = document.getElementById('comment_text').value;
+        document.getElementById('add_review').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-            // Logic to save the review (e.g., AJAX request)
-            console.log({ isAnonymous, learningRating, gradingRating, commentText });
+            sendPostRequestForm('/faculty_review', this, 'add_review').then(response => {
+                console.log(response);
+                if (response.message != 'success') {
+                    // errorMessage.textContent = response.message; // Display error message
+                }
+                else {
+                    // successMessage.textContent = '';
+                }
+            });
 
             // Close modal after submitting
             reviewModal.style.display = 'none';

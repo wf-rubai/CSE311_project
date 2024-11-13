@@ -26,6 +26,7 @@ window.addEventListener('load', function() {
 */
 async function sendPostRequestForm(url, form, action=null) {
     try {
+        console.log(form);
         formData = new FormData(form);
         if(action) {
             formData.append(action, action);
@@ -67,7 +68,7 @@ async function sendPostRequestForm(url, form, action=null) {
  * @param data A 2D array to provide data to be send through the api
 */
 async function sendPostRequest(url, action, data=null) {
-    // try {
+    try {
         formData = new FormData();
         formData.append(action, action);
         if(data) { 
@@ -98,8 +99,8 @@ async function sendPostRequest(url, action, data=null) {
             return "An error occurred. Please try again."; // Display error message
         }
 
-    // } catch (error) {
-    //     // console.error("Fetch Error:", error); // Log fetch error details
-    //     return "There was an error processing the form.";
-    // }
+    } catch (error) {
+        // console.error("Fetch Error:", error); // Log fetch error details
+        return "There was an error processing the form.";
+    }
 }
