@@ -1,3 +1,26 @@
+<?php
+    require "php/facultyReviewFunction.php";
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if(isset($_POST['get_reviews'])) {
+            header('Content-Type: application/json');
+            $reviews = get_reviews_of_faculty($_POST['faculty_initial']);
+            
+            if($reviews != null) {
+                echo json_encode(['message' => 'success', 'reviews' => $reviews]);
+            }
+            else {
+                echo json_encode(['message' => 'Error while fetching reviews!']);
+            }
+            exit();
+        }
+    } 
+    else {
+        $faculty_reviews = get_faculties();
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -442,214 +465,42 @@
 
             <div class="scroll_feed">
 
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="review_block">
-                    <div class="main_rev">
-                        <div class="fac_profile">
-                            <img src="../image/no_profile_pic.jpg" alt="">
-                            <h3>Faculty Initial (FIn)</h3>
-                        </div>
-                        <div class="rev_bars">
-                            <div class="rev">
-                                <h4>For Learning</h4>
-                                <input type="range" min="1" max="100" value="0" id="learn_rev">
-                            </div>
-                            <div class="rev">
-                                <h4>For Grading</h4>
-                                <input type="range" min="1" max="100" value="0" id="grade_rev">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rev_opt">
-                        <div class="fac_comment">
-                            <i class="fa-regular fa-message"></i>
-                        </div>
-                        <div class="write_rev">
-                            <i class="fa-solid fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
+                <?php
+
+                    if(isset($faculty_reviews)) {
+                        while($faculty_review = $faculty_reviews->fetch_assoc()) {
+                            echo '
+                            <div class="review_block">
+                                <div class="main_rev">
+                                    <div class="fac_profile">
+                                        <img src="../image/no_profile_pic.jpg" alt="">
+                                        <h3>'. $faculty_review['fullname'] .' ('. $faculty_review['initial'] .')</h3>
+                                    </div>
+                                    <div class="rev_bars">
+                                        <div class="rev">
+                                            <h4>For Learning</h4>
+                                            <input type="range" min="1" max="100" value="" id="learn_rev" style="background-size: '. $faculty_review['learning_points'] * 10 .'% 100%">
+                                        </div>
+                                        <div class="rev">
+                                            <h4>For Grading</h4>
+                                            <input type="range" min="1" max="100" value="" id="grade_rev" style="background-size: '. $faculty_review['grading_points'] * 10 .'% 100%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rev_opt">
+                                    <div class="fac_comment">
+                                        <input type="hidden" name="initial" value="'. $faculty_review['initial'] .'"/>
+                                        <i class="fa-regular fa-message"></i>
+                                    </div>
+                                    <div class="write_rev">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </div>
+                                </div>
+                            </div>';
+                        }
+                    }
+
+                ?>
             </div>
         </div>
     </div>
@@ -658,93 +509,9 @@
     <div id="comment_modal" class="modal">
         <div class="modal_content">
             <h2>Faculty Reviews</h2>
-            <div class="comments_section">
-
-                <div class="comment">
-                    <div class="comment_header">
-                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
-                        <div class="comment_info">
-                            <h3>John Doe</h3>
-                            <span class="comment_date">2024-11-07 14:30</span>
-                        </div>
-                    </div>
-                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
-                        the course was engaging.</p>
-                    <div class="reviews">
-                        <div class="rev">
-                            <h4>Learning</h4>
-                            <input type="range" value="70">
-                        </div>
-                        <div class="rev">
-                            <h4>Grading</h4>
-                            <input type="range" value="85">
-                        </div>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="comment_header">
-                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
-                        <div class="comment_info">
-                            <h3>John Doe</h3>
-                            <span class="comment_date">2024-11-07 14:30</span>
-                        </div>
-                    </div>
-                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
-                        the course was engaging.</p>
-                    <div class="reviews">
-                        <div class="rev">
-                            <h4>Learning</h4>
-                            <input type="range" value="70">
-                        </div>
-                        <div class="rev">
-                            <h4>Grading</h4>
-                            <input type="range" value="85">
-                        </div>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="comment_header">
-                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
-                        <div class="comment_info">
-                            <h3>John Doe</h3>
-                            <span class="comment_date">2024-11-07 14:30</span>
-                        </div>
-                    </div>
-                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
-                        the course was engaging.</p>
-                    <div class="reviews">
-                        <div class="rev">
-                            <h4>Learning</h4>
-                            <input type="range" value="70">
-                        </div>
-                        <div class="rev">
-                            <h4>Grading</h4>
-                            <input type="range" value="85">
-                        </div>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="comment_header">
-                        <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
-                        <div class="comment_info">
-                            <h3>John Doe</h3>
-                            <span class="comment_date">2024-11-07 14:30</span>
-                        </div>
-                    </div>
-                    <p class="comment_text">This is a sample comment about the faculty. The faculty was very helpful and
-                        the course was engaging.</p>
-                    <div class="reviews">
-                        <div class="rev">
-                            <h4>Learning</h4>
-                            <input type="range" value="70">
-                        </div>
-                        <div class="rev">
-                            <h4>Grading</h4>
-                            <input type="range" value="85">
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat .comment div for each comment -->
+            <div class="comments_section" id="comments_section">
+                <p class="error-message" id="errorMessage"></p>
+                <!-- Reviews here -->     
             </div>
         </div>
     </div>
@@ -836,12 +603,49 @@
     <script>
         // Get modal elements
         const commentModal = document.getElementById('comment_modal');
-        const facCommentButton = document.querySelector('.fac_comment');
+        const facCommentButtons = document.querySelectorAll('.fac_comment');
+        const commentsSection = document.getElementById('comments_section');
 
         // Open modal when facCommentButton is clicked
-        facCommentButton.addEventListener('click', () => {
-            commentModal.style.display = 'flex';
-        });
+        facCommentButtons.forEach(facCommentButton => {          
+            facCommentButton.addEventListener('click', () => {
+                commentsSection.innerHTML = "";
+                commentModal.style.display = 'flex';
+                var faculty_initial = facCommentButton.querySelector('input[name="initial"]').value;
+    
+                sendPostRequest('/faculty_review', 'get_reviews', [['faculty_initial', faculty_initial]]).then(response => {
+                    if (response.message != 'success') {
+                        errorMessage.textContent = response.message; // Display error message
+                    }
+                    else {
+                        reviews = response.reviews;
+    
+                        reviews.forEach (review => {
+                            commentsSection.innerHTML += `<div class="comment"> 
+                                                            <div class="comment_header">
+                                                                <img src="../image/no_profile_pic.jpg" alt="Profile Picture" class="profile_pic">
+                                                                <div class="comment_info">
+                                                                    <h3>${review.is_anonymous == 1? "Anonymous" : review.review_by}</h3>
+                                                                    <span class="comment_date">${review.created_at}</span>
+                                                                </div>
+                                                            </div>
+                                                            <p class="comment_text">${review.user_comment == null ? "" : review.user_comment}</p>
+                                                            <div class="reviews">
+                                                                <div class="rev">
+                                                                    <h4>Learning</h4>
+                                                                    <input type="range" style="background-size: ${review.learning_points * 10}% 100%">
+                                                                </div>
+                                                                <div class="rev">
+                                                                    <h4>Grading</h4>
+                                                                    <input type="range" style="background-size: ${review.grading_points * 10}% 100%">
+                                                                </div>
+                                                            </div>
+                                                        </div>`;
+                        });
+                    }
+                });
+            });
+        })
 
         // Close modal when clicking outside of the modal content
         window.addEventListener('click', (event) => {
@@ -884,7 +688,8 @@
         window.addEventListener('click', (event) => {
             if (event.target === reviewModal) {
                 reviewModal.style.display = 'none';
-            }
+            } 
+
         });
 
         // Handle Submit button click (implement as needed)

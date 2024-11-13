@@ -20,7 +20,7 @@
         }
     }
     else {
-        echo "Not logged in!";
+        header('Location: /login');
     }
 
 ?>

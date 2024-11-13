@@ -183,7 +183,7 @@
                 return;
             }
 
-            sendPostRequest('/signup', this, 'signup').then(response => {
+            sendPostRequestForm('/signup', this, 'signup').then(response => {
                 if (response.message != 'success') {
                     errorMessage.textContent = response.message; // Display error message
                 }

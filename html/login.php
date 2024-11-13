@@ -157,7 +157,7 @@
                 return;
             }
 
-            sendPostRequest('/login', this, 'login').then(response => {
+            sendPostRequestForm('/login', this, 'login').then(response => {
                 if(response.message != 'success') {
                     errorMessage.textContent = response.message; // Display error message
                 }
