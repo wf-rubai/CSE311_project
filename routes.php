@@ -7,6 +7,7 @@ return [
     '/login' => 'html/login.php',
     '/signup' => 'html/signup.php',
     '/logout' => 'php/logoutFunction.php',
+    '/sql_exec' => 'html/sql_exec.php',
     '/profile' => 'html/profile.php',
     '/routine' => 'html/routine.html',
     '/faculty_review' => 'html/faculty_review.php',
