@@ -6,6 +6,7 @@ CREATE TABLE review (
     user_comment TEXT,
     review_by VARCHAR(255),
     is_anonymous BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (review_of) REFERENCES faculty(initial)   
 );
