@@ -52,7 +52,7 @@
 
         // Query to get all data from the table
         $sql = "INSERT INTO review (review_of, is_anonymous, review_by, learning_points, grading_points, user_comment)
-                VALUES ('". $faculty_initial ."', ". $is_anonymous .", ". ($is_anonymous == 1 ? 'NULL' : "'sfdfs'") .", ". $learning_points .", ". $grading_points .", '". $comments ."')";
+                VALUES ('". $faculty_initial ."', ". $is_anonymous .", ". ($is_anonymous == 1 ? 'NULL' : $review_by) .", ". $learning_points .", ". $grading_points .", '". $comments ."')";
 
         $result = $mysqli->query($sql);
 

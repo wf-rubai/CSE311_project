@@ -1,6 +1,11 @@
 <?php
     require "php/facultyReviewFunction.php";
 
+    checkLogin();
+
+    #connect to db
+    $mysqli = connect();
+
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Type: application/json');
         if(isset($_POST['get_reviews'])) {
@@ -14,7 +19,7 @@
             }
         }
         else if(isset($_POST['add_review'])) {
-            $response = add_review($_POST['faculty_initial'], isset($_POST['anonymous']) ? 1 : 0, isset($_POST['review_by']) ? $_POST['review_by'] : null, $_POST['learning_rate'], $_POST['grading_rate'], $_POST['task_description_details']);
+            $response = add_review($_POST['faculty_initial'], isset($_POST['anonymous']) ? 1 : 0, $_SESSION['nsu_id'], $_POST['learning_rate'], $_POST['grading_rate'], $_POST['task_description_details']);
             echo json_encode(['message' => 'success']);
         }
         exit();
