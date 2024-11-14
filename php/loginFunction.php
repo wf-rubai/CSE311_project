@@ -12,7 +12,7 @@ function login($nsu_id, $password) {
     // $nsu_id = htmlspecialchars($nsu_id);
     // $password = htmlspecialchars($password);
 
-    $sql = "SELECT nsu_id, passkey FROM register_users WHERE nsu_id = ?";
+    $sql = "SELECT nsu_id, passkey, fullname FROM register_users WHERE nsu_id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("s", $nsu_id);
     $stmt->execute();
@@ -27,9 +27,8 @@ function login($nsu_id, $password) {
         return "Wrong password";
     }
     else {
-        // $_SESSION["user"] = $email;
-        // $_SESSION["first_name"] = $data["first_name"];
-        // $_SESSION["last_name"] = $data["last_name"];
+        $_SESSION["nsu_id"] = $nsu_id;
+        $_SESSION["fullname"] = $data["fullname"];
         // header("location: /profile");
         return "success";
     }
