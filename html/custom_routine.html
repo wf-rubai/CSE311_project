@@ -402,8 +402,8 @@
                         </tr>
                     </table>
                     <div class="tab_swap_controll">
-                        <button class="prev_tab"><i class="fa-solid fa-trash"></i></button>
-                        <button class="next_tab"><i class="fa-solid fa-circle-plus"></i></button>
+                        <button class="prev_tab" onclick="cleanAll()" title="Delete routine"><i class="fa-solid fa-trash"></i></button>
+                        <button class="next_tab" title="Save routine"><i class="fa-solid fa-circle-plus"></i></button>
                     </div>
                 </div>
             </div>
@@ -495,7 +495,7 @@
             courseRows.forEach(row => {
                 const classTimeCell = row.querySelector('td:nth-child(3)'); // Class Time column
                 if (classTimeCell) {
-                    courseTimes.push(classTimeCell.textContent.trim().toLowerCase());
+                    courseTimes.push(classTimeCell.textContent.trim());
                 }
             });
 
@@ -518,9 +518,16 @@
 
                     // Check for time clashes with the course times
                     const isClashing = courseTimes.some(courseTime => {
-                        // Normalize times for comparison
-                        return normalizeTime(item.time.trim().toLowerCase()) === normalizeTime(courseTime);
+                        console.log(item.time, '\t', courseTime)
+                        let a = `${item.section} - ${item.time}`;
+                        let b = `1 - ${courseTime}`;
+                        let [_1, days1, time1] = a.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
+                        let [_2, days2, time2] = b.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
+                        console.log(days1, days2);
+                        console.log(time1, time2);
+                        return timesIntersect(time1, time2) && (days1 === days2);
                     });
+
 
                     // If there is a time clash, add a "disabled" class to the option
                     if (isClashing) {
@@ -641,7 +648,7 @@
                         // if (normalizeTime(timeCell.textContent.trim()) === normalizeTime(time.trim())) {
                         // console.log((timeCell), 1);
                         // console.log(2, normalizeTime(time.trim()));
-                        if (normalizeTime(timeCell.textContent.trim()) != ''){
+                        if (normalizeTime(timeCell.textContent.trim()) != '') {
                             if (timesIntersect(normalizeTime(timeCell.textContent.trim()), normalizeTime(time.trim()))) {
                                 const targetCell = row.cells[dayColumn];
                                 if (targetCell) {
@@ -662,6 +669,9 @@
         }
 
         function timesIntersect(period1, period2) {
+            if (period1 === period2) {
+                return true;
+            }
             // Helper function to convert 12-hour time format (HH:MM AM/PM) to minutes
             const timeToMinutes = (time) => {
                 const [timePart, period] = time.split(' '); // Split time and AM/PM
@@ -694,6 +704,24 @@
 
         function normalizeTime(timeString) {
             return timeString.replace(/\b0(\d)/g, '$1'); // Remove leading zeros from hours
+        }
+    </script>
+
+    <!-- controll button js -->
+    <script>
+        function cleanAll() {
+            let routineRows = document.querySelectorAll('.routine table tr');
+            let courseRow = document.querySelector('.course_tab table tbody');
+
+            routineRows.forEach(row => {
+                row.querySelectorAll('td').forEach(td => {
+                    td.innerHTML = '';   
+                    td.style.background = '#fff'; 
+                });
+            });
+
+            courseRow.innerHTML = '';
+
         }
     </script>
 
