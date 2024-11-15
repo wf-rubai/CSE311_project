@@ -1,3 +1,28 @@
+<?php
+
+    require "php/profileFunction.php";
+
+    #connect to db
+    $mysqli = connect();
+
+    $user_details = checkLogin(); 
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        header('Content-Type: application/json');
+        if(isset($_POST['update_profile'])) {
+            $response = update_profile($_POST['fullname'], $_POST['email'], $_POST['nsu_email'], $_POST['completed_credit'], $_FILES['profile_image']);
+            if($response != null) {
+                echo json_encode(['message' => 'success', 'redirectUrl' => '/profile']);
+            }
+            else {
+                echo json_encode(['message' => 'Something went wrong!']);
+            }
+        }
+        exit();
+    } 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +33,18 @@
     <script src="../js/common.js"></script>
     <title>Member Profile</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
@@ -39,7 +76,8 @@
             gap: 20px;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to right, #ff5b5b, #ff68a6);
+            /* background: linear-gradient(to right, #ff5b5b, #ff68a6); */
+            background: linear-gradient(to right, #32334d, #5a3e49);
             position: relative;
             height: -webkit-fill-available;
             overflow: hidden;
@@ -348,13 +386,13 @@
                     <!-- Profile Information -->
                     <div class="profile-info">
                         <div class="profile-pic">
-                            <img src="../image/20230210_172719.jpg" alt="Profile Picture">
+                            <img src="<?php if(isset($user_details['profile_pic'])) {echo $user_details['profile_pic'];} else {echo '/image/no_profile_pic.jpg';} ?>" alt="Profile Picture">
                         </div>
                         <div class="profile-details">
-                            <h3>Nabila Tabassum Oyshi</h3>
-                            <p><strong>ID:</strong> 2231386042</p>
-                            <p><strong>Email:</strong> oyshu233@gmail.com</p>
-                            <p><strong>NSU Email:</strong> nabila.oyshi@northsouth.edu</p>
+                            <h3><?php if(isset($user_details['fullname'])) {echo $user_details['fullname'];} ?></h3>
+                            <p><strong>ID:</strong> <?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?></p>
+                            <p><strong>Email:</strong> <?php if(isset($user_details['email'])) {echo $user_details['email'];} ?></p>
+                            <p><strong>NSU Email:</strong> <?php if(isset($user_details['nsu_email'])) {echo $user_details['nsu_email'];} ?></p>
                         </div>
                     </div>
 
@@ -386,7 +424,7 @@
                             </tr>
                             <tr>
                                 <th>Completed Credit</th>
-                                <td>58 Credit</td>
+                                <td><?php if(isset($user_details['completed_credit'])) {echo $user_details['completed_credit'];} ?> Credit</td>
                             </tr>
                             <tr>
                                 <th>Degree Analysis</th>
@@ -400,98 +438,95 @@
             </div>
 
             <div class="edit_section main_bg">
-                <div class="edit_info">
-                    <div class="edit_part_1">
-                        <div style="position: relative;">
-                            <div class="profile-pic edit_profile">
-                                <img src="../image/20230210_172719.jpg" alt="">
-                            </div>
-                            <div class="change_img">
-                                <i class="fa-solid fa-pen-to-square" onclick="document.getElementById('image_change_file').click()"></i>
-                                <input type="file" id="image_change_file" hidden>
-                            </div>
-                        </div>
-                        <table>
-                            <tr>
-                                <th>Name</th>
-                                <td>
-                                    <input type="text" name="" id="" placeholder="Name" value="Nabila Tabassum">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>NSU ID</th>
-                                <td>
-                                    <input type="text" name="" id="" placeholder="ID" value="2231386042">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <input type="text" name="" id="" placeholder="Email" value="oyshu233@gmail.com">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>NSU Email</th>
-                                <td>
-                                    <input type="text" name="" id="" placeholder="NSU Email"
-                                        value="nabila.oyshi@northsouth.edu">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="edit_part_2">
-                        <!-- Academic Information -->
-                        <div class="academic-info">
-                            <div style="display: flex; justify-content: space-between;">
-                                <h4>Student Info</h4>
+                <form id="edit_form" enctype="multipart/form-data">
+                    <div class="edit_info">
+                        <div class="edit_part_1">
+                            <div style="position: relative;">
+                                <div class="profile-pic edit_profile">
+                                    <img src="<?php if(isset($user_details['profile_pic'])) {echo $user_details['profile_pic'];} else {echo '/image/no_profile_pic.jpg';} ?>" alt="">
+                                </div>
+                                <div class="change_img">
+                                    <i class="fa-solid fa-pen-to-square" onclick="document.getElementById('image_change_file').click()"></i>
+                                    <input type="file" name="profile_image" id="image_change_file" hidden>
+                                </div>
                             </div>
                             <table>
                                 <tr>
-                                    <th>Department</th>
-                                    <td>Electrical Computer Engineering</td>
-                                    <!-- <td>
-                                        <input type="text" name="" id="" placeholder="Name" value="Nabila Tabassum">
-                                    </td> -->
-                                </tr>
-                                <tr>
-                                    <th>Current Semester</th>
-                                    <td>Summer 2024</td>
-                                    <!-- <td>
-                                        <input type="text" name="" id="" placeholder="Name" value="Nabila Tabassum">
-                                    </td> -->
-                                </tr>
-                                <tr>
-                                    <th>Enrolled In</th>
-                                    <td>Bachelor of Science in Computer Science and Engineering</td>
-                                </tr>
-                                <tr>
-                                    <th>Total Credit</th>
-                                    <td>130 Credit</td>
-                                </tr>
-                                <tr>
-                                    <th>Completed Credit</th>
-                                    <!-- <td>58 Credit</td> -->
+                                    <th>Name</th>
                                     <td>
-                                        <input type="text" name="" id="" placeholder="" value="58">
+                                        <input type="text" name="fullname" id="" placeholder="Name" value="<?php if(isset($user_details['fullname'])) {echo $user_details['fullname'];} ?>">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Degree Analysis</th>
-                                    <!-- <td>Not yet</td> -->
+                                    <th>NSU ID</th>
                                     <td>
-                                        <input type="text" name="" id="" placeholder="" value="Not yet">
+                                        <input type="text" placeholder="ID" disabled value="<?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <input type="text" name="email" placeholder="Email" value="<?php if(isset($user_details['email'])) {echo $user_details['email'];} ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>NSU Email</th>
+                                    <td>
+                                        <input type="text" name="nsu_email" placeholder="NSU Email" value="<?php if(isset($user_details['nsu_email'])) {echo $user_details['nsu_email'];} ?>">
                                     </td>
                                 </tr>
                             </table>
-
-                            <div style="display: flex; justify-content: flex-end;">
-                                <button class="edit_btn edit_cancle" onclick="swap_section()">Cancle</button>
-                                <button class="edit_btn edit_update" onclick="">Update</button>
+                        </div>
+                        <div class="edit_part_2">
+                            <!-- Academic Information -->
+                            <div class="academic-info">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <h4>Student Info</h4>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>Electrical Computer Engineering</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Enrolled In</th>
+                                        <td>Bachelor of Science in Computer Science and Engineering</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Completed Credit</th>
+                                        <td>
+                                            <input type="text" name="completed_credit" placeholder="" value="<?php if(isset($user_details['completed_credit'])) {echo $user_details['completed_credit'];} ?>">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Degree Analysis</th>
+                                        <td>
+                                            <input type="text" name="" placeholder="" value="Not yet">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Password</th>
+                                        <td>
+                                            <input type="password" name="password" placeholder="" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Confirm Password</th>
+                                        <td>
+                                            <input type="password" name="c_password" placeholder="" value="">
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button type="button" class="edit_btn edit_cancle" onclick="swap_section()">Cancle</button>
+                                    <button type="submit" class="edit_btn edit_update" onclick="">Update</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <img class="bg_img" src="../image/Slide1.jpg" alt="">
+                    <img class="bg_img" src="../image/Slide1.jpg" alt="">
+                </form>
             </div>
         </div>
     </div>
@@ -510,6 +545,20 @@
                 editSection.style.display = "none";
             }
         }
+    </script>
+
+    <script>
+        document.getElementById('edit_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            sendPostRequestForm('/profile', this, 'update_profile').then(response => {
+                if (response.message != 'success') {
+                    alert(response.message); // Display error message
+                }
+            });
+        });
+
+
     </script>
 
 </body>

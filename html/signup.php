@@ -15,6 +15,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +26,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
         }
 
         body {
@@ -34,7 +41,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('http://ece.northsouth.edu/wp-content/uploads/2015/08/rajesh-pp-photo.jpg'); /* Replace 'your-image-path.jpg' with the actual path of your image */
+            /* background-image: url('http://ece.northsouth.edu/wp-content/uploads/2015/08/rajesh-pp-photo.jpg'); */
             background-size: contain;
             background-position: center;
             /* background-repeat: no-repeat; */
@@ -102,7 +109,8 @@
             text-decoration: underline;
         }
 
-        .error-message, .success-message {
+        .error-message,
+        .success-message {
             text-align: center;
             margin-top: 1rem;
             font-size: 0.9rem;
@@ -120,6 +128,7 @@
     <script src="/js/common.js"></script>
 
 </head>
+
 <body>
     <div class="signup-container container">
         <form id="signupForm" class="signup-form" method="POST">
@@ -148,7 +157,7 @@
     </div>
 
     <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             // Clear any previous messages
@@ -174,14 +183,14 @@
                 return;
             }
 
-            sendPostRequest('/signup', this, 'signup').then(response => {
-                if(response.message != 'success') {
+            sendPostRequestForm('/signup', this, 'signup').then(response => {
+                if (response.message != 'success') {
                     errorMessage.textContent = response.message; // Display error message
                 }
                 else {
                     successMessage.textContent = 'You have successfully signed up! Redirecting to login page...';
-            
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         window.location.href = '/login';
                     }, 2000);
                 }
@@ -189,4 +198,5 @@
         });
     </script>
 </body>
+
 </html>

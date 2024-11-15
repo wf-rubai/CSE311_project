@@ -12,7 +12,7 @@ function signup($nsu_id, $email, $password, $confirm_password) {
         return "Email not valid";
     }
 
-    $stmt = $mysqli->prepare("SELECT * FROM register_users WHERE nsu_id = ?");
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE nsu_id = ?");
     $stmt->bind_param("s", $nsu_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,7 +27,7 @@ function signup($nsu_id, $email, $password, $confirm_password) {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $mysqli->prepare("INSERT INTO register_users(nsu_id, email, passkey) VALUES (?,?,?)");
+    $stmt = $mysqli->prepare("INSERT INTO users(nsu_id, email, passkey) VALUES (?,?,?)");
     $stmt->bind_param("sss", $nsu_id, $email, $hashed_password);
     $stmt->execute();
     if($stmt->affected_rows != 1) {

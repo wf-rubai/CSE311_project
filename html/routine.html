@@ -8,6 +8,18 @@
     <script src="../js/common.js"></script>
     <title>Document</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
@@ -627,30 +639,6 @@
                                         <td>SAC306</td>
                                         <td>20</td>
                                     </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>TBA</td>
-                                        <td>SAC212</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>TBA</td>
-                                        <td>NAC211</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>15</td>
-                                        <td>TBA</td>
-                                        <td>SAC210</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>18</td>
-                                        <td>TBA</td>
-                                        <td>SAC306</td>
-                                        <td>20</td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -681,7 +669,7 @@
     <script>
         const courses = [
             "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
-            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310", "CSE320",
+            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
             "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
             "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
             "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
