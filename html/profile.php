@@ -10,7 +10,7 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Type: application/json');
         if(isset($_POST['update_profile'])) {
-            $response = update_profile($_POST['fullname'], $_POST['email'], $_POST['nsu_email'], $_FILES['profile_image']);
+            $response = update_profile($_POST['fullname'], $_POST['email'], $_POST['nsu_email'], $_POST['completed_credit'], $_FILES['profile_image']);
             if($response != null) {
                 echo json_encode(['message' => 'success', 'redirectUrl' => '/profile']);
             }
@@ -424,7 +424,7 @@
                             </tr>
                             <tr>
                                 <th>Completed Credit</th>
-                                <td>58 Credit</td>
+                                <td><?php if(isset($user_details['completed_credit'])) {echo $user_details['completed_credit'];} ?> Credit</td>
                             </tr>
                             <tr>
                                 <th>Degree Analysis</th>
@@ -460,19 +460,19 @@
                                 <tr>
                                     <th>NSU ID</th>
                                     <td>
-                                        <input type="text" name="nsu_id" disabled id="" placeholder="ID" value="<?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?>">
+                                        <input type="text" placeholder="ID" disabled value="<?php if(isset($user_details['nsu_id'])) {echo $user_details['nsu_id'];} ?>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
                                     <td>
-                                        <input type="text" name="email" id="" placeholder="Email" value="<?php if(isset($user_details['email'])) {echo $user_details['email'];} ?>">
+                                        <input type="text" name="email" placeholder="Email" value="<?php if(isset($user_details['email'])) {echo $user_details['email'];} ?>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>NSU Email</th>
                                     <td>
-                                        <input type="text" name="nsu_email" id="" placeholder="NSU Email" value="<?php if(isset($user_details['nsu_email'])) {echo $user_details['nsu_email'];} ?>">
+                                        <input type="text" name="nsu_email" placeholder="NSU Email" value="<?php if(isset($user_details['nsu_email'])) {echo $user_details['nsu_email'];} ?>">
                                     </td>
                                 </tr>
                             </table>
@@ -495,25 +495,25 @@
                                     <tr>
                                         <th>Completed Credit</th>
                                         <td>
-                                            <input type="text" name="" id="" placeholder="" value="58">
+                                            <input type="text" name="completed_credit" placeholder="" value="<?php if(isset($user_details['completed_credit'])) {echo $user_details['completed_credit'];} ?>">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Degree Analysis</th>
                                         <td>
-                                            <input type="text" name="" id="" placeholder="" value="Not yet">
+                                            <input type="text" name="" placeholder="" value="Not yet">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Password</th>
                                         <td>
-                                            <input type="password" name="" id="" placeholder="" value="">
+                                            <input type="password" name="password" placeholder="" value="">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Confirm Password</th>
                                         <td>
-                                            <input type="password" name="" id="" placeholder="" value="">
+                                            <input type="password" name="c_password" placeholder="" value="">
                                         </td>
                                     </tr>
                                 </table>
