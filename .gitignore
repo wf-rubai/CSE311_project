@@ -3,3 +3,4 @@
 *.sqlite
 /data_rds2
 config.php
+/test

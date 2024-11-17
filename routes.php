@@ -12,6 +12,7 @@ return [
     '/routine' => 'html/routine.html',
     '/faculty_review' => 'html/faculty_review.php',
     '/custom_routine' => 'html/custom_routine.html',
+    '/test' => 'test/test3.php',
 ];
 
 ?>

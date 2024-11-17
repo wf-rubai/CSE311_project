@@ -523,8 +523,6 @@
                         let b = `1 - ${courseTime}`;
                         let [_1, days1, time1] = a.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
                         let [_2, days2, time2] = b.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
-                        console.log(days1, days2);
-                        console.log(time1, time2);
                         return timesIntersect(time1, time2) && (days1 === days2);
                     });
 
@@ -697,10 +695,6 @@
             // Check if the two time periods overlap
             return startTime1 < endTime2 && startTime2 < endTime1;
         }
-
-        // Example usage:
-        console.log(timesIntersect("02:00 PM - 03:15 PM", "02:30 PM - 04:00 PM")); // Should return true
-        console.log(timesIntersect("02:00 PM - 03:00 PM", "03:00 PM - 04:00 PM")); // Should return false
 
         function normalizeTime(timeString) {
             return timeString.replace(/\b0(\d)/g, '$1'); // Remove leading zeros from hours
