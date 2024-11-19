@@ -1,3 +1,21 @@
+<?php
+$conn = connect();
+
+$a_2 = 'SELECT c.course FROM courses c GROUP BY c.course';
+$result_2 = $conn->query($a_2);
+$_course_ = '';
+while ($r = $result_2->fetch_assoc()) {
+    $_course_ .= "'" . $r['course'] . "',";
+}
+
+$a_1 = 'SELECT course, section, CONCAT(days, " ", start, " - ", end) as time, faculty, seats FROM courses';
+$result_1 = $conn->query($a_1);
+$_sections = '';
+while ($r = $result_1->fetch_assoc()) {
+    $_sections .= '{"course":"' . $r['course'] . '","section":"' . $r['section'] . '","time":"' . $r['time'] . '","faculty":"' . $r['faculty'] . '","seats":"' . $r['seats'] . '"},';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -229,31 +247,32 @@
         }
 
         .tab_swap_controll {
-            margin: 10px;
+            margin: 10px 3px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
         }
 
         .tab_swap_controll button {
-            margin: 0 5px;
+            margin: 0 0 0 10px;
             border: 0;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            border-radius: 5px;
             display: flex;
             justify-content: center;
             font-size: 15px;
             align-items: center;
             background: 0;
-            color: white;
-            /* transition: .5s; */
+            color: #ffffff;
             cursor: pointer;
+            padding: 5px;
+            border: 1px solid #fff;
+            transition: .5s;
         }
 
-        .tab_swap_controll button i:hover {
-            /* background: #ffffff6e; */
-            text-shadow: 0 0 10px #fff;
+        .tab_swap_controll button:hover {
+            background: #ffffff;
+            color: #333;
+            box-shadow: 0 0 10px #fff;
         }
     </style>
 </head>
@@ -304,7 +323,6 @@
                                     <th style="border-radius: 0 0 0 0;">Section</th>
                                     <th style="border-radius: 0 0 0 0;">Class Time</th>
                                     <th style="border-radius: 0 0 0 0;">Faculty</th>
-                                    <th style="border-radius: 0 0 0 0;">Room</th>
                                     <th style="border-radius: 0 0 0 0;">Seat available</th>
                                     <th style="border-radius: 0 10px 0 0;">Remove</th>
                                 </tr>
@@ -316,109 +334,96 @@
                 </div>
             </div>
 
-            <div class="routine_table">
-                <div class="routine">
-                    <table>
-                        <tr>
-                            <th></th>
-                            <th>Sat</th>
-                            <th>Sun</th>
-                            <th>Mon</th>
-                            <th>Tue</th>
-                            <th>Wed</th>
-                            <th>Thu</th>
-                        </tr>
-                        <tr>
-                            <th>8:00 AM - 9:15 AM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>9:25 AM - 10:40 AM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>10:50 AM - 12:05 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>12:15 PM - 1:30 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>1:40 PM - 2:55 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>3:05 PM - 4:20 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>4:30 PM - 5:45 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr hidden>
-                            <th>5:55 - 7:10 PM</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                    <div class="tab_swap_controll">
-                        <button class="prev_tab" onclick="cleanAll()" title="Delete routine"><i class="fa-solid fa-trash"></i></button>
-                        <button class="next_tab" title="Save routine"><i class="fa-solid fa-circle-plus"></i></button>
+            <form method="POST">
+                <div class="routine_table">
+                    <div class="routine">
+                        <table>
+                            <tr data-rowNum="0">
+                                <th></th>
+                                <th>Sat</th>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                            </tr>
+                            <tr data-rowNum="1">
+                                <th>8:00 AM - 9:15 AM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="2">
+                                <th>9:25 AM - 10:40 AM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="3">
+                                <th>10:50 AM - 12:05 PM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="4">
+                                <th>12:15 PM - 1:30 PM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="5">
+                                <th>1:40 PM - 2:55 PM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="6">
+                                <th>3:05 PM - 4:20 PM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                            <tr data-rowNum="7">
+                                <th>4:30 PM - 5:45 PM</th>
+                                <td data-colNum="1"></td>
+                                <td data-colNum="2"></td>
+                                <td data-colNum="3"></td>
+                                <td data-colNum="4"></td>
+                                <td data-colNum="5"></td>
+                                <td data-colNum="6"></td>
+                            </tr>
+                        </table>
+                        <div class="tab_swap_controll">
+                            <button class="prev_tab" onclick="cleanAll()" title="Delete routine">Clear</button>
+                            <button type="button" class="next_tab" onclick="saveRoutine()" title="Save routine">Save Routine</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <!-- course selection js -->
     <script>
-        const courses = [
-            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
-            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
-            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
-            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
-            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
-        ];
+        const courses = [<?php echo $_course_; ?>];
         const searchBox = document.querySelector(`#search_box_course`);
         const listContainer = document.querySelector(`#courseList`);
 
@@ -456,35 +461,16 @@
 
     <!-- section selection js -->
     <script>
-        const sections = [
-            { section: '1', time: "MW 08:00 AM - 09:45 AM" },
-            { section: '2', time: "ST 09:25 AM - 10:40 AM" },
-            { section: '3', time: "RA 10:50 AM - 12:05 PM" },
-            { section: '4', time: "MW 01:40 PM - 02:55 PM" },
-            { section: '5', time: "ST 03:05 PM - 04:20 PM" },
-            { section: '6', time: "RA 04:30 PM - 05:45 PM" },
-            { section: '7', time: "MW 06:00 PM - 07:15 PM" },
-            { section: '8', time: "ST 07:30 PM - 08:45 PM" },
-            { section: '9', time: "RA 09:25 AM - 10:40 AM" },
-            { section: '10', time: "MW 10:50 AM - 12:05 PM" },
-            { section: '11', time: "ST 12:15 PM - 01:30 PM" },
-            { section: '12', time: "RA 01:40 PM - 02:55 PM" },
-            { section: '13', time: "MW 03:05 PM - 04:20 PM" },
-            { section: '14', time: "ST 04:30 PM - 05:45 PM" },
-            { section: '15', time: "RA 06:00 PM - 07:15 PM" },
-            { section: '16', time: "MW 07:30 PM - 08:45 PM" },
-            { section: '17', time: "ST 09:25 AM - 10:40 AM" },
-            { section: '18', time: "RA 10:30 AM - 11:45 AM" },
-            { section: '19', time: "MW 12:00 PM - 01:15 PM" },
-            { section: '20', time: "ST 02:00 PM - 03:15 PM" }
-        ];
-
+        const sections = [<?php echo $_sections; ?>];
+        let short_section = [];
 
         const sectionSearchBox = document.querySelector(`#search_box_section`);
         const sectionListContainer = document.querySelector(`#sectionList`);
 
         function filterSectionList() {
+            short_section = [];
             const filter = sectionSearchBox.value.toLowerCase();
+            const selected_course = searchBox.value.toLowerCase();
 
             sectionListContainer.style.display = "block";
             sectionListContainer.innerHTML = "";
@@ -499,9 +485,11 @@
                 }
             });
 
-            sections
-                .filter(item => item.section.toLowerCase().includes(filter) || item.time.toLowerCase().includes(filter))
+            if (selected_course != '')
+                sections
+                .filter(item => ((item.section.toLowerCase().includes(filter) || item.time.toLowerCase().includes(filter)) && item.course.toLowerCase() == selected_course.trim()))
                 .forEach(item => {
+                    short_section.push(item);
                     const option = document.createElement("div");
                     option.classList.add("dropdown-item");
 
@@ -518,7 +506,6 @@
 
                     // Check for time clashes with the course times
                     const isClashing = courseTimes.some(courseTime => {
-                        console.log(item.time, '\t', courseTime)
                         let a = `${item.section} - ${item.time}`;
                         let b = `1 - ${courseTime}`;
                         let [_1, days1, time1] = a.match(/- ([A-Z]+) ([\d:APM\s-]+)/) || [];
@@ -572,7 +559,7 @@
         const sectionInput = document.getElementById("search_box_section");
         const courseTable = document.querySelector(".course_tab tbody"); // Getting tbody for new rows
 
-        addButton.addEventListener("click", function () {
+        addButton.addEventListener("click", function() {
             addCoursesToCourses();
             addCoursesToRoutine();
         });
@@ -581,6 +568,7 @@
             // Get selected course and section values
             const selectedCourse = courseInput.value.trim();
             const selectedSection = sectionInput.value.trim();
+            let faculty, seats;
 
             if (!selectedCourse || !selectedSection) {
                 alert("Please select both a course and a section.");
@@ -594,20 +582,37 @@
             // Create a new row
             const newRow = document.createElement("tr");
 
+            short_section.forEach(sec => {
+                if (sec.course == selectedCourse && sec.section == section) {
+                    faculty = sec.faculty;
+                    seats = sec.seats;
+                }
+            });
+
             // Add cells for each column with values or placeholders
             newRow.innerHTML = `
                 <td>${selectedCourse}</td>
                 <td>${section}</td>
                 <td>${time}</td>
-                <td>TBA</td>
-                <td></td>
-                <td></td>
+                <td>${faculty}</td>
+                <td>${seats}</td>
                 <td><button>&times;</button></td>
             `;
 
             courseTable.appendChild(newRow);
-            newRow.querySelector("button").addEventListener("click", function () {
+            newRow.querySelector("button").addEventListener("click", function() {
                 courseTable.removeChild(newRow);
+                let sectCors = newRow.querySelector('td').innerText;
+                let tr_row = document.querySelectorAll(".routine_table .routine table tr");
+                tr_row.forEach(row => {
+                    let tr_row = row.querySelectorAll('td');
+                    tr_row.forEach(td => {
+                        if (td.innerText == sectCors) {
+                            td.innerText = '';
+                            td.style.backgroundColor = '#ffffff';
+                        }
+                    });
+                });
             });
         }
 
@@ -628,7 +633,7 @@
                 'M': 3, // Monday
                 'T': 4, // Tuesday
                 'W': 5, // Wednesday
-                'R': 6  // Thursday
+                'R': 6 // Thursday
             };
 
             // Choose a random color from the array
@@ -689,8 +694,14 @@
             };
 
             // Extract start and end times for both periods
-            const { start: startTime1, end: endTime1 } = extractTimes(period1);
-            const { start: startTime2, end: endTime2 } = extractTimes(period2);
+            const {
+                start: startTime1,
+                end: endTime1
+            } = extractTimes(period1);
+            const {
+                start: startTime2,
+                end: endTime2
+            } = extractTimes(period2);
 
             // Check if the two time periods overlap
             return startTime1 < endTime2 && startTime2 < endTime1;
@@ -709,8 +720,8 @@
 
             routineRows.forEach(row => {
                 row.querySelectorAll('td').forEach(td => {
-                    td.innerHTML = '';   
-                    td.style.background = '#fff'; 
+                    td.innerHTML = '';
+                    td.style.background = '#fff';
                 });
             });
 
@@ -718,6 +729,76 @@
 
         }
     </script>
+
+    <!-- array setup functions -->
+    <script>
+        let courseDict = [];
+
+        function make_dictionary() {
+            courseDict = [];
+            let table = document.querySelector(".course_tab table");
+
+            for (let i = 1; i < table.rows.length; i++) {
+                let row = table.rows[i];
+                let entry = {
+                    course: row.cells[0].innerText,
+                    section: row.cells[1].innerText,
+                    time: row.cells[2].innerText,
+                    faculty: row.cells[3].innerText,
+                    seats: row.cells[4].innerText
+                };
+                courseDict.push(entry);
+            }
+        }
+
+        function find_json(course) {
+            // console.log(course);
+            return courseDict.find(dict => dict.course === course);
+        }
+
+        function saveRoutine() {
+            make_dictionary();
+            let jsonData = [];
+            let tab_row = document.querySelectorAll('.routine table tr');
+
+            tab_row.forEach(row => {
+                if (row.dataset.rowNum != 0) {
+                    let row_td = row.querySelectorAll('td');
+                    row_td.forEach(td => {
+                        if (td.innerText != '') {
+                            let cor = find_json(td.innerText);
+                            // console.log(cor);
+                            // if(cor) {
+                                let entry = {
+                                    course: td.innerText,
+                                    row: row.dataset.rownum,
+                                    col: td.dataset.colnum,
+                                    section: cor.section,
+                                    time: cor.time,
+                                    faculty: cor.faculty,
+                                    seats: cor.seats,
+                                    color: td.style.backgroundColor || "none" // Handle empty color
+                                };
+                                jsonData.push(entry);
+                            // } else {
+                            //     console.warn(`Course '${td.innerText}' not found in dictionary`);
+                            // }
+                        }
+                    });
+                }
+            });
+
+            let sendJSON = JSON.stringify(jsonData);
+            console.log(sendJSON);
+        }
+    </script>
+
+    <!-- php codes -->
+    <?php
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    }
+    ?>
 
 </body>
 

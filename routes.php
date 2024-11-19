@@ -11,7 +11,8 @@ return [
     '/profile' => 'html/profile.php',
     '/routine' => 'html/routine.html',
     '/faculty_review' => 'html/faculty_review.php',
-    '/custom_routine' => 'html/custom_routine.html',
+    '/custom_routine' => 'html/custom_routine.php',
+    '/saved_routine' => 'html/saved_routine.php',
     '/test' => 'test/test3.php',
 ];
 
