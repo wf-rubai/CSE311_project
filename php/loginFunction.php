@@ -12,7 +12,7 @@ function login($nsu_id, $password) {
     // $nsu_id = htmlspecialchars($nsu_id);
     // $password = htmlspecialchars($password);
 
-    $sql = "SELECT nsu_id, passkey, fullname FROM register_users WHERE nsu_id = ?";
+    $sql = "SELECT nsu_id, passkey, fullname FROM users WHERE nsu_id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("s", $nsu_id);
     $stmt->execute();

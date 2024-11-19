@@ -26,7 +26,6 @@ window.addEventListener('load', function() {
 */
 async function sendPostRequestForm(url, form, action=null) {
     try {
-        console.log(form);
         formData = new FormData(form);
         if(action) {
             formData.append(action, action);
@@ -34,10 +33,7 @@ async function sendPostRequestForm(url, form, action=null) {
         
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded', // Set header for URL encoded data
-            },
-            body: new URLSearchParams(formData) // Send serialized form data
+            body: formData // Send serialized form data
         });
 
         const data = await response.json(); // Parse the JSON response
