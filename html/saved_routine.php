@@ -52,6 +52,13 @@
             top: 0;
             left: 0;
         }
+
+        hr {
+            width: 5px;
+            background: white;
+            border: 0;
+            border-radius: 5px;
+        }
     </style>
     <!-- base css -->
     <style>
@@ -72,7 +79,7 @@
     <!-- course table css -->
     <style>
         .course_tab {
-            /* width: 50%; */
+            width: 550px;
             /* width: -webkit-fill-available; */
             height: fit-content;
             max-height: 280px;
@@ -214,8 +221,8 @@
         <!-- all main content here -->
         <div class="main_body">
             <img class="bg_img" src="../image/Slide1.jpg" alt="">
-            <h3 style="margin: 0; color: white;">Saved Routines</h3>
             <div class="scroll_tab">
+                <h3 style="margin: 0; color: white; text-align: center;">Saved Routines</h3>
                 <!-- added table_row div here from the hidden_routine_table based on database -->
             </div>
         </div>
@@ -225,10 +232,11 @@
     <!-- hidden routine table html -->
     <div class="hidden_routine_table" hidden>
         <div class="table_row">
+            <hr>
             <div class="routine">
                 <div>
                     <button type="button" onclick="">Remove Table</button>
-                    <button type="button" onclick="open_side_tab(this)">Routine detail</button>
+                    <button class="open" type="button" onclick="">Routine detail</button>
                 </div>
                 <table>
                     <tr data-rowNum="0">
@@ -315,7 +323,7 @@
                 </table>
             </div>
             <div style="display: none; flex-direction: column; align-items: end;">
-                <button class="close" type="button" onclick="close_side_tab(this)">&times;</button>
+                <button class="close" type="button" onclick="">&times;</button>
                 <div class="course_tab">
                     <table>
                         <thead>
@@ -328,13 +336,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>CSE311</td>
-                                <td>10</td>
-                                <td>MW 10:40 AM - 12:05 PM</td>
-                                <td>TBA</td>
-                                <td>7</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -344,16 +345,254 @@
 
     <!-- generative script -->
     <script>
-        function new_tab() {
-            return document.querySelector('.hidden_routine_table').innerHTML;
+        const json_obj1 = [{
+                "course": "CSE115",
+                "row": "2",
+                "col": "2",
+                "section": "2",
+                "time": "ST 9:25 AM - 10:40 AM",
+                "faculty": "TBA",
+                "seats": "24",
+                "color": "rgb(0, 191, 255)"
+            },
+            {
+                "course": "ACT201",
+                "row": "2",
+                "col": "3",
+                "section": "1",
+                "time": "MW 9:25 AM - 10:40 AM",
+                "faculty": "TBA",
+                "seats": "30",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "CSE115",
+                "row": "2",
+                "col": "4",
+                "section": "2",
+                "time": "ST 9:25 AM - 10:40 AM",
+                "faculty": "TBA",
+                "seats": "24",
+                "color": "rgb(0, 191, 255)"
+            },
+            {
+                "course": "ACT201",
+                "row": "2",
+                "col": "5",
+                "section": "1",
+                "time": "MW 9:25 AM - 10:40 AM",
+                "faculty": "TBA",
+                "seats": "30",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "CSE311L",
+                "row": "5",
+                "col": "1",
+                "section": "6",
+                "time": "A 1:40 PM - 4:20 PM",
+                "faculty": "TBA",
+                "seats": "7",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "ACT202",
+                "row": "5",
+                "col": "2",
+                "section": "5",
+                "time": "ST 1:40 PM - 2:55 PM",
+                "faculty": "TBA",
+                "seats": "23",
+                "color": "rgb(221, 160, 221)"
+            },
+            {
+                "course": "ACT202",
+                "row": "5",
+                "col": "4",
+                "section": "5",
+                "time": "ST 1:40 PM - 2:55 PM",
+                "faculty": "TBA",
+                "seats": "23",
+                "color": "rgb(221, 160, 221)"
+            },
+            {
+                "course": "CSE311L",
+                "row": "6",
+                "col": "1",
+                "section": "6",
+                "time": "A 1:40 PM - 4:20 PM",
+                "faculty": "TBA",
+                "seats": "7",
+                "color": "rgb(144, 238, 144)"
+            }
+        ];
+        const json_obj2 = [{
+                "course": "CSE115",
+                "row": "1",
+                "col": "3",
+                "section": "1",
+                "time": "MW 8:00 AM - 9:15 AM",
+                "faculty": "TBA",
+                "seats": "3",
+                "color": "rgb(218, 218, 0)"
+            },
+            {
+                "course": "CSE115",
+                "row": "1",
+                "col": "5",
+                "section": "1",
+                "time": "MW 8:00 AM - 9:15 AM",
+                "faculty": "TBA",
+                "seats": "3",
+                "color": "rgb(218, 218, 0)"
+            },
+            {
+                "course": "MAT116",
+                "row": "3",
+                "col": "3",
+                "section": "9",
+                "time": "MW 10:50 AM - 12:05 PM",
+                "faculty": "TBA",
+                "seats": "34",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "MAT116",
+                "row": "3",
+                "col": "5",
+                "section": "9",
+                "time": "MW 10:50 AM - 12:05 PM",
+                "faculty": "TBA",
+                "seats": "34",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "PHY107L",
+                "row": "3",
+                "col": "6",
+                "section": "3",
+                "time": "R 10:50 AM - 1:30 PM",
+                "faculty": "TBA",
+                "seats": "28",
+                "color": "rgb(255, 182, 193)"
+            },
+            {
+                "course": "PHY107L",
+                "row": "4",
+                "col": "6",
+                "section": "3",
+                "time": "R 10:50 AM - 1:30 PM",
+                "faculty": "TBA",
+                "seats": "28",
+                "color": "rgb(255, 182, 193)"
+            },
+            {
+                "course": "EEE154",
+                "row": "5",
+                "col": "1",
+                "section": "2",
+                "time": "A 1:40 PM - 2:55 PM",
+                "faculty": "TBA",
+                "seats": "0",
+                "color": "rgb(144, 238, 144)"
+            },
+            {
+                "course": "HIS103",
+                "row": "5",
+                "col": "2",
+                "section": "15",
+                "time": "ST 1:40 PM - 2:55 PM",
+                "faculty": "TBA",
+                "seats": "4",
+                "color": "rgb(0, 191, 255)"
+            },
+            {
+                "course": "HIS103",
+                "row": "5",
+                "col": "4",
+                "section": "15",
+                "time": "ST 1:40 PM - 2:55 PM",
+                "faculty": "TBA",
+                "seats": "4",
+                "color": "rgb(0, 191, 255)"
+            }
+        ]
+
+        function new_tab_row() {
+            return document.querySelector('.hidden_routine_table .table_row').cloneNode(true);
         }
 
         function open_side_tab(tag) {
-            tag.parentElement.nextElementSibling.style.display = 'flex';
+            tag.parentElement.parentElement.nextElementSibling.style.display = 'flex';
         }
 
         function close_side_tab(tag) {
             tag.parentElement.style.display = 'none';
+        }
+    </script>
+
+    <!-- set table js -->
+    <script>
+        generate_table(json_obj1);
+        generate_table(json_obj2);
+        generate_table(json_obj1);
+        generate_table(json_obj2);
+
+        function generate_table(json) {
+            let new_tab = new_tab_row();
+            json.forEach(obj => {
+                set_routine(obj, new_tab);
+            });
+            set_table(json, new_tab);
+
+            new_tab.querySelector('.open').onclick = function() {
+                open_side_tab(this);
+            };
+            new_tab.querySelector('.close').onclick = function() {
+                close_side_tab(this);
+            };
+            document.querySelector('.scroll_tab').appendChild(new_tab);
+        }
+
+        function set_routine(obj, tab) {
+            let rows = tab.querySelectorAll('.routine table tr');
+            rows.forEach(row => {
+                if (row.dataset.rownum === obj.row) {
+                    let row_td = row.querySelectorAll('td');
+                    row_td.forEach(td => {
+                        if (td.dataset.colnum === obj.col) {
+                            td.innerText = obj.course;
+                            td.style.backgroundColor = obj.color;
+                        }
+                    });
+                }
+            });
+        }
+
+        function set_table(obj, tab) {
+            let rows = remove_duplicate_courses(obj);
+            let table = tab.querySelector('.course_tab table tbody');
+            rows.forEach(row => {
+                let newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${row.course}</td>
+                    <td>${row.section}</td>
+                    <td>${row.time}</td>
+                    <td>${row.faculty}</td>
+                    <td>${row.seats}</td>
+                `;
+                table.appendChild(newRow);
+            });
+        }
+
+        function remove_duplicate_courses(jsonArray) {
+            const uniqueCourses = new Map();
+            jsonArray.forEach(obj => {
+                if (!uniqueCourses.has(obj.course)) {
+                    uniqueCourses.set(obj.course, obj);
+                }
+            });
+            return Array.from(uniqueCourses.values());
         }
     </script>
 </body>

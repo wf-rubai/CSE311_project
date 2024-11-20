@@ -762,34 +762,29 @@ while ($r = $result_1->fetch_assoc()) {
             let tab_row = document.querySelectorAll('.routine table tr');
 
             tab_row.forEach(row => {
-                if (row.dataset.rowNum != 0) {
+                if (row.dataset.rownum != 0) {
                     let row_td = row.querySelectorAll('td');
                     row_td.forEach(td => {
                         if (td.innerText != '') {
                             let cor = find_json(td.innerText);
-                            // console.log(cor);
-                            // if(cor) {
-                                let entry = {
-                                    course: td.innerText,
-                                    row: row.dataset.rownum,
-                                    col: td.dataset.colnum,
-                                    section: cor.section,
-                                    time: cor.time,
-                                    faculty: cor.faculty,
-                                    seats: cor.seats,
-                                    color: td.style.backgroundColor || "none" // Handle empty color
-                                };
-                                jsonData.push(entry);
-                            // } else {
-                            //     console.warn(`Course '${td.innerText}' not found in dictionary`);
-                            // }
+                            let entry = {
+                                course: td.innerText,
+                                row: row.dataset.rownum,
+                                col: td.dataset.colnum,
+                                section: cor.section,
+                                time: cor.time,
+                                faculty: cor.faculty,
+                                seats: cor.seats,
+                                color: td.style.backgroundColor || "none" // Handle empty color
+                            };
+                            jsonData.push(entry);
                         }
                     });
                 }
             });
 
-            let sendJSON = JSON.stringify(jsonData);
-            console.log(sendJSON);
+            // let sendJSON = JSON.stringify(jsonData);
+            console.log(jsonData);
         }
     </script>
 
@@ -803,3 +798,4 @@ while ($r = $result_1->fetch_assoc()) {
 </body>
 
 </html>
+
