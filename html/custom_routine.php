@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $sql = "INSERT INTO save_routine (user_id, routine_data) VALUES ($nsu_id, '$routine_data')";
             $conn->query($sql);
-            echo json_encode(['message' => 'success', 'data' => $_POST]);
+            echo json_encode(['message' => 'success', 'redirectUrl' => '/custom_routine']);
         } catch (exception $e) {
             echo json_encode(['message' => 'Error! Could not save your routine!']);
         }
