@@ -1,6 +1,25 @@
 <?php
 $conn = connect();
 
+checkLogin();
+$nsu_id = $_SESSION['nsu_id'];
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['save_routine'])) {
+        header('Content-Type: application/json');
+        $routine_data = $_POST['jsondata'];
+
+        try {
+            $sql = "INSERT INTO save_routine (user_id, routine_data) VALUES ($nsu_id, '$routine_data')";
+            $conn->query($sql);
+            echo json_encode(['message' => 'success', 'data' => $_POST]);
+        } catch (exception $e) {
+            echo json_encode(['message' => 'Error! Could not save your routine!']);
+        }
+        exit();
+    }
+}
+
 $a_2 = 'SELECT c.course FROM courses c GROUP BY c.course';
 $result_2 = $conn->query($a_2);
 $_course_ = '';
@@ -783,17 +802,19 @@ while ($r = $result_1->fetch_assoc()) {
                 }
             });
 
-            // let sendJSON = JSON.stringify(jsonData);
-            console.log(jsonData);
+            let sendJSON = JSON.stringify(jsonData);
+
+            sendPostRequest('/custom_routine', 'save_routine', [['jsondata', sendJSON]]).then(response => {
+                if (response.message != 'success') {
+                    // errorMessage.textContent = response.message; // Display error message
+                    alert(response.message);
+                }
+                else {
+                    alert("Routine saved succesfully!");
+                }
+            });
         }
     </script>
-
-    <!-- php codes -->
-    <?php
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    }
-    ?>
 
 </body>
 
