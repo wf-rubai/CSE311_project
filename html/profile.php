@@ -10,7 +10,7 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Type: application/json');
         if(isset($_POST['update_profile'])) {
-            $response = update_profile($_POST['fullname'], $_POST['email'], $_POST['nsu_email'], $_POST['completed_credit'], $_FILES['profile_image']);
+            $response = update_profile($_POST['fullname'], $_POST['email'], $_POST['nsu_email'], $_POST['completed_credit'], $_FILES['profile_image'], $_POST['password'], $_POST['c_password']);
             if($response != null) {
                 echo json_encode(['message' => 'success', 'redirectUrl' => '/profile']);
             }
@@ -438,7 +438,7 @@
             </div>
 
             <div class="edit_section main_bg">
-                <form id="edit_form" enctype="multipart/form-data">
+                <form id="edit_form" enctype="multipart/form-data" method="POST">
                     <div class="edit_info">
                         <div class="edit_part_1">
                             <div style="position: relative;">
@@ -507,13 +507,13 @@
                                     <tr>
                                         <th>Password</th>
                                         <td>
-                                            <input type="password" name="password" placeholder="" value="">
+                                            <input type="password" name="password" id="password" placeholder="" value="">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Confirm Password</th>
                                         <td>
-                                            <input type="password" name="c_password" placeholder="" value="">
+                                            <input type="password" name="c_password" placeholder="" id="c_password" value="">
                                         </td>
                                     </tr>
                                 </table>
@@ -548,8 +548,16 @@
     </script>
 
     <script>
+        
         document.getElementById('edit_form').addEventListener('submit', function (e) {
-            // e.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('c_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return;
+            }
 
             sendPostRequestForm('/profile', this, 'update_profile').then(response => {
                 if (response.message != 'success') {
