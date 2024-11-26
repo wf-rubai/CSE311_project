@@ -27,7 +27,7 @@
 
         // Query to get all data from the table
         $sql = "SELECT * FROM review
-                WHERE review_of = '". $faculty_initial ."'";
+                WHERE review_of = '$faculty_initial'";
 
         $result = $mysqli->query($sql);
 

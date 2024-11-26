@@ -13,6 +13,7 @@ return [
     '/faculty_review' => 'html/faculty_review.php',
     '/update_signup'=>'html/update_signup.html',
     '/custom_routine' => 'html/custom_routine.html',
+    '/admin/faculty'=>'html/faculty.php'
 ];
 
 ?>

@@ -549,7 +549,7 @@
 
     <script>
         document.getElementById('edit_form').addEventListener('submit', function (e) {
-            e.preventDefault();
+            // e.preventDefault();
 
             sendPostRequestForm('/profile', this, 'update_profile').then(response => {
                 if (response.message != 'success') {
