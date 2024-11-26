@@ -1,19 +1,10 @@
 <?php
-echo '<pre>';
-
-$json_str = '[{"course":"cse115", "cr": 3},{"course":"mat116", "cr": 3},{"course":"eng102", "cr": 3},{"course":"phy107", "cr": 3}, {"min_cr": 5, "max_cr": 10}]';
-$json = json_decode($json_str, true);
+$data = json_decode(file_get_contents("php://input"), true);
+$json = $data['courses'];
 $courses = [];
 for($i = 0; $i < count($json)-1; $i++){
     $courses[] = $json[$i];
 }
-
-// $courses = json_decode($course_json, true);
-// $courses = ["cse115", "mat116", "eng102", "cse115l", "cse311l"];
-$courses_comb = generate_course_combinations($courses);
-// print_r($courses);
-
-// $courses_set = fetch_course_list($courses);
 
 function credit_in_between($courses){
     global $json;
@@ -31,35 +22,27 @@ function credit_in_between($courses){
 
 function generate_course_combinations($courses) {
     $result = [];
-    // $n = count($courses);
 
-    // Helper function to generate combinations
     function combinations_helper($courses, $current, $index, &$result) {
-        // Add current combination to the result
         if(credit_in_between($current)){
             $result[] = $current;
         }
 
-        // Iterate through the array starting from the current index
         for ($i = $index; $i < count($courses); $i++) {
-            // Include the current element and recurse
             $current[] = $courses[$i];
             combinations_helper($courses, $current, $i + 1, $result);
-            // Backtrack: remove the last added element
             array_pop($current);
         }
     }
 
-    // Call the helper with an empty current combination
     combinations_helper($courses, [], 0, $result);
-    // print_r($result);
     return $result;
 }
 
 function fetch_course_list($courses){
     $conn = connect();
     foreach($courses as $cour){
-        $sql = "SELECT c.course, CONCAT(c.days,' ', c.start, ' - ', c.end) as time 
+        $sql = "SELECT c.course, CONCAT(c.days,' ', c.start, ' - ', c.end) as time, '{$cour['color']}' as color
                 FROM courses c
                 WHERE c.course = '{$cour['course']}'
                 GROUP BY time";
@@ -77,20 +60,17 @@ function fetch_course_list($courses){
 }
 
 function check_time_clash($routine) {
-    // Check if there is any time clash in the routine
     for ($i = 0; $i < count($routine); $i++) {
         for ($j = $i + 1; $j < count($routine); $j++) {
-            // Compare times of two different courses
             if (is_time_clash($routine[$i]['time'], $routine[$j]['time'])) {
-                return true; // Time clash found
+                return true;
             }
         }
     }
-    return false; // No clash
+    return false;
 }
 
 function is_time_clash($time1, $time2) {
-    // Parse the start and end times for both inputs
     preg_match('/([STMWRAstmwra]{1})([STMWRAstmwra]{0,1}) (\d{1,2}:\d{2} [APM]{2}) - (\d{1,2}:\d{2} [APM]{2})/', $time1, $matches1);
     preg_match('/([STMWRAstmwra]{1})([STMWRAstmwra]{0,1}) (\d{1,2}:\d{2} [APM]{2}) - (\d{1,2}:\d{2} [APM]{2})/', $time2, $matches2);
     
@@ -100,28 +80,46 @@ function is_time_clash($time1, $time2) {
     $matches2[2] = strtolower($matches2[2]);    
 
     if (!$matches1 || !$matches2) {
-        return false; // Invalid time format
+        return false; 
     }elseif (!($matches1[1] == $matches2[1] || $matches1[1] == $matches2[2] || $matches1[2] == $matches2[1] || ($matches1[2] == $matches2[2] && $matches1[2] != '' && $matches2[2] != ''))){
         return false;
     }
 
-    // Convert times to 24-hour format for easier comparison
     $start1 = strtotime($matches1[3]);
     $end1 = strtotime($matches1[4]);
     $start2 = strtotime($matches2[3]);
     $end2 = strtotime($matches2[4]);
 
-    // Check if the times overlap
     return !($end1 <= $start2 || $end2 <= $start1);
+}
+
+function acceptable_day_count($course_list) {
+    global $json;
+    $days_of_week = ['A', 'S', 'M', 'T', 'W', 'R'];
+    $days_taken = [];
+
+    foreach ($course_list as $course) {
+        $time = $course['time'];
+        
+        preg_match_all('/[A-Za-z]/', $time, $matches);
+
+        foreach ($matches[0] as $day) {
+            if (in_array($day, $days_of_week)) {
+                $days_taken[$day] = true;
+            }
+        }
+    }
+
+    return count($days_taken) <= $json[count($json)-1]['day_num'];
 }
 
 function generate_routines() {
     $routines = [];
     $combinations = generate_all_combinations();
 
-    $routine_number = 1; // Start counting routines
+    $routine_number = 1; 
     foreach ($combinations as $combination) {
-        if (!check_time_clash($combination)) {
+        if (!check_time_clash($combination) && acceptable_day_count($combination)) {
             $routines[] = [
                 'table' => $routine_number,
                 'routine' => $combination
@@ -138,46 +136,35 @@ function generate_all_combinations(){
     foreach($courses_comb as $course){
         $courses_set = fetch_course_list($course);
 
-        $combination = array_merge($combination, generate_sub_combinations($courses_set));
+        $combination = array_merge($combination, generate_sub_combinations_recursive($courses_set));
     }
     return $combination;
 }
 
-function generate_sub_combinations($courses_set) {
-    $combinations = [];
-    $course_count = count($courses_set);
-    $indices = array_fill(0, $course_count, 0); // Initialize all indices to 0
-
-    while (true) {
+function generate_sub_combinations_recursive($courses_set, $indices = [], $combinations = []) {
+    // Base case: if we've processed all courses
+    if (count($indices) == count($courses_set)) {
+        // Build the combination from the current indices
         $combination = [];
-        for ($i = 0; $i < $course_count; $i++) {
-            $combination[] = $courses_set[$i][$indices[$i]];
+        foreach ($indices as $i => $index) {
+            $combination[] = $courses_set[$i][$index];
         }
+        // Add the combination to the list of combinations
         $combinations[] = $combination;
-
-        // Move to the next combination
-        $i = $course_count - 1;
-        while ($i >= 0) {
-            if ($indices[$i] < count($courses_set[$i]) - 1) {
-                $indices[$i]++;
-                break;
-            } else {
-                $indices[$i] = 0;
-                $i--;
-            }
-        }
-        if ($i < 0) {
-            break;
-        }
+        return $combinations;
     }
 
-    return $combinations;
+    // Recursive case: process the next course
+    $current_course = $courses_set[count($indices)];
+    $current_combinations = [];
+    foreach ($current_course as $i => $course) {
+        $new_indices = array_merge($indices, [$i]);
+        $current_combinations = array_merge($current_combinations, generate_sub_combinations_recursive($courses_set, $new_indices, $combinations));
+    }
+
+    return $current_combinations;
 }
+$courses_comb = generate_course_combinations($courses);
 $routines = generate_routines();
-
-$temps = json_encode($routines);
-echo "<script> console.log($temps)</script>";
-
-
-echo '</pre>';
+echo json_encode($routines);
 ?>

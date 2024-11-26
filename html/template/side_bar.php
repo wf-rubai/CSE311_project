@@ -147,7 +147,7 @@
                 <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/faculty_review')">Faculty Review</a></h4>
             </div>
         </div>
-        <div class="log_out_btn"> <a onclick="navigateToPages('/logout')">Log out<i class="fa-solid fa-right-from-bracket"></i></a></div>
+        <div class="log_out_btn"> <a onclick="navigateToPages('/logout')">Log out <i class="fa-solid fa-right-from-bracket"></i></a></div>
         <!-- <h3>Navigate to</h3> -->
     </div>
 
