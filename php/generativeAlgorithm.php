@@ -1,7 +1,7 @@
 <?php
 echo '<pre>';
 
-$json_str = '[{"course":"cse115", "cr": 3},{"course":"mat116", "cr": 3},{"course":"eng102", "cr": 3},{"course":"eee154", "cr": 1}, {"min_cr": 5, "max_cr": 10}]';
+$json_str = '[{"course":"cse115", "cr": 3},{"course":"mat116", "cr": 3},{"course":"eng102", "cr": 3},{"course":"phy107", "cr": 3}, {"min_cr": 5, "max_cr": 10}]';
 $json = json_decode($json_str, true);
 $courses = [];
 for($i = 0; $i < count($json)-1; $i++){
@@ -62,8 +62,7 @@ function fetch_course_list($courses){
         $sql = "SELECT c.course, CONCAT(c.days,' ', c.start, ' - ', c.end) as time 
                 FROM courses c
                 WHERE c.course = '{$cour['course']}'
-                GROUP BY time
-                LIMIT 4";
+                GROUP BY time";
 
         $result = $conn->query($sql);
         $temp = [];

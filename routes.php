@@ -11,7 +11,6 @@ return [
     '/profile' => 'html/profile.php',
     '/generate_routine' => 'html/generate_routine.html',
     '/faculty_review' => 'html/faculty_review.php',
-    '/update_signup'=>'html/update_signup.html',
     '/custom_routine' => 'html/custom_routine.php',
     '/saved_routine' => 'html/saved_routine.php',
     '/test' => 'php/generativeAlgorithm.php',
