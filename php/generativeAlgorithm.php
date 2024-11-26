@@ -11,7 +11,7 @@ for($i = 0; $i < count($json)-1; $i++){
 // $courses = json_decode($course_json, true);
 // $courses = ["cse115", "mat116", "eng102", "cse115l", "cse311l"];
 $courses_comb = generate_course_combinations($courses);
-print_r($courses);
+// print_r($courses);
 
 // $courses_set = fetch_course_list($courses);
 
@@ -31,7 +31,7 @@ function credit_in_between($courses){
 
 function generate_course_combinations($courses) {
     $result = [];
-    $n = count($courses);
+    // $n = count($courses);
 
     // Helper function to generate combinations
     function combinations_helper($courses, $current, $index, &$result) {
@@ -52,7 +52,7 @@ function generate_course_combinations($courses) {
 
     // Call the helper with an empty current combination
     combinations_helper($courses, [], 0, $result);
-    print_r($result);
+    // print_r($result);
     return $result;
 }
 
@@ -116,7 +116,7 @@ function is_time_clash($time1, $time2) {
     return !($end1 <= $start2 || $end2 <= $start1);
 }
 
-function generate_routines($courses_set) {
+function generate_routines() {
     $routines = [];
     $combinations = generate_all_combinations();
 
@@ -174,7 +174,7 @@ function generate_sub_combinations($courses_set) {
 
     return $combinations;
 }
-$routines = generate_routines($courses_set);
+$routines = generate_routines();
 
 $temps = json_encode($routines);
 echo "<script> console.log($temps)</script>";
