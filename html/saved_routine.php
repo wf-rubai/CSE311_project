@@ -235,7 +235,7 @@
             <hr>
             <div class="routine">
                 <div>
-                    <button type="button" onclick="">Remove Table</button>
+                    <button id="remove_btn" data-tab-num="0" type="button" onclick="">Remove Table</button>
                     <button class="open" type="button" onclick="">Routine detail</button>
                 </div>
                 <table>
@@ -533,13 +533,14 @@
 
     <!-- set table js -->
     <script>
-        generate_table(json_obj1);
-        generate_table(json_obj2);
-        generate_table(json_obj1);
-        generate_table(json_obj2);
+        generate_table(json_obj1, 0);
+        generate_table(json_obj1, 1);
+        generate_table(json_obj1, 2);
 
-        function generate_table(json) {
+        function generate_table(json, tabNum) {
             let new_tab = new_tab_row();
+            new_tab.querySelector('#remove_btn').dataset.tabNum = tabNum;
+
             json.forEach(obj => {
                 set_routine(obj, new_tab);
             });

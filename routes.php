@@ -9,11 +9,11 @@ return [
     '/logout' => 'php/logoutFunction.php',
     '/sql_exec' => 'html/sql_exec.php',
     '/profile' => 'html/profile.php',
-    '/routine' => 'html/routine.html',
+    '/generate_routine' => 'html/generate_routine.html',
     '/faculty_review' => 'html/faculty_review.php',
     '/custom_routine' => 'html/custom_routine.php',
     '/saved_routine' => 'html/saved_routine.php',
-    '/test' => 'test/test4.php',
+    '/test' => 'php/generativeAlgorithm.php',
 ];
 
 ?>
