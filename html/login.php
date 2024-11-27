@@ -21,6 +21,10 @@
 
         exit;
     }
+
+    if(isset($_SESSION['nsu_id'])) {
+        header('Location: /profile');
+    }
 ?>
 
 <!DOCTYPE html>
