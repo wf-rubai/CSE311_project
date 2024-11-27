@@ -426,14 +426,20 @@ while ($r = $result_2->fetch_assoc()) {
                     </div>
                 </div>
                 <div class="info_group">
-                    <label for="min_cr_6">Minimum class days</label>
+                    <label for="min_cr_6">Maximum class days</label>
                     <div style="display: flex; align-items: center;">
                         <input type="radio" id="min_cr_6" name="min_cr" value="6" style="margin: 0 5px 0 0;" checked>
                         <label for="min_cr_6" style="margin-right: 30px; width: 0;">6</label>
+                        <input type="radio" id="min_cr_5" name="min_cr" value="5" style="margin: 0 5px 0 0;">
+                        <label for="min_cr_5" style="margin-right: 30px; width: 0;">5</label>
                         <input type="radio" id="min_cr_4" name="min_cr" value="4" style="margin: 0 5px 0 0;">
                         <label for="min_cr_4" style="margin-right: 30px; width: 0;">4</label>
+                        <input type="radio" id="min_cr_3" name="min_cr" value="3" style="margin: 0 5px 0 0;">
+                        <label for="min_cr_3" style="margin-right: 30px; width: 0;">3</label>
                         <input type="radio" id="min_cr_2" name="min_cr" value="2" style="margin: 0 5px 0 0;">
                         <label for="min_cr_2" style="margin-right: 30px; width: 0;">2</label>
+                        <input type="radio" id="min_cr_1" name="min_cr" value="1" style="margin: 0 5px 0 0;">
+                        <label for="min_cr_1" style="margin-right: 30px; width: 0;">1</label>
                     </div>
                 </div>
                 <div class="selected_courses">
@@ -446,7 +452,7 @@ while ($r = $result_2->fetch_assoc()) {
             </div>
 
             <div class="show_table">
-                <h3 style="text-align: center; margin-top: 0;">
+                <h3 style="text-align: center; margin: 0 0 20px 0;">
                     Class Time Tables
                 </h3>
                 <div class="time_table">
