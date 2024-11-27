@@ -6,11 +6,16 @@
         header('Content-Type: application/json');
         if(isset($_POST['login'])) {
             $response = login($_POST['nsu_id'], $_POST['password']);
-            if ($response != 'success') {
+            if ($response['message'] != 'success') {
                 echo json_encode(['message' => $response]);
             }
             else {
-                echo json_encode(['redirectUrl' => '/profile']);
+                if($response['is_admin'] == TRUE) {
+                    echo json_encode(['redirectUrl' => '/admin/faculty']);
+                }
+                else {
+                    echo json_encode(['redirectUrl' => '/profile']);
+                }
             }
         }
 
