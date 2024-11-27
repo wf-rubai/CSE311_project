@@ -551,11 +551,11 @@ $routines = $mysqli->query($sql);
         
         <?php
         while($routine = $routines->fetch_assoc()) {
-            echo "generate_table(". $routine['routine_data'] .");";
+            echo "generate_table(". $routine['table_id'] .",".  $routine['routine_data'] .");";
         }
         ?>
 
-        function generate_table(json) {
+        function generate_table(table_id, json) {
             let new_tab = new_tab_row();
             json.forEach(obj => {
                 set_routine(obj, new_tab);
