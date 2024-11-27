@@ -5,7 +5,11 @@
     #connect to db
     $mysqli = connect();
 
-    $user_details = checkLogin(); 
+    $user_details = checkLogin();
+
+    if($user_details['is_admin'] != TRUE) {
+        header('Location: /login');
+    }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if(isset($_POST['add_faculty'])) {
