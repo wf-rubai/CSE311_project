@@ -93,4 +93,5 @@ php -v
 
 Run the following command in **Terminal** or **Command Prompt**:
 ```bash
-php -S localhost:8000
+php -S localhost:8000 routing.php
+```

@@ -1,50 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSE311 project</title>
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Advising Assistant</title>
     <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+
         body {
+            font-family: Arial, sans-serif;
+            /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
+            background-image: linear-gradient(to right, #1f0033, #09000f, #09000f, #1f0033);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            /* max-width: 1200px;
+            margin: 0 auto; */
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            /* padding: 20px; */
+            /* height: 5vh; */
+            padding-top: 20px;
+        }
+
+        .header button {
+            margin-left: 10px;
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 2px solid;
+            color: #ffffff76;
+            cursor: pointer;
+            transition: all 0.5s;
+            height: fit-content;
+            background: 0;
+        }
+
+        .header button:hover {
+            box-shadow: 0px 0px 10px 0px #fff;
+            color: #ffffff;
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 0 20px 50px 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .main-content h1 {
+            font-size: 9rem;
+            /* background: -webkit-linear-gradient(45deg, #3F51B5, #FF9800); */
+            /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+            background-image: url('https://plus.unsplash.com/premium_photo-1672201106204-58e9af7a2888?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3JhZGllbnQlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww');
+            background-size: 400% 400%;
+            animation: gradient 15s linear infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 100% 0%;
+            }
+
+            25% {
+                background-position: 0% 100%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            75% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+
+        .description {
+            font-size: 1.25rem;
+            margin: 20px 0;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            height: 100vh;
+        }
+
+        .hero_title {
+            position: sticky;
+            top: 50%;
+            transform: translate(0, -50%);
+            animation: hero_title_animation ease-out forwards;
+            animation-timeline: view(y 0% 100%);
+        }
+
+        @keyframes hero_title_animation {
+            0% {
+                scale: 1;
+            }
+
+            50%,
+            100% {
+                scale: .5;
+            }
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .screenshot-section {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 300px;
-            padding: 150px 0 400px 0;
-            /* background: black; */
+            gap: 20px;
         }
 
-        div {
-            height: 300px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            font-family: sans-serif;
-            font-size: 90px;
-            color: rgba(10, 59, 150, 0);
-            text-shadow: 3px 3px 6px rgb(255, 255, 255), 0 0 0 #000, 1px 4px 6px rgb(255, 255, 255);
-            transition: .5s;
+        .screenshot {
+            width: 30%;
+            height: max-content;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            animation: pro-img-animation linear forwards;
+            animation-timeline: view();
+            animation-range: enter;
         }
-        div:hover{
-            color: rgb(255 255 255);
-            /* text-shadow: -3px -3px 6px #000000; */
-            text-shadow: 3px 3px 6px rgba(255, 255, 255, 0), 0 0 0 #ffffff00, 3px 3px 6px rgb(0, 0, 0);
-            transition: .5s;
-            cursor: none;
+
+        @keyframes pro-img-animation {
+            0% {
+                opacity: 0;
+                scale: .8;
+            }
+
+            30%,
+            100% {
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        .screenshot img {
+            width: 70%;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+
+        .description-text {
+            max-width: 50%;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #cccccc;
+        }
+
+        .screenshot-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+            background-color: #111;
+            color: #777;
+        }
+
+        .contact_me {
+            margin: 30px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            color: #ddd;
+        }
+
+        .contact_me h3 {
+            font-size: 25px;
+        }
+
+        .contact_me h5 {
+            font-size: 13px;
+            margin-left: 15px;
+            color: #c5c5c5;
+        }
+
+        .contact_me h5 i {
+            width: 20px;
+        }
+
+        .contact_me h5 a {
+            color: #c5c5c5;
+        }
+    </style>
+    <style>
+        .dev_info{
+
+            display: flex;
+    justify-content: center;
+    gap: 50px;
+            animation: pro-img-animation linear forwards;
+            animation-timeline: view();
+            animation-range: enter;
+        }
+
+        .dev{
+            width: 235px;
+    background: #ffffff2b;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: .5s;
+        }
+
+        .dev:hover{
+            scale: 1.1;
+    box-shadow: 0 0 15px #fff;
+        }
+
+        .dev_img{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 10px 0 20px 0;
+    border-radius: 50%;
+    border: 1px solid #fffffff7;
+        }
+
+        .dev_img img{
+            width: 100%;
+        }
+
+        .dev .dev_contact{
+            width: 100%;
+        }
+
+        .dev .dev_contact h4{
+    font-size: large;
+    margin: 0 0 20px 0;
+        }
+
+        .dev .dev_contact h5{
+    /* text-align: left; */
+    width: 100%;
+    color: #898989;
+    margin: 5px 0;
+        }
+
+        .dev .dev_contact h5 a{
+    color: #898989;
+        }
+
+        .dev .dev_contact h5 i{
+            width: 20px;
         }
     </style>
 </head>
 
 <body>
-    <form action="../php/process.php" method="POST">
-        <div>
-            <strong>
-                Welcome Fuckers
-            </strong>
-        </div>
-    </form>
+    <div class="container">
 
-    <script src="../js/script.js"></script>
+        <div class="main-content">
+            <div class="hero">
+                <header class="header">
+                    <button type="button" class="header_btn log-btn" onclick="location.href = '/login';">Login</button>
+                    <button type="button" class="header_btn sign-btn" onclick="location.href = '/signup';">Sign
+                        up</button>
+                </header>
+                <div class="hero_title">
+                    <h1>Advising Assistant</h1>
+                    <p class="description">
+                        Welcome to the Advising Assistant! Plan your academic journey effortlessly by generating
+                        personalized schedules based on your chosen courses, class days, and seat availability. Track
+                        your
+                        progress, manage your profile, and explore faculty reviews all in one place.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Screenshot Section -->
+            <div class="image-container">
+                <h2 style="font-size: 35px;">How Will it Help</h2>
+                <div class="screenshot-section">
+                    <div class="screenshot"><img src="../image/home_1.png"></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+
+                <div class="screenshot-section">
+                    <div class="screenshot"><img src="../image/home_2.png"></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+
+                <div class="screenshot-section">
+                    <div class="screenshot"><img src="../image/home_3.png"></div>
+                    <p class="description-text">Imagine a dynamic "Library Management System" powered by Java,
+                        meticulously
+                        crafted to revolutionize the way libraries operate. This system serves as a comprehensive tool
+                        for librarians, offering them unparalleled efficiency in managing diverse resources ranging from
+                        books to multimedia materials. With an array of features such as user authentication, inventory
+                        management, and borrowing tracking, librarians can effortlessly catalog, update, and track the
+                        availability of library items. Meanwhile, patrons benefit from a user-friendly interface that
+                        enables them to browse the library's collection, reserve items, and review their borrowing
+                        history with ease. Leveraging the power of JavaFX for intuitive graphical user interfaces and
+                        employing robust object-oriented programming principles, this project promises to elevate the
+                        library experience for both staff and visitors alike.</p>
+                </div>
+            </div>
+
+            <h2 style="font-size: 35px; margin: 30px 0 40px 0;">Meet With Our Developers</h2>
+            <div class="dev_info">
+                <div class="dev">
+                    <div class="dev_img">
+                        <img src="../image/arman.jpg" alt="">
+                    </div>
+                    <div class="dev_contact">
+                        <h4>Arman Mokammel</h4>
+                        <!-- <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-phone"></i> +88 01912-653657</h5> -->
+                        <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-envelope"></i> armanmokammel@gmail.com</h5>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-brands fa-github"></i> <a href="https://github.com/ArmanMokammel">Arman Mokammel</a></h5>
+                    </div>
+                </div>
+
+                <div class="dev">
+                    <div class="dev_img">
+                        <img src="../image/rubai.jpg" alt="">
+                    </div>
+                    <div class="dev_contact">
+                        <h4>Washio Ferdous Rubai</h4>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-phone"></i> +88 01912-653657</h5>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-envelope"></i> rubai4483302@gmail.com</h5>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-brands fa-github"></i> <a href="https://github.com/wf-rubai">Washio Ferdous Rubai</a></h5>
+                    </div>
+                </div>
+
+                <div class="dev">
+                    <div class="dev_img">
+                        <img src="../image/oyshi.jpg" alt="">
+                    </div>
+                    <div class="dev_contact">
+                        <h4>Nabila Tabassum</h4>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-phone"></i> +88 01912-653657</h5>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-envelope"></i> rubai4483302@gmail.com</h5>
+                        <h5 class="contact-font h5-contact-font"><i class="fa-brands fa-github"></i> <a href="https://github.com/wf-rubai">Washio Ferdous Rubai</a></h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <!-- <div class="contact_me">
+                <h3 class="contact-font">Contact</h3>
+                <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-phone"></i> Phone : +88 01912-653657</h5>
+                <h5 class="contact-font h5-contact-font"><i class="fa-solid fa-envelope"></i> E-mail :
+                    rubai4483302@gmail.com</h5>
+                <h5 class="contact-font h5-contact-font"><i class="fa-brands fa-github"></i> GitHub : <a
+                        href="https://github.com/wf-rubai">Washio Ferdous Rubai</a></h5>
+            </div> -->
+            &copy; 2024 Advising Assistant. All Rights Reserved.
+        </footer>
+    </div>
 </body>
+
 </html>

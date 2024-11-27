@@ -1,4 +1,7 @@
 # ignore log files and databases
 *.log
-*.sql
 *.sqlite
+config.php
+/data_rds2
+/image/uploads
+/test
