@@ -136,12 +136,12 @@ function generate_all_combinations(){
     foreach($courses_comb as $course){
         $courses_set = fetch_course_list($course);
 
-        $combination = array_merge($combination, generate_sub_combinations_recursive($courses_set));
+        $combination = array_merge($combination, generate_sub_combinations($courses_set));
     }
     return $combination;
 }
 
-function generate_sub_combinations_recursive($courses_set, $indices = [], $combinations = []) {
+function generate_sub_combinations($courses_set, $indices = [], $combinations = []) {
     // Base case: if we've processed all courses
     if (count($indices) == count($courses_set)) {
         // Build the combination from the current indices
@@ -159,7 +159,7 @@ function generate_sub_combinations_recursive($courses_set, $indices = [], $combi
     $current_combinations = [];
     foreach ($current_course as $i => $course) {
         $new_indices = array_merge($indices, [$i]);
-        $current_combinations = array_merge($current_combinations, generate_sub_combinations_recursive($courses_set, $new_indices, $combinations));
+        $current_combinations = array_merge($current_combinations, generate_sub_combinations($courses_set, $new_indices, $combinations));
     }
 
     return $current_combinations;
