@@ -4,6 +4,19 @@ $mysqli = connect();
 
 checkLogin();
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['delete_routine'])) {
+        $table_id = $_POST['table_id'];
+        
+        $sql = "DELETE FROM save_routine WHERE table_id = $table_id";
+
+        $mysqli->query($sql);
+
+        echo json_encode(['message' => 'success', 'redirectUrl' => '/saved_routine']);
+        exit();
+    }
+}
+
 $sql = "SELECT * FROM save_routine WHERE user_id = ". $_SESSION['nsu_id'];
 $routines = $mysqli->query($sql);
 
@@ -246,7 +259,7 @@ $routines = $mysqli->query($sql);
             <hr>
             <div class="routine">
                 <div>
-                    <button id="remove_btn" data-tab-num="0" type="button" onclick="">Remove Table</button>
+                    <button id="remove_btn" data-tab-num="0" type="button" onclick="delete_routine(this)">Remove Table</button>
                     <button class="open" type="button" onclick="">Routine detail</button>
                 </div>
                 <table>
@@ -377,7 +390,7 @@ $routines = $mysqli->query($sql);
         }
         ?>
 
-        function generate_table(json, tabNum) {
+        function generate_table(tabNum, json) {
             let new_tab = new_tab_row();
             new_tab.querySelector('#remove_btn').dataset.tabNum = tabNum;
 
@@ -434,6 +447,12 @@ $routines = $mysqli->query($sql);
                 }
             });
             return Array.from(uniqueCourses.values());
+        }
+
+        function delete_routine(routineDiv) {
+            table_id = routineDiv.dataset.tabNum;
+            
+            sendPostRequest('/saved_routine', 'delete_routine', [['table_id', table_id]]);
         }
     </script>
 </body>
