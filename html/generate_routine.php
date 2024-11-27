@@ -1,3 +1,14 @@
+<?php
+$conn = connect();
+
+$a_2 = 'SELECT c.course FROM courses c GROUP BY c.course';
+$result_2 = $conn->query($a_2);
+$_course_ = '';
+while ($r = $result_2->fetch_assoc()) {
+    $_course_ .= "'" . $r['course'] . "',";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -175,7 +186,7 @@
             width: 200px;
         }
 
-        .selected-option {
+        .selected_option {
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -426,60 +437,6 @@
                     </div>
                 </div>
                 <div class="selected_courses">
-                    <div class="info_group course_selection" style="display: none;">
-                        <label for="search_box_course">Choose course</label>
-                        <div style="width: 300px; position: relative;">
-                            <input style="width: 312px;" type="search" id="search_box_course" placeholder="Course title"
-                                onfocus="filterList()" required>
-                            <div id="courseList" class="dropdown-list"></div>
-                        </div>
-                        <label style="margin-left: 50px; width: 60px;position: relative; left: 12px; ">Credit</label>
-                        <select name="credit" style="width: 200px;" required>
-                            <option value="1">1</option>
-                            <option value="1.5">1.5</option>
-                            <option value="3" selected>3</option>
-                        </select>
-                        <label style="margin-left: 50px; width: 60px;">Color</label>
-                        <div class="custom-dropdown">
-                            <div class="selected-option" id="selectedColor">
-                                <i class="fa fa-square" style="color: rgb(95, 95, 255);"></i> Blue
-                            </div>
-                            <div class="dropdown-list-color" id="colorList" style="width: calc(100% - 12px);">
-                                <div class="dropdown-item" data-color="red">
-                                    <i class="fa fa-square" style="color: rgb(255, 99, 99); margin-right: 5px;"></i> Red
-                                </div>
-                                <div class="dropdown-item" data-color="green">
-                                    <i class="fa fa-square" style="color: rgb(91, 255, 91); margin-right: 5px;"></i>
-                                    Green
-                                </div>
-                                <div class="dropdown-item" data-color="blue">
-                                    <i class="fa fa-square" style="color: rgb(95, 95, 255); margin-right: 5px;"></i>
-                                    Blue
-                                </div>
-                                <div class="dropdown-item" data-color="yellow">
-                                    <i class="fa fa-square" style="color: rgb(218, 218, 0); margin-right: 5px;"></i>
-                                    Yellow
-                                </div>
-                                <div class="dropdown-item" data-color="orange">
-                                    <i class="fa fa-square" style="color: rgb(255, 166, 0); margin-right: 5px;"></i>
-                                    Orange
-                                </div>
-                                <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: rgb(255, 93, 255); margin-right: 5px;"></i>
-                                    Pink
-                                </div>
-                                <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: rgb(0, 255, 255); margin-right: 5px;"></i>
-                                    Cyan
-                                </div>
-                                <div class="dropdown-item" data-color="purple">
-                                    <i class="fa fa-square" style="color: rgb(188, 188, 188); margin-right: 5px;"></i>
-                                    Gray
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dlt_course">&times;</div>
-                    </div>
                 </div>
 
                 <div style="display: flex; justify-content: flex-start;">
@@ -494,92 +451,11 @@
                 </h3>
                 <div class="time_table">
                     <div class="routine">
-                        <div class="tab_compare">
+                        <!-- <div class="tab_compare">
                             <button class="tab_compare">+ Add to compare</button>
+                        </div> -->
+                        <div class="rout_table_container">
                         </div>
-                        <table>
-                            <tr>
-                                <th></th>
-                                <th>Sat</th>
-                                <th>Sun</th>
-                                <th>Mon</th>
-                                <th>Tue</th>
-                                <th>Wed</th>
-                                <th>Thu</th>
-                            </tr>
-                            <tr>
-                                <th>8:00 AM - 9:15 AM</th>
-                                <td onclick="baal('gfd','gdfvcx')" style="background: rgb(218, 218, 0);">CSE311L</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>9:25 AM - 10:40 AM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>10:50 AM - 12:05 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>12:15 PM - 1:30 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>1:40 PM - 2:55 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>3:05 PM - 4:20 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>4:30 PM - 5:45 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr hidden>
-                                <th>5:55 - 7:10 PM</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
                         <div class="tab_swap_controll">
                             <button class="prev_tab"><i class="fa fa-chevron-left"></i></button>
                             <span class="current_tab">7</span>
@@ -648,36 +524,248 @@
         </div>
     </div>
 
+    <!-- routine table supply div  -->
+    <div class="rout_table_container_supply" hidden>
+        <table>
+            <tr>
+                <th></th>
+                <th>Sat</th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+            </tr>
+            <tr>
+                <th>8:00 AM - 9:15 AM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>9:25 AM - 10:40 AM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>10:50 AM - 12:05 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>12:15 PM - 1:30 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>1:40 PM - 2:55 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>3:05 PM - 4:20 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>4:30 PM - 5:45 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr hidden>
+                <th>5:55 - 7:10 PM</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- new course list supply  -->
+    <div class="course_selection_supply">
+        <div class="info_group course_selection" style="display: flex;">
+            <label for="search_box_course">Choose course</label>
+            <div style="width: 300px; position: relative;">
+                <input style="width: 312px;" type="search" class="search_box_course" id="search_box_course" placeholder="Course title"
+                    onfocus="filterList()" required>
+                <div id="courseList" class="dropdown-list"></div>
+            </div>
+            <label style="margin-left: 50px; width: 60px;position: relative; left: 12px; ">Credit</label>
+            <select name="credit" style="width: 200px;" required>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="3" selected>3</option>
+            </select>
+            <label style="margin-left: 50px; width: 60px;">Color</label>
+            <div class="custom-dropdown">
+                <div class="selected_option" id="selectedColor">
+                    <i class="fa fa-square" style="color: rgb(95, 95, 255);"></i> Blue
+                </div>
+                <div class="dropdown-list-color" id="colorList" style="width: calc(100% - 12px);">
+                    <div class="dropdown-item" data-color="red">
+                        <i class="fa fa-square" style="color: rgb(255, 99, 99); margin-right: 5px;"></i> Red
+                    </div>
+                    <div class="dropdown-item" data-color="green">
+                        <i class="fa fa-square" style="color: rgb(91, 255, 91); margin-right: 5px;"></i>
+                        Green
+                    </div>
+                    <div class="dropdown-item" data-color="blue">
+                        <i class="fa fa-square" style="color: rgb(95, 95, 255); margin-right: 5px;"></i>
+                        Blue
+                    </div>
+                    <div class="dropdown-item" data-color="yellow">
+                        <i class="fa fa-square" style="color: rgb(218, 218, 0); margin-right: 5px;"></i>
+                        Yellow
+                    </div>
+                    <div class="dropdown-item" data-color="orange">
+                        <i class="fa fa-square" style="color: rgb(255, 166, 0); margin-right: 5px;"></i>
+                        Orange
+                    </div>
+                    <div class="dropdown-item" data-color="purple">
+                        <i class="fa fa-square" style="color: rgb(255, 93, 255); margin-right: 5px;"></i>
+                        Pink
+                    </div>
+                    <div class="dropdown-item" data-color="purple">
+                        <i class="fa fa-square" style="color: rgb(0, 255, 255); margin-right: 5px;"></i>
+                        Cyan
+                    </div>
+                    <div class="dropdown-item" data-color="purple">
+                        <i class="fa fa-square" style="color: rgb(188, 188, 188); margin-right: 5px;"></i>
+                        Gray
+                    </div>
+                </div>
+            </div>
+            <div class="dlt_course">&times;</div>
+        </div>
+    </div>
+
     <!-- show_table div related js -->
     <script>
-        document.querySelectorAll('.routine td').forEach(cell => {
-            cell.addEventListener('click', () => {
-                if (cell.textContent.trim() != "") {
-                    document.querySelector(".course_detail").style.display = "flex";
-                }
-            });
-        });
+        let currentIndex = 1;
+        let totalRoutine = 1;
+        let routine_combination_list = {};
+
+        function open_side_tab(course, time) {
+            // alert shoray tui tr kaj kor
+            // for arman
+            alert(course, time);
+            document.querySelector(".course_detail").style.display = "flex";
+        }
         document.querySelector(".close_course_detail").addEventListener('click', () => {
             document.querySelector(".course_detail").style.display = "none";
         });
+
+
         document.getElementById("generateRoutine").addEventListener('click', () => {
+            let courses = document.querySelectorAll('.selected_courses .course_selection');
+            let course_list = [];
+            courses.forEach(course => {
+                let record = {
+                    course: course.querySelector('.search_box_course').value,
+                    cr: course.querySelector('select[name="credit"]').value,
+                    color: course.querySelector('.selected_option i').style.color
+                }
+                course_list.push(record);
+            });
+            let record = {
+                min_cr: document.getElementById('min_cr').value,
+                max_cr: document.getElementById('max_cr').value,
+                day_num: document.querySelector('input[name="min_cr"]:checked').value
+            }
+            course_list.push(record);
+            // console.log(course_list);
+            fetch('/generatingAlgorithm', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        courses: course_list
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(routines => routines.json()) // Change 'response' to 'routines' here
+                .then(data => {
+                    initiate_routine_display(data);
+                    console.log(routine_combination_list[1]);
+                    new_table(routine_combination_list[1]);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
             document.querySelector(".show_table").style.display = "flex";
         });
+        document.querySelector(".prev_tab").addEventListener('click', function() {
+            if (currentIndex > 1) {
+                currentIndex -= 1;
+                new_table(routine_combination_list[currentIndex]);
+            }
+            document.querySelector(".current_tab").textContent = currentIndex;
+        });
+        document.querySelector(".next_tab").addEventListener('click', function() {
+            if (currentIndex < totalRoutine) {
+                currentIndex += 1;
+                new_table(routine_combination_list[currentIndex]);
+            }
+            document.querySelector(".current_tab").textContent = currentIndex;
+        });
+
+        function initiate_routine_display(data) {
+            routine_combination_list = {};
+            data.forEach((routine) => {
+                routine_combination_list[routine.table] = routine.routine;
+            });
+            totalRoutine = Object.keys(routine_combination_list).length;
+            currentIndex = 1;
+            document.querySelector(".current_tab").textContent = currentIndex;
+            document.querySelector(".total_tab").textContent = totalRoutine;
+        }
     </script>
 
     <!-- Adds a row to insert course info -->
     <script>
-        const courses = [
-            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
-            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
-            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
-            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
-            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
-        ];
+        const courses = [<?php echo $_course_; ?>];
+        // const courses = [
+        //     "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
+        //     "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
+        //     "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
+        //     "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
+        //     "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
+        // ];
 
 
         document.getElementById("addCourse").addEventListener("click", () => {
-            const originalCourseSelection = document.querySelector(".course_selection");
+            const originalCourseSelection = document.querySelector(".course_selection_supply .course_selection");
             const newCourseSelection = originalCourseSelection.cloneNode(true);
 
             newCourseSelection.querySelector("#search_box_course").value = "";
@@ -719,7 +807,7 @@
             const searchBox = newCourseSelection.querySelector(`#search_box_course_${uniqueID}`);
             const listContainer = newCourseSelection.querySelector(`#courseList_${uniqueID}`);
 
-            window.filterList = function () {
+            window.filterList = function() {
                 const filter = searchBox.value.toLowerCase();
 
                 listContainer.style.display = "block";
@@ -756,7 +844,103 @@
                 newCourseSelection.remove();
             });
         });
+    </script>
 
+    <!-- generation start here -->
+    <script>
+        function new_table(course_list) {
+            let new_tab = document.querySelector('.rout_table_container_supply table').cloneNode(true);
+            course_list.forEach(cour => {
+                set_course(cour, new_tab);
+            });
+            document.querySelector('.rout_table_container').innerHTML = '';
+            document.querySelector('.rout_table_container').appendChild(new_tab);
+        }
+
+        function set_course(course, tab) {
+            const regex = /([STMWRAstmwra]{1,2}) (\d{1,2}:\d{2} [APM]{2} - \d{1,2}:\d{2} [APM]{2})/;
+            let day_time = course.time.match(regex);
+            let days = day_time[1];
+            let time = day_time[2];
+
+            const daysMapping = {
+                'A': 1, // Saturday
+                'S': 2, // Sunday
+                'M': 3, // Monday
+                'T': 4, // Tuesday
+                'W': 5, // Wednesday
+                'R': 6 // Thursday
+            };
+
+            // Loop through each day in days (e.g., 'MW' -> Monday, Wednesday)
+            for (let day of days) {
+                const dayColumn = daysMapping[day];
+                if (dayColumn) {
+                    // Locate the correct row by matching the time
+                    const rows = tab.querySelectorAll("tr");
+
+                    rows.forEach((row) => {
+                        const timeCell = row.querySelector("th");
+                        if (normalizeTime(timeCell.textContent.trim()) != '') {
+                            if (timesIntersect(normalizeTime(timeCell.textContent.trim()), normalizeTime(time.trim()))) {
+                                const targetCell = row.cells[dayColumn];
+                                if (targetCell) {
+                                    targetCell.style.backgroundColor = course.color;
+                                    targetCell.textContent = course.course;
+                                    targetCell.dataset.time = course.time;
+                                    targetCell.onclick = function() {
+                                        open_side_tab(course.course, course.time);
+                                    };
+
+                                } else {
+                                    console.warn(`No cell found for day ${day} and time ${time}`);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        function timesIntersect(period1, period2) {
+            if (period1 === period2) {
+                return true;
+            }
+            // Helper function to convert 12-hour time format (HH:MM AM/PM) to minutes
+            const timeToMinutes = (time) => {
+                const [timePart, period] = time.split(' '); // Split time and AM/PM
+                let [hours, minutes] = timePart.split(':').map(Number); // Split hours and minutes
+                if (period === 'PM' && hours !== 12) hours += 12; // Convert PM times
+                if (period === 'AM' && hours === 12) hours = 0; // Convert 12 AM to 00:00
+                return hours * 60 + minutes;
+            };
+
+            // Extract start and end times from each period
+            const extractTimes = (period) => {
+                const [startTime, endTime] = period.split(' - '); // Split the period into start and end times
+                return {
+                    start: timeToMinutes(startTime.trim()),
+                    end: timeToMinutes(endTime.trim())
+                };
+            };
+
+            // Extract start and end times for both periods
+            const {
+                start: startTime1,
+                end: endTime1
+            } = extractTimes(period1);
+            const {
+                start: startTime2,
+                end: endTime2
+            } = extractTimes(period2);
+
+            // Check if the two time periods overlap
+            return startTime1 < endTime2 && startTime2 < endTime1;
+        }
+
+        function normalizeTime(timeString) {
+            return timeString.replace(/\b0(\d)/g, '$1'); // Remove leading zeros from hours
+        }
     </script>
 </body>
 

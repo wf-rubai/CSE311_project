@@ -1,6 +1,8 @@
 <!-- use this iframe to add navigation bar -->
 <!-- <iframe src="template/side_bar.html"  class="side_bar" id="sidebar" style="border: none; width: 250px; margin: 10px 0 10px 10px; display: none;"></iframe> -->
-
+<?php 
+    $user_details = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -132,20 +134,20 @@
         <div class="container">
             <div class="nav_pro">
                 <div class="nav_pro_img">
-                    <img src="../../image/oyshi.jpg" alt="">
+                    <img src="../<?php echo $user_details['profile_pic']; ?>" alt="">
                 </div>
-                <h4>Washio Ferdous Rubai</h4>
+                <h4><?php echo $user_details['fullname']; ?></h4>
             </div>
 
             <div class="nav_option">
                 <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/profile')">Profile</a></h4>
-                <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/routine')">Routine Generate</a></h4>
+                <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/generate_routine')">Routine Generate</a></h4>
                 <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/custom_routine')">Custom Routine</a></h4>
                 <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/saved_routine')">Saved Routines</a></h4>
                 <h4><i class="fa-solid fa-caret-right"></i> <a onclick="navigateToPages('/faculty_review')">Faculty Review</a></h4>
             </div>
         </div>
-        <div class="log_out_btn"><a onclick="navigateToPages('/logout')">Logout<i class="fa-solid fa-right-from-bracket"></i></a></div>
+        <div class="log_out_btn"> <a onclick="navigateToPages('/logout')">Log out <i class="fa-solid fa-right-from-bracket"></i></a></div>
         <!-- <h3>Navigate to</h3> -->
     </div>
 

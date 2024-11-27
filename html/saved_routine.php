@@ -246,7 +246,7 @@ $routines = $mysqli->query($sql);
             <hr>
             <div class="routine">
                 <div>
-                    <button type="button" onclick="">Remove Table</button>
+                    <button id="remove_btn" data-tab-num="0" type="button" onclick="">Remove Table</button>
                     <button class="open" type="button" onclick="">Routine detail</button>
                 </div>
                 <table>
@@ -356,179 +356,6 @@ $routines = $mysqli->query($sql);
 
     <!-- generative script -->
     <script>
-        // const json_obj1 = [{
-        //         "course": "CSE115",
-        //         "row": "2",
-        //         "col": "2",
-        //         "section": "2",
-        //         "time": "ST 9:25 AM - 10:40 AM",
-        //         "faculty": "TBA",
-        //         "seats": "24",
-        //         "color": "rgb(0, 191, 255)"
-        //     },
-        //     {
-        //         "course": "ACT201",
-        //         "row": "2",
-        //         "col": "3",
-        //         "section": "1",
-        //         "time": "MW 9:25 AM - 10:40 AM",
-        //         "faculty": "TBA",
-        //         "seats": "30",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "CSE115",
-        //         "row": "2",
-        //         "col": "4",
-        //         "section": "2",
-        //         "time": "ST 9:25 AM - 10:40 AM",
-        //         "faculty": "TBA",
-        //         "seats": "24",
-        //         "color": "rgb(0, 191, 255)"
-        //     },
-        //     {
-        //         "course": "ACT201",
-        //         "row": "2",
-        //         "col": "5",
-        //         "section": "1",
-        //         "time": "MW 9:25 AM - 10:40 AM",
-        //         "faculty": "TBA",
-        //         "seats": "30",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "CSE311L",
-        //         "row": "5",
-        //         "col": "1",
-        //         "section": "6",
-        //         "time": "A 1:40 PM - 4:20 PM",
-        //         "faculty": "TBA",
-        //         "seats": "7",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "ACT202",
-        //         "row": "5",
-        //         "col": "2",
-        //         "section": "5",
-        //         "time": "ST 1:40 PM - 2:55 PM",
-        //         "faculty": "TBA",
-        //         "seats": "23",
-        //         "color": "rgb(221, 160, 221)"
-        //     },
-        //     {
-        //         "course": "ACT202",
-        //         "row": "5",
-        //         "col": "4",
-        //         "section": "5",
-        //         "time": "ST 1:40 PM - 2:55 PM",
-        //         "faculty": "TBA",
-        //         "seats": "23",
-        //         "color": "rgb(221, 160, 221)"
-        //     },
-        //     {
-        //         "course": "CSE311L",
-        //         "row": "6",
-        //         "col": "1",
-        //         "section": "6",
-        //         "time": "A 1:40 PM - 4:20 PM",
-        //         "faculty": "TBA",
-        //         "seats": "7",
-        //         "color": "rgb(144, 238, 144)"
-        //     }
-        // ];
-        // const json_obj2 = [{
-        //         "course": "CSE115",
-        //         "row": "1",
-        //         "col": "3",
-        //         "section": "1",
-        //         "time": "MW 8:00 AM - 9:15 AM",
-        //         "faculty": "TBA",
-        //         "seats": "3",
-        //         "color": "rgb(218, 218, 0)"
-        //     },
-        //     {
-        //         "course": "CSE115",
-        //         "row": "1",
-        //         "col": "5",
-        //         "section": "1",
-        //         "time": "MW 8:00 AM - 9:15 AM",
-        //         "faculty": "TBA",
-        //         "seats": "3",
-        //         "color": "rgb(218, 218, 0)"
-        //     },
-        //     {
-        //         "course": "MAT116",
-        //         "row": "3",
-        //         "col": "3",
-        //         "section": "9",
-        //         "time": "MW 10:50 AM - 12:05 PM",
-        //         "faculty": "TBA",
-        //         "seats": "34",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "MAT116",
-        //         "row": "3",
-        //         "col": "5",
-        //         "section": "9",
-        //         "time": "MW 10:50 AM - 12:05 PM",
-        //         "faculty": "TBA",
-        //         "seats": "34",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "PHY107L",
-        //         "row": "3",
-        //         "col": "6",
-        //         "section": "3",
-        //         "time": "R 10:50 AM - 1:30 PM",
-        //         "faculty": "TBA",
-        //         "seats": "28",
-        //         "color": "rgb(255, 182, 193)"
-        //     },
-        //     {
-        //         "course": "PHY107L",
-        //         "row": "4",
-        //         "col": "6",
-        //         "section": "3",
-        //         "time": "R 10:50 AM - 1:30 PM",
-        //         "faculty": "TBA",
-        //         "seats": "28",
-        //         "color": "rgb(255, 182, 193)"
-        //     },
-        //     {
-        //         "course": "EEE154",
-        //         "row": "5",
-        //         "col": "1",
-        //         "section": "2",
-        //         "time": "A 1:40 PM - 2:55 PM",
-        //         "faculty": "TBA",
-        //         "seats": "0",
-        //         "color": "rgb(144, 238, 144)"
-        //     },
-        //     {
-        //         "course": "HIS103",
-        //         "row": "5",
-        //         "col": "2",
-        //         "section": "15",
-        //         "time": "ST 1:40 PM - 2:55 PM",
-        //         "faculty": "TBA",
-        //         "seats": "4",
-        //         "color": "rgb(0, 191, 255)"
-        //     },
-        //     {
-        //         "course": "HIS103",
-        //         "row": "5",
-        //         "col": "4",
-        //         "section": "15",
-        //         "time": "ST 1:40 PM - 2:55 PM",
-        //         "faculty": "TBA",
-        //         "seats": "4",
-        //         "color": "rgb(0, 191, 255)"
-        //     }
-        // ]
-
         function new_tab_row() {
             return document.querySelector('.hidden_routine_table .table_row').cloneNode(true);
         }
@@ -544,19 +371,16 @@ $routines = $mysqli->query($sql);
 
     <!-- set table js -->
     <script>
-        // generate_table(json_obj1);
-        // generate_table(json_obj2);
-        // generate_table(json_obj1);
-        // generate_table(json_obj2);
-        
         <?php
         while($routine = $routines->fetch_assoc()) {
             echo "generate_table(". $routine['table_id'] .",".  $routine['routine_data'] .");";
         }
         ?>
 
-        function generate_table(table_id, json) {
+        function generate_table(json, tabNum) {
             let new_tab = new_tab_row();
+            new_tab.querySelector('#remove_btn').dataset.tabNum = tabNum;
+
             json.forEach(obj => {
                 set_routine(obj, new_tab);
             });

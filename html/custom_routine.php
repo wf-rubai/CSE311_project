@@ -652,7 +652,7 @@ while ($r = $result_1->fetch_assoc()) {
                 'M': 3, // Monday
                 'T': 4, // Tuesday
                 'W': 5, // Wednesday
-                'R': 6 // Thursday
+                'R': 6  // Thursday
             };
 
             // Choose a random color from the array
@@ -819,4 +819,3 @@ while ($r = $result_1->fetch_assoc()) {
 </body>
 
 </html>
-
