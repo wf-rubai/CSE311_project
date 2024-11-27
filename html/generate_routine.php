@@ -1,6 +1,31 @@
 <?php
 $conn = connect();
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['fetch_sections'])) {
+        header('Content-Type: application/json');
+        $course = $_POST['course'];
+
+        $sql = "SELECT section, faculty, seats FROM courses WHERE course = '$course'";
+        $result = $conn->query($sql);
+
+        $data = array(); // Initialize an empty array to hold the data
+        if ($result->num_rows > 0) {
+            // Fetch each row and add it to the data array
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            echo json_encode(['sections' => $data]);
+
+        } else {
+            echo "error";
+        }
+
+        exit();
+    }
+}
+
 $a_2 = 'SELECT c.course FROM courses c GROUP BY c.course';
 $result_2 = $conn->query($a_2);
 $_course_ = '';
@@ -497,24 +522,7 @@ while ($r = $result_2->fetch_assoc()) {
                                         <th style="border-radius: 0 0 0 0;">Room</th>
                                         <th style="border-radius: 0 10px 0 0;">Seats available</th>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>TBA</td>
-                                        <td>SAC308</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>TBA</td>
-                                        <td>NAC211</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>TBA</td>
-                                        <td>SAC306</td>
-                                        <td>20</td>
-                                    </tr>
+                                    <tbody id="section_table"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -674,12 +682,22 @@ while ($r = $result_2->fetch_assoc()) {
         let currentIndex = 1;
         let totalRoutine = 1;
         let routine_combination_list = {};
+        const section_table = document.getElementById('section_table');
 
         function open_side_tab(course, time) {
-            // alert shoray tui tr kaj kor
-            // for arman
-            alert(course, time);
+
             document.querySelector(".course_detail").style.display = "flex";
+            sendPostRequest('/generate_routine', 'fetch_sections', [['course', course]]).then(response => {
+                section_table.innerHTML = '';
+                response.sections.forEach(section => {
+                    section_table.innerHTML += `<tr>
+                        <td>${section.section}</td>
+                        <td>${section.faculty}</td>
+                        <td>ROOM</td>
+                        <td>${section.seats}</td>
+                    </tr>`;
+                });
+            });
         }
         document.querySelector(".close_course_detail").addEventListener('click', () => {
             document.querySelector(".course_detail").style.display = "none";
