@@ -28,6 +28,15 @@
         $faculty_reviews = get_faculties();
     }
 
+
+
+// $a_2 = 'SELECT initial FROM faculty';
+// $result_2 = $conn->query($a_2);
+// $_course_ = '';
+// while ($r = $result_2->fetch_assoc()) {
+//     $_course_ .= "'" . $r['course'] . "',";
+// }
+
 ?>
 
 <!DOCTYPE html>
@@ -464,13 +473,13 @@
         <!-- all main content here -->
         <div class="main_body">
             <img class="bg_img" src="../image/Slide1.jpg" alt="">
-            <div class="search_field">
+            <!-- <div class="search_field">
                 <div style="width: 300px; position: relative;">
                     <input style="width: 312px;" type="search" id="search_box_course" placeholder="Search faculty"
                         onfocus="filterList()" required>
                     <div id="courseList" class="dropdown-list"></div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="scroll_feed">
 
@@ -570,13 +579,7 @@
 
     <!-- search box js -->
     <script>
-        const courses = [
-            "MAT101", "MAT102", "MAT201", "MAT202", "MAT301",
-            "CSE110", "CSE120", "CSE210", "CSE220", "CSE310",
-            "PHY111", "PHY112", "PHY211", "PHY212", "PHY311",
-            "ENG102", "ENG103", "ENG202", "ENG203", "ENG302",
-            "BIO105", "BIO106", "BIO205", "BIO206", "BIO305"
-        ];
+        const courses = [<?php echo $_course_; ?>];
         const searchBox = document.querySelector(`#search_box_course`);
         const listContainer = document.querySelector(`#courseList`);
 

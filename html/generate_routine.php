@@ -5,8 +5,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset($_POST['fetch_sections'])) {
         header('Content-Type: application/json');
         $course = $_POST['course'];
+        $time = $_POST['time'];
 
-        $sql = "SELECT section, faculty, seats FROM courses WHERE course = '$course'";
+        $sql = "SELECT section, faculty, seats, CONCAT(days,' ', start, ' - ', end) as time FROM courses WHERE course = '$course' and CONCAT(days,' ', start, ' - ', end) = '$time'";
         $result = $conn->query($sql);
 
         $data = array(); // Initialize an empty array to hold the data
@@ -502,22 +503,17 @@ while ($r = $result_2->fetch_assoc()) {
                                 <div class="dt" style="display: flex;">
                                     <div style="width: 40%;" class="dt1">Course Title</div>
                                     <div style="width: 10%;" class="dt2">:</div>
-                                    <div style="width: 50%;" class="dt3">CSE311L</div>
-                                </div>
-                                <div class="dt" style="display: flex;">
-                                    <div style="width: 40%;" class="dt1">Course Credit</div>
-                                    <div style="width: 10%;" class="dt2">:</div>
-                                    <div style="width: 50%;" class="dt3">1</div>
+                                    <div id="course_title_unk" style="width: 50%;" class="dt3">CSE311L</div>
                                 </div>
                                 <div class="dt" style="display: flex;">
                                     <div style="width: 40%;" class="dt1">Class Time</div>
                                     <div style="width: 10%;" class="dt2">:</div>
-                                    <div style="width: 50%;" class="dt3">8:00 AM - 9:15 AM</div>
+                                    <div id="course_time_unk" style="width: 50%;" class="dt3">8:00 AM - 9:15 AM</div>
                                 </div>
                                 <div class="dt" style="display: flex;">
                                     <div style="width: 40%;" class="dt1">Class Day</div>
                                     <div style="width: 10%;" class="dt2">:</div>
-                                    <div style="width: 50%;" class="dt3">RA</div>
+                                    <div id="course_day_unk" style="width: 50%;" class="dt3">RA</div>
                                 </div>
                             </div>
                             <div class="course_tab">
@@ -691,9 +687,13 @@ while ($r = $result_2->fetch_assoc()) {
         const section_table = document.getElementById('section_table');
 
         function open_side_tab(course, time) {
+            const [days, time_unk] = time.split(/ (.+)/);
+            document.getElementById('course_title_unk').textContent = course;
+            document.getElementById('course_time_unk').textContent = time_unk;
+            document.getElementById('course_day_unk').textContent = days;
 
             document.querySelector(".course_detail").style.display = "flex";
-            sendPostRequest('/generate_routine', 'fetch_sections', [['course', course]]).then(response => {
+            sendPostRequest('/generate_routine', 'fetch_sections', [['course', course], ['time', time]]).then(response => {
                 section_table.innerHTML = '';
                 response.sections.forEach(section => {
                     section_table.innerHTML += `<tr>
